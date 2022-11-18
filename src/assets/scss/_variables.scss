@@ -1,0 +1,41 @@
+/* --- font family starts --- */
+$fontMerriweather: 'Merriweather';
+$fontLeagueSpartan: 'League Spartan';
+/* --- font family ends --- */
+
+/* --- colors starts --- */
+$tangaroa: #04253a;
+$maastrichtBlue: #031c2b;
+$blackPearl: #021018;
+$black: #000;
+$elephant: #113044;
+$blueDianne: #1d3a4d;
+$rhino: #294557;
+
+$bone: #e1ddbf;
+$desertSand: #d9d4af;
+$darkVanilla: #d1cb9f;
+$sage: #c6bf88;
+$berylGreen: #e3dfc2;
+$whiteRock: #e4e0c5;
+$dirtyWhite: #e5e2c9;
+
+$fadedJade: #4c837a;
+$hookersGreen: #45776f;
+$deepSpaceSparkle: #3b6760;
+$ourterSpace: #24403b;
+$winterGreenDream: #558981;
+$steelTeal: #5e8f87;
+$desaturatedCyan: #67958e;
+/* --- colors ends --- */
+
+/* --- global variables starts --- */
+$button: (
+  'button, .button, [type=submit], [type=reset], [type=button]'
+) !default;
+/* --- global variables ends --- */
+
+/* --- media queries starts --- */
+$tabletLandscape: 'all and (min-width: 1024px)';
+$tabletPotrait: 'all and (min-width: 768px)';
+/* --- media queries ends --- */

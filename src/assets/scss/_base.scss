@@ -1,0 +1,121 @@
+* {
+  box-sizing: border-box;
+}
+
+*::selection {
+  color: $bone;
+  background: $tangaroa;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: $fontLeagueSpartan;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  color: $black;
+  background-color: $dirtyWhite;
+  overflow: hidden;
+}
+
+h1 {
+  @include h1;
+}
+
+h2 {
+  @include h2;
+}
+
+h3 {
+  @include h3;
+}
+
+h4 {
+  @include h4;
+}
+
+h5 {
+  @include h5;
+}
+
+h6 {
+  @include h6;
+}
+
+p {
+  padding-bottom: 2rem;
+}
+
+a {
+  @include link;
+}
+
+ul {
+  padding-left: 2rem;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding-bottom: 1rem;
+  }
+
+  ul {
+    padding-top: 1rem;
+  }
+
+  li {
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+
+ol {
+  padding-left: 2rem;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding-bottom: 1rem;
+  }
+
+  ul {
+    padding-top: 1rem;
+  }
+
+  li {
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+
+sup {
+  position: relative;
+  top: -0.3rem;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+sub {
+  position: relative;
+  bottom: 0.3rem;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+img {
+  @extend %responsiveImage;
+  transition: all 1s ease-in;
+}
+
+.hide {
+  display: block;
+}
+
+#{$button} {
+  @include btn;
+}

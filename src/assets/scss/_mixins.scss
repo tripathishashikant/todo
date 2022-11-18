@@ -1,0 +1,200 @@
+/* --- headings starts --- */
+@mixin h1($fontSize: 6rem, $color: $tangaroa) {
+  font-family: $fontMerriweather;
+  font-size: $fontSize;
+  line-height: 1.2;
+  font-weight: bold;
+  color: $color;
+}
+
+@mixin h2($fontSize: 4.2rem, $color: $tangaroa) {
+  font-family: $fontMerriweather;
+  font-size: $fontSize;
+  line-height: 1.2;
+  font-weight: bold;
+  color: $color;
+}
+
+@mixin h3($fontSize: 2.6rem, $color: $tangaroa) {
+  font-family: $fontMerriweather;
+  font-size: $fontSize;
+  line-height: 1.2;
+  font-weight: bold;
+  color: $color;
+}
+
+@mixin h4($fontSize: 2.2rem, $color: $tangaroa) {
+  font-family: $fontMerriweather;
+  font-size: $fontSize;
+  line-height: 1.2;
+  font-weight: bold;
+  color: $color;
+}
+
+@mixin h5($fontSize: 1.8rem, $color: $tangaroa) {
+  font-family: $fontMerriweather;
+  font-size: $fontSize;
+  line-height: 1.2;
+  font-weight: bold;
+  color: $color;
+}
+
+@mixin h6($fontSize: 1.6rem, $color: $tangaroa) {
+  font-family: $fontMerriweather;
+  font-size: $fontSize;
+  line-height: 1.2;
+  font-weight: bold;
+  color: $color;
+}
+
+@mixin link($color: $tangaroa, $decoration: none) {
+  font-size: inherit;
+  line-height: inherit;
+  color: $color;
+  text-decoration: $decoration;
+
+  &:hover,
+  &:focus {
+    color: $color;
+    @if $decoration == 'none' {
+      text-decoration: underline;
+    } @else {
+      text-decoration: none;
+    }
+  }
+}
+
+@mixin btn($fontSize: 1.6rem, $color: $bone, $bg: $tangaroa) {
+  position: relative;
+  padding: 1rem;
+  font-size: $fontSize;
+  line-height: 1;
+  color: $color;
+  border-radius: 1rem;
+  border: 0.1rem solid transparent;
+  background: $bg;
+  appearance: none;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+
+  &:hover,
+  &:focus {
+    color: $bg;
+    background: $color;
+  }
+}
+
+@mixin footnotes($fontSize: 1.2rem, $color: $tangaroa) {
+  font-family: $fontLeagueSpartan;
+  font-size: $fontSize;
+  line-height: 1.2;
+  color: $color;
+}
+
+@mixin fullScreen() {
+  width: 100vw;
+  height: 100vh;
+}
+
+/**
+  When using ::before and ::after you'll always need these three, so we're saving two lines of code every time you use this.
+*/
+@mixin pseudo($display: block, $pos: absolute, $content: '') {
+  content: $content;
+  display: $display;
+  position: $pos;
+}
+
+/*
+  We use this for creating scalable elements (usually images / background images) that maintain a ratio.
+*/
+
+@mixin responsive-ratio($x, $y, $pseudo: false) {
+  $padding: unquote(($y / $x) * 100 + '%');
+  @if $pseudo {
+    &:before {
+      @include pseudo($pos: relative);
+      width: 100%;
+      padding-top: $padding;
+    }
+  } @else {
+    padding-top: $padding;
+  }
+}
+
+/*
+  They're a pain as you have to set the style in all the separate formats, this sorts it for you.
+*/
+@mixin input-placeholder {
+  &.placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+  &::-webkit-input-placeholder {
+    @content;
+  }
+}
+
+/*
+  A massive time saver! You can just use pixel values but we have some default breakpoints setup that work too, another time saver while keeping your breakpoints consistent. 
+*/
+$breakpoints: (
+  'tablet-small': 640px,
+  'tablet': 768px,
+  'tablet-wide': 1024px,
+  'desktop': 1248px,
+  'desktop-wide': 1440px,
+);
+@mixin mq($width, $type: min) {
+  @if map_has_key($breakpoints, $width) {
+    $width: map_get($breakpoints, $width);
+    @if $type == max {
+      $width: $width - 1px;
+    }
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+/*
+  While technically this is just a pure function, but I felt it's worth being on the list as it's so easy to loose track of your z-index values when working in several different files, so we created this so that we could store them in one place for easy editing/recording. Just place this snippet in your main variables/settings.scss file (needs to be imported before any of your other files that reference a x-index of course).
+*/
+$z-indexes: (
+  'outdated-browser',
+  'modal',
+  'site-header',
+  'page-wrapper',
+  'site-footer'
+);
+
+@function z($name) {
+  @if index($z-indexes, $name) {
+    @return (length($z-indexes) - index($z-indexes, $name)) + 1;
+  } @else {
+    @warn 'There is no item "#{$name}" in this list; choose one of: #{$z-indexes}';
+    @return null;
+  }
+}
+/*
+  Adding Truncation to an element isn't as simple as it should be, although it is with this handy time saver, meaning when you include the mixin, you only have to specify your boundry with a max width value, happy days!
+*/
+@mixin textShorten($truncation-boundary) {
+  max-width: $truncation-boundary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
