@@ -4,17 +4,22 @@
       <app-header :title="title"></app-header>
     </section>
     <main class="app__content">
+      <base-card>
+        <pending-tasks :todos="todos" @markComplete="taskCompleted"></pending-tasks>
+      </base-card>
     </main>
   </section>
 </template>
 
 <script>
 import AppHeader from './AppHeader.vue';
+import PendingTasks from './PendingTasks.vue';
 
 export default {
   name: 'todoApp',
   components: {
     AppHeader,
+    PendingTasks,
   },
   data() {
     return {
@@ -37,6 +42,11 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    taskCompleted(i) {
+      this.todos[i].completed = !this.todos[i].completed;
+    },
   },
 };
 </script>
