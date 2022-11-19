@@ -5,7 +5,10 @@
     </section>
     <main class="app__content">
       <base-card>
-        <pending-tasks :todos="todos" @markComplete="taskCompleted"></pending-tasks>
+        <pending-tasks :todos="todos" @markComplete="toggleCompleted"></pending-tasks>
+      </base-card>
+      <base-card>
+        <completed-tasks :todos="todos" @markPending="toggleCompleted"></completed-tasks>
       </base-card>
     </main>
   </section>
@@ -14,12 +17,14 @@
 <script>
 import AppHeader from './AppHeader.vue';
 import PendingTasks from './PendingTasks.vue';
+import CompletedTasks from './CompletedTasks.vue';
 
 export default {
   name: 'todoApp',
   components: {
     AppHeader,
     PendingTasks,
+    CompletedTasks,
   },
   data() {
     return {
@@ -44,7 +49,7 @@ export default {
     };
   },
   methods: {
-    taskCompleted(i) {
+    toggleCompleted(i) {
       this.todos[i].completed = !this.todos[i].completed;
     },
   },
