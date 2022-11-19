@@ -1,18 +1,18 @@
 <template>
-  <article class="pending">
-    <h2 class="pending__title">{{ title }}</h2>
-    <ul class="pending__list">
+  <article class="completed">
+    <h2 class="completed__title">{{ title }}</h2>
+    <ul class="completed__list">
       <template v-for="( { id, title, completed }, i) in todos" :key="id">
-        <li v-if="!completed" class="pending__item">
-          <label class="pending__label" for="id">
+        <li v-if="completed" class="completed__item">
+          <label class="completed__label" for="id">
             <input
               :id="id"
-              class="pending__checkbox"
+              class="completed__checkbox"
               type="checkbox"
               :name="title"
-              @click="$emit('markComplete', i)">
+              @click="$emit('markPending', i)">
           </label>
-          <p class="pending__task">{{ title }}</p>
+          <p class="completed__task">{{ title }}</p>
         </li>
       </template>
     </ul>
@@ -21,18 +21,18 @@
 
 <script>
 export default {
-  name: 'pendingTasks',
+  name: 'completedTasks',
   props: ['todos'],
   data() {
     return {
-      title: 'Pending Tasks',
+      title: 'Completed tasks',
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.pending {
+.completed {
   &__title {
     text-align: center;
   }
