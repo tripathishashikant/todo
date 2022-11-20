@@ -119,3 +119,13 @@ img {
 #{$button} {
   @include btn;
 }
+
+input[type=text] {
+  padding: 1rem 1rem 0.8rem;
+  font-family: $fontLeagueSpartan;
+  font-size: 1.6rem;
+  line-height: normal;
+  color: $tangaroa;
+  border: 1px solid $tangaroa;
+  border-radius: 0.5rem;
+}
