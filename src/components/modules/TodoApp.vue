@@ -5,6 +5,9 @@
     </section>
     <main class="app__content">
       <base-card>
+        <add-task @addNewTask="addTask"></add-task>
+      </base-card>
+      <base-card>
         <pending-tasks :todos="todos" @markComplete="toggleCompleted"></pending-tasks>
       </base-card>
       <base-card>
@@ -18,6 +21,7 @@
 import AppHeader from './AppHeader.vue';
 import PendingTasks from './PendingTasks.vue';
 import CompletedTasks from './CompletedTasks.vue';
+import AddTask from './AddTask.vue';
 
 export default {
   name: 'todoApp',
@@ -25,6 +29,7 @@ export default {
     AppHeader,
     PendingTasks,
     CompletedTasks,
+    AddTask,
   },
   data() {
     return {
@@ -51,6 +56,13 @@ export default {
   methods: {
     toggleCompleted(i) {
       this.todos[i].completed = !this.todos[i].completed;
+    },
+    addTask(newTask) {
+      this.todos.unshift({
+        id: new Date().valueOf(),
+        title: newTask,
+        completed: false,
+      });
     },
   },
 };
