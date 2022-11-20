@@ -56,22 +56,27 @@
   &:hover,
   &:focus {
     color: $color;
-    @if $decoration == 'none' {
+
+    @if $decoration =='none' {
       text-decoration: underline;
-    } @else {
+    }
+
+    @else {
       text-decoration: none;
     }
   }
 }
 
 @mixin btn($fontSize: 1.6rem, $color: $bone, $bg: $tangaroa) {
+  font-family: $fontLeagueSpartan;
   position: relative;
-  padding: 1rem;
+  padding: 1.2rem 2rem 1rem;
   font-size: $fontSize;
   line-height: 1;
   color: $color;
-  border-radius: 1rem;
-  border: 0.1rem solid transparent;
+  cursor: pointer;
+  border-radius: 2rem;
+  border: 0.1rem solid $color;
   background: $bg;
   appearance: none;
 
@@ -83,6 +88,7 @@
   &:hover,
   &:focus {
     color: $bg;
+    border-color: $bg;
     background: $color;
   }
 }
@@ -114,13 +120,16 @@
 
 @mixin responsive-ratio($x, $y, $pseudo: false) {
   $padding: unquote(($y / $x) * 100 + '%');
+
   @if $pseudo {
     &:before {
       @include pseudo($pos: relative);
       width: 100%;
       padding-top: $padding;
     }
-  } @else {
+  }
+
+  @else {
     padding-top: $padding;
   }
 }
@@ -132,15 +141,19 @@
   &.placeholder {
     @content;
   }
+
   &:-moz-placeholder {
     @content;
   }
+
   &::-moz-placeholder {
     @content;
   }
+
   &:-ms-input-placeholder {
     @content;
   }
+
   &::-webkit-input-placeholder {
     @content;
   }
@@ -156,16 +169,21 @@ $breakpoints: (
   'desktop': 1248px,
   'desktop-wide': 1440px,
 );
+
 @mixin mq($width, $type: min) {
   @if map_has_key($breakpoints, $width) {
     $width: map_get($breakpoints, $width);
-    @if $type == max {
+
+    @if $type ==max {
       $width: $width - 1px;
     }
+
     @media only screen and (#{$type}-width: $width) {
       @content;
     }
-  } @else {
+  }
+
+  @else {
     @warn 'Invalid breakpoint: #{$breakpoint}.';
   }
 }
@@ -183,12 +201,15 @@ $z-indexes: (
 
 @function z($name) {
   @if index($z-indexes, $name) {
-    @return (length($z-indexes) - index($z-indexes, $name)) + 1;
-  } @else {
+    @return (length($z-indexes) - index($z-indexes, $name))+1;
+  }
+
+  @else {
     @warn 'There is no item "#{$name}" in this list; choose one of: #{$z-indexes}';
     @return null;
   }
 }
+
 /*
   Adding Truncation to an element isn't as simple as it should be, although it is with this handy time saver, meaning when you include the mixin, you only have to specify your boundry with a max width value, happy days!
 */
