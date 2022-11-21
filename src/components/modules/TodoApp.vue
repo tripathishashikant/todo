@@ -8,10 +8,12 @@
         <add-task @addNewTask="addTask"></add-task>
       </base-card>
       <base-card>
-        <pending-tasks :todos="todos" @markComplete="toggleCompleted"></pending-tasks>
+        <pending-tasks :todos="todos" @markComplete="toggleCompleted">
+        </pending-tasks>
       </base-card>
       <base-card>
-        <completed-tasks :todos="todos" @markPending="toggleCompleted"></completed-tasks>
+        <completed-tasks :todos="todos" @markPending="toggleCompleted">
+        </completed-tasks>
       </base-card>
     </main>
   </section>
