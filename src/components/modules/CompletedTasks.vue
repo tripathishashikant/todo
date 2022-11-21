@@ -15,6 +15,9 @@
           <p class="completed__task">{{ title }}</p>
         </li>
       </template>
+      <li v-show="showEmptyTaskMessage">
+        <p class="completed__error">{{ noTaskMessage }}</p>
+      </li>
     </ul>
   </article>
 </template>
@@ -26,7 +29,13 @@ export default {
   data() {
     return {
       title: 'Completed tasks',
+      noTaskMessage: 'Not a single task is completed yet!',
     };
+  },
+  computed: {
+    showEmptyTaskMessage() {
+      return this.todos.every((todo) => todo.completed !== true);
+    },
   },
 };
 </script>
@@ -38,7 +47,7 @@ export default {
   }
 
   &__list {
-    padding-left: 0;
+    padding: 1rem 0;
   }
 
   &__item {
@@ -59,6 +68,11 @@ export default {
 
   &__task {
     padding-bottom: 0;
+  }
+
+  &__error {
+    padding-top: 1rem;
+    text-align: center;
   }
 }
 </style>
