@@ -9,6 +9,7 @@
               :id="id"
               class="completed__checkbox"
               type="checkbox"
+              checked
               :name="title"
               @click="$emit('markPending', i)">
           </label>
@@ -64,14 +65,24 @@ export default {
   &__label {
     display: flex;
     align-items: center;
+
+    margin-right: 2rem;
+  }
+
+  &__checkbox {
+    width: 2rem;
+    height: 2rem;
   }
 
   &__task {
     padding-bottom: 0;
+    font-size: 2rem;
+    text-decoration: line-through;
   }
 
   &__error {
     padding-top: 1rem;
+    font-size: 2rem;
     text-align: center;
   }
 }

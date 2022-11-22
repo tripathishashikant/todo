@@ -63,14 +63,23 @@ export default {
   &__label {
     display: flex;
     align-items: center;
+
+    margin-right: 2rem;
+  }
+
+  &__checkbox {
+    width: 2rem;
+    height: 2rem;
   }
 
   &__task {
+    font-size: 2rem;
     padding-bottom: 0;
   }
 
   &__error {
     padding-top: 1rem;
+    font-size: 2rem;
     text-align: center;
   }
 }

@@ -13,6 +13,8 @@ export default {
 
 <style lang="scss" scoped>
 .header {
+  padding: 2rem 1.5rem;
+
   &__title {
     text-align: center;
   }
