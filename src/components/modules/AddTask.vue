@@ -11,7 +11,7 @@
           v-model="newTask"
           @keydown.enter="addTask()" />
       </label>
-      <button type="button" @click="addTask()">Add task</button>
+      <button class="addTask__btn" type="button" @click="addTask()">Add task</button>
     </section>
   </article>
 </template>
@@ -46,6 +46,16 @@ export default {
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+
+    padding: 1rem 0;
+  }
+
+  &__input {
+    font-size: 2rem;
+  }
+
+  &__btn {
+    font-size: 2rem;
   }
 }
 </style>
