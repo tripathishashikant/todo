@@ -27,6 +27,7 @@
 export default {
   name: 'completedTasks',
   props: ['todos'],
+  emits: ['markPending'],
   data() {
     return {
       title: 'Completed tasks',
