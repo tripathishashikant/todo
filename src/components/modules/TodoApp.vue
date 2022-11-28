@@ -5,10 +5,7 @@
     </section>
     <main class="app__content">
       <base-card>
-        <add-task @addNewTask="addTask"></add-task>
-      </base-card>
-      <base-card>
-        <todo-list :lists="lists" @markComplete="toggleCompleted"></todo-list>
+        <todo-list :lists="lists"></todo-list>
       </base-card>
     </main>
   </section>
@@ -17,21 +14,19 @@
 <script>
 import AppHeader from './AppHeader.vue';
 import TodoList from './TodoList.vue';
-import AddTask from './AddTask.vue';
 
 export default {
   name: 'todoApp',
   components: {
     AppHeader,
     TodoList,
-    AddTask,
   },
   data() {
     return {
       title: 'Todo App',
       lists: [
         {
-          listName: 'List 1',
+          name: 'List 1',
           id: 1,
           todos: [
             {
@@ -54,18 +49,35 @@ export default {
       ],
     };
   },
+  provide() {
+    return {
+      toggleCompleted: this.toggleCompleted,
+      addTask: this.addTask,
+    };
+  },
   methods: {
-    toggleCompleted(index) {
-      const { todoIndex, taskIndex } = index;
-      this.lists[todoIndex].todos[taskIndex].completed = !this.lists[todoIndex]
-        .todos[taskIndex].completed;
+    toggleCompleted(listID, id) {
+      for (let i = 0; i < this.lists.length; i += 1) {
+        if (this.lists[i].id === listID) {
+          for (let j = 0; j < this.lists[i].todos.length; j += 1) {
+            if (this.lists[i].todos[j].id === id) {
+              this.lists[i].todos[j].completed = !this.lists[i].todos[j].completed;
+              break;
+            }
+          }
+        }
+      }
     },
-    addTask(newTask) {
-      this.todos.unshift({
-        id: new Date().valueOf(),
-        title: newTask,
-        completed: false,
-      });
+    addTask(listID, newTask) {
+      for (let i = 0; i < this.lists.length; i += 1) {
+        if (this.lists[i].id === listID) {
+          this.lists[i].todos.unshift({
+            id: new Date().valueOf(),
+            title: newTask,
+            completed: false,
+          });
+        }
+      }
     },
   },
 };

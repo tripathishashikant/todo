@@ -1,17 +1,16 @@
 <template>
   <article class="addTask">
-    <h2 class="addTask__title">{{ title }}</h2>
     <section class="addTask__wrapper">
       <label class="addTask__label" for="addTask">
         <input
+          ref="addTask__input"
           id="addTask"
           class="addTask__input"
           type="text"
-          placeholder="what's on your mind?"
+          placeholder="Add a task"
           v-model="newTask"
-          @keydown.enter="addTask()" />
+          @keydown.enter="addNewTask()" />
       </label>
-      <button class="addTask__btn" type="button" @click="addTask()">Add task</button>
     </section>
   </article>
 </template>
@@ -19,16 +18,20 @@
 <script>
 export default {
   name: 'addTask',
-  emits: ['addNewTask'],
+  props: ['listID'],
+  inject: ['addTask'],
   data() {
     return {
-      title: 'Add New Task',
       newTask: null,
     };
   },
+  mounted() {
+    const ele = this.$refs.addTask__input;
+    ele.focus();
+  },
   methods: {
-    addTask() {
-      this.$emit('addNewTask', this.newTask);
+    addNewTask() {
+      this.addTask(this.listID, this.newTask);
       this.newTask = '';
     },
   },
@@ -37,10 +40,6 @@ export default {
 
 <style lang="scss" scoped>
 .addTask {
-  &__title {
-    text-align: center;
-  }
-
   &__wrapper {
     display: flex;
     flex-flow: row nowrap;
@@ -50,12 +49,22 @@ export default {
     padding: 1rem 0;
   }
 
+  &__label {
+    flex: 1 1 100%;
+    padding-right: 20px;
+  }
+
   &__input {
-    font-size: 2rem;
+    font-size: 1.2rem;
+    width: 100%;
+    border: 0 none;
+    background: transparent;
+    outline: 0 none;
   }
 
   &__btn {
-    font-size: 2rem;
+    font-size: 1.2rem;
+    flex: 1 0 11rem;
   }
 }
 </style>
