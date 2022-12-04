@@ -4,9 +4,7 @@
       <app-header :title="title"></app-header>
     </section>
     <main class="app__content">
-      <base-card>
-        <todo-list :lists="lists"></todo-list>
-      </base-card>
+      <todo-list :lists="lists"></todo-list>
     </main>
   </section>
 </template>
@@ -51,8 +49,11 @@ export default {
   },
   provide() {
     return {
+      lists: this.lists,
       toggleCompleted: this.toggleCompleted,
       addTask: this.addTask,
+      addNewList: this.addNewList,
+      deleteTask: this.deleteTask,
     };
   },
   methods: {
@@ -78,6 +79,21 @@ export default {
           });
         }
       }
+    },
+    deleteTask(listID, id) {
+      for (let i = 0; i < this.lists.length; i += 1) {
+        if (this.lists[i].id === listID) {
+          for (let j = 0; j < this.lists[i].todos.length; j += 1) {
+            if (this.lists[i].todos[j].id === id) {
+              this.lists[i].todos.splice(j, 1);
+              break;
+            }
+          }
+        }
+      }
+    },
+    addNewList(newList) {
+      this.lists.push(newList);
     },
   },
 };

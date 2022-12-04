@@ -1,0 +1,76 @@
+<template>
+  <section class="addList">
+    <label v-show="listnameVisible" class="addList__label">
+      <input
+        ref="addlistname"
+        id="addList"
+        class="addList__input"
+        type="text"
+        placeholder="New list name"
+        v-model="listname"
+        @keydown.enter="addNewList()" />
+    </label>
+    <button v-show="!listnameVisible" class="addList__btn nostyle"
+      @click.stop="setListnameVisibility">+ Add new
+      list</button>
+  </section>
+</template>
+
+<script>
+export default {
+  name: 'addList',
+  props: ['lists'],
+  emits: ['emit:addNewList'],
+  data() {
+    return {
+      listname: null,
+      listnameVisible: false,
+    };
+  },
+  methods: {
+    setListnameVisibility() {
+      this.listnameVisible = true;
+      setTimeout(() => {
+        this.$refs.addlistname.focus();
+      }, 350);
+    },
+    addNewList() {
+      const newList = {
+        id: new Date().valueOf(),
+        name: this.listname,
+        todos: [],
+      };
+      this.$emit('emit:addNewList', newList);
+      this.listnameVisible = false;
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.addList {
+  width: 100%;
+  max-width: 30rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.2rem 0.8rem rgba($black, 0.26);
+
+  &__input {
+    width: 100%;
+    min-height: 4rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    outline: 0 none;
+    border-color: transparent;
+    background: transparent;
+  }
+
+  &__btn {
+    width: 100%;
+    padding: 1rem 0 0.8rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-color: transparent;
+    background: transparent;
+  }
+}
+</style>

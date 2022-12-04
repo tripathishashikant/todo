@@ -1,5 +1,5 @@
 <template>
-  <article class="completed">
+  <article v-show="showCompletedList" class="completed">
     <h3 class="completed__title">Completed</h3>
     <ul class="completed__tasks">
       <template v-for="{ id, title, completed } in list.todos" :key="id">
@@ -20,11 +20,22 @@ export default {
   components: {
     TheTask,
   },
+  computed: {
+    showCompletedList() {
+      return this.list.todos.some((todo) => todo.completed === true);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .completed {
+  padding: 0.5rem 0;
+
+  &__completed {
+    padding: 0.5rem 0;
+  }
+
   &__tasks {
     padding-left: 0;
   }
