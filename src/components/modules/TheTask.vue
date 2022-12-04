@@ -10,6 +10,7 @@
         @click="toggleCompleted(listID, id)">
     </label>
     <p class="task__title">{{ title }}</p>
+    <button class="task__delete nostyle" @click="deleteTask(listID, id)">x</button>
   </section>
 </template>
 
@@ -17,7 +18,7 @@
 export default {
   name: 'theTask',
   props: ['listID', 'id', 'title', 'checked'],
-  inject: ['toggleCompleted'],
+  inject: ['toggleCompleted', 'deleteTask'],
   data() {
     return {
       completed: this.checked,
@@ -49,6 +50,22 @@ export default {
   &__title {
     line-height: normal;
     padding: 0.1rem 0 0;
+  }
+
+  &__delete {
+    padding: 0 0.5rem;
+    position: absolute;
+    top: 50%;
+    right: 00.5rem;
+    transform: translateY(-50%);
+    font-size: 1.6rem;
+    cursor: pointer;
+    border: 0 none;
+    background: transparent;
+
+    &:hover {
+      outline: 0.1rem solid $tangaroa;
+    }
   }
 }
 </style>
