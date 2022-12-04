@@ -2,15 +2,31 @@
   <section class="task">
     <label class="task__label" :for="id">
       <input
-        :id="id"
         class="task__checkbox"
         type="checkbox"
+        :id="id"
         :name="title"
         v-model="completed"
         @click="toggleCompleted(listID, id)">
     </label>
-    <p class="task__title">{{ title }}</p>
-    <button class="task__delete nostyle" @click="deleteTask(listID, id)">x</button>
+    <input
+      ref="task__title"
+      class="task__title"
+      type="input"
+      :id="id"
+      :name="title"
+      :value="title"
+      @blur="editComplete(listID, id)"
+      @keypress.enter="editComplete(listID, id)"
+      readonly>
+    <button
+      class="task__edit nostyle"
+      title="Edit this task"
+      @click="editTheTask()">&#9998;</button>
+    <button
+      class="task__delete nostyle"
+      title="Delete this task"
+      @click="deleteTask(listID, id)">&#10006;</button>
   </section>
 </template>
 
@@ -18,11 +34,22 @@
 export default {
   name: 'theTask',
   props: ['listID', 'id', 'title', 'checked'],
-  inject: ['toggleCompleted', 'deleteTask'],
+  inject: ['toggleCompleted', 'deleteTask', 'editTask'],
   data() {
     return {
       completed: this.checked,
     };
+  },
+  methods: {
+    editTheTask() {
+      this.$refs.task__title.removeAttribute('readonly');
+      this.$refs.task__title.classList.add('task__title--edit');
+      this.$refs.task__title.focus();
+    },
+    editComplete(listID, id) {
+      this.editTask(listID, id, this.$refs.task__title.value);
+      this.$refs.task__title.setAttribute('readonly', true);
+    },
   },
 };
 </script>
@@ -34,7 +61,7 @@ export default {
   justify-content: flex-start;
   align-items: center;
 
-  padding: 0.5rem 0;
+  padding: 0.7rem 6rem 0.5rem 0;
 
   &__label {
     width: 1.5rem;
@@ -48,23 +75,42 @@ export default {
   }
 
   &__title {
-    line-height: normal;
-    padding: 0.1rem 0 0;
+    &:read-only {
+      border: 0 none;
+      background: transparent;
+      outline: 0 none;
+    }
   }
 
   &__delete {
     padding: 0 0.5rem;
     position: absolute;
     top: 50%;
-    right: 00.5rem;
+    right: 0.5rem;
     transform: translateY(-50%);
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     cursor: pointer;
     border: 0 none;
     background: transparent;
 
     &:hover {
-      outline: 0.1rem solid $tangaroa;
+      color: $sage;
+    }
+  }
+
+  &__edit {
+    padding: 0.5rem 0.5rem 0.3rem;
+    position: absolute;
+    top: 50%;
+    right: 2.5rem;
+    transform: translateY(-50%);
+    font-size: 1.4rem;
+    cursor: pointer;
+    border: 0 none;
+    background: transparent;
+
+    &:hover {
+      color: $sage;
     }
   }
 }
