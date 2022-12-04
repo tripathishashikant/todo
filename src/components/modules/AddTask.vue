@@ -51,11 +51,9 @@ export default {
 
   &__label {
     flex: 1 1 100%;
-    padding-right: 20px;
   }
 
   &__input {
-    font-size: 1.2rem;
     width: 100%;
     border: 0 none;
     background: transparent;

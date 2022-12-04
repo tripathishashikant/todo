@@ -54,9 +54,13 @@ export default {
       addTask: this.addTask,
       addNewList: this.addNewList,
       deleteTask: this.deleteTask,
+      editTask: this.editTask,
     };
   },
   methods: {
+    addNewList(newList) {
+      this.lists.push(newList);
+    },
     toggleCompleted(listID, id) {
       for (let i = 0; i < this.lists.length; i += 1) {
         if (this.lists[i].id === listID) {
@@ -92,8 +96,17 @@ export default {
         }
       }
     },
-    addNewList(newList) {
-      this.lists.push(newList);
+    editTask(listID, id, value) {
+      for (let i = 0; i < this.lists.length; i += 1) {
+        if (this.lists[i].id === listID) {
+          for (let j = 0; j < this.lists[i].todos.length; j += 1) {
+            if (this.lists[i].todos[j].id === id) {
+              this.lists[i].todos[j].title = value;
+              break;
+            }
+          }
+        }
+      }
     },
   },
 };
