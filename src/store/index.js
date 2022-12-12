@@ -14,7 +14,7 @@ const store = createStore({
         todos: [
           {
             id: 1,
-            title: 'Learn Vue',
+            title: 'Learn Vue 3',
             completed: false,
           },
           {
