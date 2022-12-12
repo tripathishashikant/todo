@@ -1,5 +1,5 @@
 /* --- headings starts --- */
-@mixin h1($fontSize: 2rem, $color: $tangaroa) {
+@mixin h1($fontSize: 6rem, $color: $tangaroa) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
@@ -7,7 +7,7 @@
   color: $color;
 }
 
-@mixin h2($fontSize: 1.6rem, $color: $tangaroa) {
+@mixin h2($fontSize: 4.2rem, $color: $tangaroa) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
@@ -15,7 +15,7 @@
   color: $color;
 }
 
-@mixin h3($fontSize: 1.4rem, $color: $tangaroa) {
+@mixin h3($fontSize: 2.6rem, $color: $tangaroa) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
@@ -23,7 +23,23 @@
   color: $color;
 }
 
-@mixin h4($fontSize: 1.2rem, $color: $tangaroa) {
+@mixin h4($fontSize: 2.2rem, $color: $tangaroa) {
+  font-family: $fontMerriweather;
+  font-size: $fontSize;
+  line-height: 1.2;
+  font-weight: bold;
+  color: $color;
+}
+
+@mixin h5($fontSize: 1.8rem, $color: $tangaroa) {
+  font-family: $fontMerriweather;
+  font-size: $fontSize;
+  line-height: 1.2;
+  font-weight: bold;
+  color: $color;
+}
+
+@mixin h6($fontSize: 1.6rem, $color: $tangaroa) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
@@ -51,10 +67,10 @@
   }
 }
 
-@mixin btn($fontSize: 1.4rem, $color: $bone, $bg: $tangaroa) {
+@mixin btn($fontSize: 1.6rem, $color: $bone, $bg: $tangaroa) {
   font-family: $fontLeagueSpartan;
   position: relative;
-  padding: 1.2rem 2rem 0.8rem;
+  padding: 1.2rem 2rem 1rem;
   font-size: $fontSize;
   line-height: 1;
   color: $color;

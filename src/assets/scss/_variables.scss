@@ -27,14 +27,12 @@ $ourterSpace: #24403b;
 $winterGreenDream: #558981;
 $steelTeal: #5e8f87;
 $desaturatedCyan: #67958e;
-
-$aliceBlue: #f0f8ff;
 /* --- colors ends --- */
 
 /* --- global variables starts --- */
 $button: (
-  'button:not(.nostyle), .button, [type=submit], [type=reset], [type=button]'
-  ) !default;
+  'button, .button, [type=submit], [type=reset], [type=button]'
+) !default;
 /* --- global variables ends --- */
 
 /* --- media queries starts --- */
