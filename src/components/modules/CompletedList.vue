@@ -4,7 +4,7 @@
     <ul class="completed__tasks">
       <template v-for="{ id, title, completed } in list.todos" :key="id">
         <li v-if="completed" class="completed__task">
-          <the-task :listID="list.id" :id="id" :title="title" :checked="true"></the-task>
+          <the-task :listID="listID" :id="id" :title="title" :checked="true"></the-task>
         </li>
       </template>
     </ul>
@@ -12,15 +12,22 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import TheTask from './TheTask.vue';
 
 export default {
   name: 'completedList',
-  props: ['list'],
+  props: ['listID'],
   components: {
     TheTask,
   },
   computed: {
+    ...mapGetters({
+      lists: 'getLists',
+    }),
+    list() {
+      return this.lists.find((list) => list.id === this.listID);
+    },
     showCompletedList() {
       return this.list.todos.some((todo) => todo.completed === true);
     },

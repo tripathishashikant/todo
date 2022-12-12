@@ -7,20 +7,21 @@
           <add-task :listID="list.id"></add-task>
         </section>
         <section class="list__pending">
-          <pending-list :list="list"></pending-list>
+          <pending-list :listID="list.id"></pending-list>
         </section>
         <section class="list__completed">
-          <completed-list :list="list"></completed-list>
+          <completed-list :listID="list.id"></completed-list>
         </section>
       </article>
     </base-card>
     <section class="list__newList">
-      <add-list :lists="lists" @emit:addNewList="addNewList"></add-list>
+      <add-list></add-list>
     </section>
   </section>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import PendingList from './PendingList.vue';
 import CompletedList from './CompletedList.vue';
 import AddTask from './AddTask.vue';
@@ -28,12 +29,16 @@ import AddList from './AddList.vue';
 
 export default {
   name: 'todoList',
-  inject: ['lists', 'addNewList'],
   components: {
     PendingList,
     CompletedList,
     AddTask,
     AddList,
+  },
+  computed: {
+    ...mapGetters({
+      lists: 'getLists',
+    }),
   },
 };
 </script>

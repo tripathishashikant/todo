@@ -7,13 +7,13 @@
         :id="id"
         :name="title"
         v-model="completed"
-        @click="toggleCompleted(listID, id)">
+        @click="toggleCompletedTask({ listID, id })">
     </label>
     <input
       ref="task__title"
       class="task__title"
       type="input"
-      :id="id"
+      :id="inputTitleID"
       :name="title"
       :value="title"
       @blur="editComplete(listID, id)"
@@ -22,25 +22,37 @@
     <button
       class="task__edit nostyle"
       title="Edit this task"
+      v-if="!completed"
       @click="editTheTask()">&#9998;</button>
     <button
       class="task__delete nostyle"
       title="Delete this task"
-      @click="deleteTask(listID, id)">&#10006;</button>
+      @click="deleteTask({ listID, id })">&#10006;</button>
   </section>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'theTask',
   props: ['listID', 'id', 'title', 'checked'],
-  inject: ['toggleCompleted', 'deleteTask', 'editTask'],
   data() {
     return {
       completed: this.checked,
     };
   },
+  computed: {
+    inputTitleID() {
+      return `input-${this.id}`;
+    },
+  },
   methods: {
+    ...mapActions([
+      'toggleCompletedTask',
+      'deleteTask',
+      'editTask',
+    ]),
     editTheTask() {
       this.$refs.task__title.removeAttribute('readonly');
       this.$refs.task__title.classList.add('task__title--edit');
