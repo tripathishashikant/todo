@@ -9,17 +9,18 @@
           type="text"
           placeholder="Add a task"
           v-model="newTask"
-          @keydown.enter="addNewTask()" />
+          @keydown.enter="addTask()" />
       </label>
     </section>
   </article>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'addTask',
   props: ['listID'],
-  inject: ['addTask'],
   data() {
     return {
       newTask: null,
@@ -30,8 +31,19 @@ export default {
     ele.focus();
   },
   methods: {
-    addNewTask() {
-      this.addTask(this.listID, this.newTask);
+    ...mapActions([
+      'addNewTask',
+    ]),
+    addTask() {
+      const task = {
+        listID: this.listID,
+        newTask: {
+          id: new Date().valueOf(),
+          title: this.newTask,
+          completed: false,
+        },
+      };
+      this.addNewTask(task);
       this.newTask = '';
     },
   },

@@ -11,15 +11,22 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import TheTask from './TheTask.vue';
 
 export default {
   name: 'pendingList',
-  props: ['list'],
+  props: ['listID'],
   components: {
     TheTask,
   },
   computed: {
+    ...mapGetters({
+      lists: 'getLists',
+    }),
+    list() {
+      return this.lists.find((list) => list.id === this.listID);
+    },
     showPendingList() {
       return this.list.todos.some((todo) => todo.completed === false);
     },

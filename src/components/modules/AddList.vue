@@ -8,7 +8,7 @@
         type="text"
         placeholder="New list name"
         v-model="listname"
-        @keydown.enter="addNewList()" />
+        @keydown.enter="addList()" />
     </label>
     <button v-show="!listnameVisible" class="addList__btn nostyle"
       @click.stop="setListnameVisibility">+ Add new
@@ -17,10 +17,10 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'addList',
-  props: ['lists'],
-  emits: ['emit:addNewList'],
   data() {
     return {
       listname: null,
@@ -28,19 +28,22 @@ export default {
     };
   },
   methods: {
+    ...mapActions([
+      'addNewList',
+    ]),
     setListnameVisibility() {
       this.listnameVisible = true;
       setTimeout(() => {
         this.$refs.addlistname.focus();
       }, 350);
     },
-    addNewList() {
+    addList() {
       const newList = {
         id: new Date().valueOf(),
         name: this.listname,
         todos: [],
       };
-      this.$emit('emit:addNewList', newList);
+      this.addNewList(newList);
       this.listnameVisible = false;
     },
   },
