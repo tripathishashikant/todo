@@ -1,34 +1,49 @@
 <template>
   <article class="addTask">
-    <h2 class="addTask__title">{{ title }}</h2>
     <section class="addTask__wrapper">
       <label class="addTask__label" for="addTask">
         <input
+          ref="addTask__input"
           id="addTask"
           class="addTask__input"
           type="text"
-          placeholder="what's on your mind?"
+          placeholder="Add a task"
           v-model="newTask"
           @keydown.enter="addTask()" />
       </label>
-      <button type="button" @click="addTask()">Add task</button>
     </section>
   </article>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'addTask',
-  emits: ['addNewTask'],
+  props: ['listID'],
   data() {
     return {
-      title: 'Add New Task',
       newTask: null,
     };
   },
+  mounted() {
+    const ele = this.$refs.addTask__input;
+    ele.focus();
+  },
   methods: {
+    ...mapActions([
+      'addNewTask',
+    ]),
     addTask() {
-      this.$emit('addNewTask', this.newTask);
+      const task = {
+        listID: this.listID,
+        newTask: {
+          id: new Date().valueOf(),
+          title: this.newTask,
+          completed: false,
+        },
+      };
+      this.addNewTask(task);
       this.newTask = '';
     },
   },
@@ -37,15 +52,29 @@ export default {
 
 <style lang="scss" scoped>
 .addTask {
-  &__title {
-    text-align: center;
-  }
-
   &__wrapper {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+
+    padding: 1rem 0;
+  }
+
+  &__label {
+    flex: 1 1 100%;
+  }
+
+  &__input {
+    width: 100%;
+    border: 0 none;
+    background: transparent;
+    outline: 0 none;
+  }
+
+  &__btn {
+    font-size: 1.2rem;
+    flex: 1 0 11rem;
   }
 }
 </style>
