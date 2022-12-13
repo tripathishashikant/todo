@@ -4,20 +4,18 @@
       <app-header></app-header>
     </section>
     <main class="app__content">
-      <todo-list></todo-list>
+      <router-view></router-view>
     </main>
   </section>
 </template>
 
 <script>
 import AppHeader from './AppHeader.vue';
-import TodoList from './TodoList.vue';
 
 export default {
   name: 'todoApp',
   components: {
     AppHeader,
-    TodoList,
   },
 };
 </script>
