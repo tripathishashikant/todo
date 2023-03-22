@@ -31,7 +31,7 @@
   color: $color;
 }
 
-@mixin link($color: $tangaroa, $decoration: none) {
+@mixin link($color: $tangaroa, $decoration: underline) {
   font-size: inherit;
   line-height: inherit;
   color: $color;
@@ -42,7 +42,7 @@
     color: $color;
 
     @if $decoration =='none' {
-      text-decoration: underline;
+      text-decoration: 'underline';
     }
 
     @else {

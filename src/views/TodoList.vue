@@ -22,10 +22,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import PendingList from './PendingList.vue';
-import CompletedList from './CompletedList.vue';
-import AddTask from './AddTask.vue';
-import AddList from './AddList.vue';
+import PendingList from '../components/modules/PendingList.vue';
+import CompletedList from '../components/modules/CompletedList.vue';
+import AddTask from '../components/modules/AddTask.vue';
+import AddList from '../components/modules/AddList.vue';
 
 export default {
   name: 'todoList',
