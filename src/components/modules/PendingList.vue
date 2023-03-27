@@ -1,5 +1,5 @@
 <template>
-  <section v-show="showPendingList" class="pending">
+  <article v-show="showPendingList" class="pending">
     <ul class="pending__tasks">
       <template v-for="{ id, title, completed } in list.todos" :key="id">
         <li v-if="!completed" class="pending__task">
@@ -7,7 +7,12 @@
         </li>
       </template>
     </ul>
-  </section>
+  </article>
+  <article v-show="showNoTaskPresentAlert" class="alert">
+    <p class="alert__title">
+      Hurray you have completed all the tasks from this list!
+    </p>
+  </article>
 </template>
 
 <script>
@@ -16,7 +21,7 @@ import TheTask from './TheTask.vue';
 
 export default {
   name: 'pendingList',
-  props: ['listID'],
+  props: ['listID', 'showAlertMessage'],
   components: {
     TheTask,
   },
@@ -29,6 +34,13 @@ export default {
     },
     showPendingList() {
       return this.list.todos.some((todo) => todo.completed === false);
+    },
+    showNoTaskPresentAlert() {
+      if (this.showAlertMessage && !this.showPendingList) {
+        return true;
+      }
+
+      return false;
     },
   },
 };

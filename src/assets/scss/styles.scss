@@ -9,6 +9,11 @@
 /* --- global styling --- */
 @import 'base';
 
+/* --- global modules styling --- */
+@import './modules/list';
+@import './modules/alert';
+
+
 /* --- global plugin style goes here --- */
 
 /* --- global component style goes here --- */
