@@ -1,6 +1,6 @@
 <template>
   <article v-show="showCompletedList" class="completed">
-    <h3 class="completed__title">Completed</h3>
+    <h3 v-if="showTitle" class="completed__title">Completed</h3>
     <ul class="completed__tasks">
       <template v-for="{ id, title, completed } in list.todos" :key="id">
         <li v-if="completed" class="completed__task">
@@ -8,6 +8,11 @@
         </li>
       </template>
     </ul>
+  </article>
+  <article v-show="showNoTaskCompletedAlert" class="alert">
+    <p class="alert__title">
+      You haven't completed any task from this list yet. Common start with the least difficult one!
+    </p>
   </article>
 </template>
 
@@ -17,7 +22,7 @@ import TheTask from './TheTask.vue';
 
 export default {
   name: 'completedList',
-  props: ['listID'],
+  props: ['listID', 'showTitle', 'showAlertMessage'],
   components: {
     TheTask,
   },
@@ -30,6 +35,13 @@ export default {
     },
     showCompletedList() {
       return this.list.todos.some((todo) => todo.completed === true);
+    },
+    showNoTaskCompletedAlert() {
+      if (this.showAlertMessage && !this.showCompletedList) {
+        return true;
+      }
+
+      return false;
     },
   },
 };

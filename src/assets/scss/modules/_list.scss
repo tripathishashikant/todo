@@ -1,0 +1,18 @@
+.list {
+  padding: 0 1.5rem;
+
+  &__headerTitle {
+    text-align: center;
+  }
+
+  &__title {
+    padding: 0.5rem 0;
+  }
+
+  &__newList {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+}
