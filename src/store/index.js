@@ -20,7 +20,7 @@ const store = createStore({
           {
             id: 2,
             title: 'Learn Vuex',
-            completed: false,
+            completed: true,
           },
           {
             id: 3,
@@ -46,7 +46,7 @@ const store = createStore({
           {
             id: 3,
             title: 'Learn Karma',
-            completed: false,
+            completed: true,
           },
         ],
       },
