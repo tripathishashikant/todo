@@ -7,10 +7,17 @@
           <add-task :listID="list.id"></add-task>
         </section>
         <section class="list__pending">
-          <pending-list :listID="list.id"></pending-list>
+          <pending-list
+            :listID="list.id"
+            :showAlertMessage="false">
+          </pending-list>
         </section>
         <section class="list__completed">
-          <completed-list :listID="list.id"></completed-list>
+          <completed-list
+            :listID="list.id"
+            :showTitle="true"
+            :showAlertMessage="false">
+          </completed-list>
         </section>
       </article>
     </base-card>
@@ -22,10 +29,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import PendingList from './PendingList.vue';
-import CompletedList from './CompletedList.vue';
-import AddTask from './AddTask.vue';
-import AddList from './AddList.vue';
+import PendingList from '../components/modules/PendingList.vue';
+import CompletedList from '../components/modules/CompletedList.vue';
+import AddTask from '../components/modules/AddTask.vue';
+import AddList from '../components/modules/AddList.vue';
 
 export default {
   name: 'todoList',
@@ -42,20 +49,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.list {
-  padding: 0 1.5rem;
-
-  &__title {
-    padding: 0.5rem 0;
-  }
-
-  &__newList {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-  }
-}
-</style>
