@@ -6,7 +6,7 @@ import rootActions from './actions';
 
 const store = createStore({
   state: {
-    title: 'Todo App',
+    title: 'Todo',
     lists: [
       {
         name: 'List 1',
