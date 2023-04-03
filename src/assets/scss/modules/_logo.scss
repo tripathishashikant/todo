@@ -1,6 +1,4 @@
 .logo {
-  flex: 0 1 11rem;
-
   &__link {
     display: flex;
     flex-flow: row nowrap;
@@ -12,7 +10,6 @@
 
   &__image {
     flex: 0 1 5rem;
-
     margin-right: 0.5rem;
   }
 }

@@ -10,9 +10,12 @@
         v-model="listname"
         @keydown.enter="addList()" />
     </label>
-    <button v-show="!listnameVisible" class="addList__btn nostyle"
-      @click.stop="setListnameVisibility">+ Add new
-      list</button>
+    <button
+      class="addList__btn nostyle"
+      v-show="!listnameVisible"
+      @click.stop="setListnameVisibility">
+      + Add new list
+    </button>
   </section>
 </template>
 
@@ -54,6 +57,7 @@ export default {
 .addList {
   width: 100%;
   max-width: 30rem;
+  margin: 0 auto;
   border-radius: 1rem;
   box-shadow: 0 0.2rem 0.8rem rgba($black, 0.26);
 
