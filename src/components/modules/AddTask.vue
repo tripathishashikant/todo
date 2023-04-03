@@ -1,10 +1,10 @@
 <template>
   <article class="addTask">
     <section class="addTask__wrapper">
-      <label class="addTask__label" for="addTask">
+      <label class="addTask__label" :for="'addTask' + listID">
         <input
           ref="addTask__input"
-          id="addTask"
+          :id="'addTask' + listID"
           class="addTask__input"
           type="text"
           placeholder="Add a task"

@@ -7,30 +7,56 @@
           <h1 class="logo__title">{{ title }}</h1>
         </router-link>
       </div>
+      <div class="header__menu menu">
+        <section
+          class="menu__toggleLayout toggleLayout"
+          :title="showLayoutTitle"
+          @click="setVerticalIconStatus">
+          <vertical-layout-icon v-if="showVerticalIconStatus"></vertical-layout-icon>
+          <horizontal-layout-icon v-else></horizontal-layout-icon>
+        </section>
+      </div>
     </section>
   </header>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import TheLogo from '../svgs/TheLogo.vue';
+import VerticalLayoutIcon from '../svgs/VerticalLayoutIcon.vue';
+import HorizontalLayoutIcon from '../svgs/HorizontalLayoutIcon.vue';
 
 export default {
   name: 'appHeader',
   components: {
     TheLogo,
+    VerticalLayoutIcon,
+    HorizontalLayoutIcon,
   },
   computed: {
     ...mapGetters({
       title: 'getTitle',
+      showVerticalIconStatus: 'appHeaderStore/showVerticalIconStatus',
+      showLayoutTitle: 'appHeaderStore/showLayoutTitle',
+    }),
+  },
+  watch: {
+    showVerticalIconStatus(value) {
+      if (value) {
+        this.setLayoutTitle('Vertical view');
+      } else {
+        this.setLayoutTitle('Horizontal view');
+      }
+    },
+  },
+  methods: {
+    ...mapActions({
+      setVerticalIconStatus: 'appHeaderStore/setVerticalIconStatus',
+      setLayoutTitle: 'appHeaderStore/setLayoutTitle',
     }),
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '../../assets/scss/modules/logo';
-</style>
 
 <style lang="scss" scoped>
 .header {
@@ -41,6 +67,14 @@ export default {
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
+  }
+
+  &__logo {
+    flex: 0 1 11rem;
+  }
+
+  &__menu {
+    flex: 1 1 auto;
   }
 }
 </style>

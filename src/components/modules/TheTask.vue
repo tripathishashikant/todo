@@ -1,10 +1,10 @@
 <template>
   <section class="task">
-    <label class="task__label" :for="id">
+    <label class="task__label" :for="'list-' + listID + '-checkbox-' + '-task-' + id">
       <input
         class="task__checkbox"
         type="checkbox"
-        :id="id"
+        :id="'list-' + listID + '-checkbox-' + '-task-' + id"
         :name="title"
         v-model="completed"
         @click="toggleCompletedTask({ listID, id })">
@@ -12,8 +12,8 @@
     <input
       ref="task__title"
       class="task__title"
-      type="input"
-      :id="inputTitleID"
+      type="text"
+      :id="'list-' + listID + '-edit-task-' + id"
       :name="title"
       :value="title"
       @blur="editComplete(listID, id)"
@@ -41,11 +41,6 @@ export default {
     return {
       completed: this.checked,
     };
-  },
-  computed: {
-    inputTitleID() {
-      return `input-${this.id}`;
-    },
   },
   methods: {
     ...mapActions([
