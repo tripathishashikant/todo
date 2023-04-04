@@ -1,32 +1,32 @@
 <template>
-  <section class="list" :class="{ list__horizontalLayout: !showVerticalIconStatus }">
-    <section class="list__cardContainer">
+  <div class="list" :class="{ list__horizontalLayout: !showVerticalIconStatus }">
+    <div class="list__cardContainer">
       <base-card v-for="list in lists" :key="list.id" class="list__card">
-        <article class="list__article">
+        <section class="list__wrapper">
           <h2 class="list__title">{{ list.name }}</h2>
-          <section class="list__addTask">
+          <div class="list__addTask">
             <add-task :listID="list.id"></add-task>
-          </section>
-          <section class="list__pending">
+          </div>
+          <div class="list__pending">
             <pending-list
               :listID="list.id"
               :showAlertMessage="false">
             </pending-list>
-          </section>
-          <section class="list__completed">
+          </div>
+          <div class="list__completed">
             <completed-list
               :listID="list.id"
               :showTitle="true"
               :showAlertMessage="false">
             </completed-list>
-          </section>
-        </article>
+          </div>
+        </section>
       </base-card>
-      <section class="list__card list__card--addListBtn">
+      <div class="list__card list__card--addListBtn">
         <add-list></add-list>
-      </section>
-    </section>
-  </section>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <section class="addList">
+  <div class="addList">
     <label v-show="listnameVisible" class="addList__label">
       <input
         ref="addlistname"
@@ -16,7 +16,7 @@
       @click.stop="setListnameVisibility">
       + Add new list
     </button>
-  </section>
+  </div>
 </template>
 
 <script>

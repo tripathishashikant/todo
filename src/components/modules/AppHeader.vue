@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <section class="header__container">
+    <div class="header__container">
       <div class="header__logo logo">
         <router-link to="/" class="logo__link">
           <the-logo></the-logo>
@@ -8,15 +8,15 @@
         </router-link>
       </div>
       <div class="header__menu menu">
-        <section
+        <div
           class="menu__toggleLayout toggleLayout"
           :title="showLayoutTitle"
           @click="setVerticalIconStatus">
           <vertical-layout-icon v-if="showVerticalIconStatus"></vertical-layout-icon>
           <horizontal-layout-icon v-else></horizontal-layout-icon>
-        </section>
+        </div>
       </div>
-    </section>
+    </div>
   </header>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <article v-show="showCompletedList" class="completed">
+  <div v-show="showCompletedList" class="completed">
     <h3 v-if="showTitle" class="completed__title">Completed</h3>
     <ul class="completed__tasks">
       <template v-for="{ id, title, completed } in list.todos" :key="id">
@@ -8,12 +8,12 @@
         </li>
       </template>
     </ul>
-  </article>
-  <article v-show="showNoTaskCompletedAlert" class="alert">
+  </div>
+  <div v-show="showNoTaskCompletedAlert" class="alert">
     <p class="alert__title">
       You haven't completed any task from this list yet. Common start with the least difficult one!
     </p>
-  </article>
+  </div>
 </template>
 
 <script>

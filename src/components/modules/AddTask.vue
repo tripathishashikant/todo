@@ -1,6 +1,6 @@
 <template>
-  <article class="addTask">
-    <section class="addTask__wrapper">
+  <div class="addTask">
+    <div class="addTask__wrapper">
       <label class="addTask__label" :for="'addTask' + listID">
         <input
           ref="addTask__input"
@@ -11,8 +11,8 @@
           v-model="newTask"
           @keydown.enter="addTask()" />
       </label>
-    </section>
-  </article>
+    </div>
+  </div>
 </template>
 
 <script>
