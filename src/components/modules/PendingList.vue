@@ -1,5 +1,5 @@
 <template>
-  <article v-show="showPendingList" class="pending">
+  <div v-show="showPendingList" class="pending">
     <ul class="pending__tasks">
       <template v-for="{ id, title, completed } in list.todos" :key="id">
         <li v-if="!completed" class="pending__task">
@@ -7,12 +7,12 @@
         </li>
       </template>
     </ul>
-  </article>
-  <article v-show="showNoTaskPresentAlert" class="alert">
+  </div>
+  <div v-show="showNoTaskPresentAlert" class="alert">
     <p class="alert__title">
       Hurray you have completed all the tasks from this list!
     </p>
-  </article>
+  </div>
 </template>
 
 <script>

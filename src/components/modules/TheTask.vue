@@ -1,5 +1,5 @@
 <template>
-  <section class="task">
+  <div class="task">
     <label class="task__label" :for="'list-' + listID + '-checkbox-' + '-task-' + id">
       <input
         class="task__checkbox"
@@ -28,7 +28,7 @@
       class="task__delete nostyle"
       title="Delete this task"
       @click="deleteTask({ listID, id })">&#10006;</button>
-  </section>
+  </div>
 </template>
 
 <script>
