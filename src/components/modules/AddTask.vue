@@ -26,10 +26,6 @@ export default {
       newTask: null,
     };
   },
-  mounted() {
-    const ele = this.$refs.addTask__input;
-    ele.focus();
-  },
   methods: {
     ...mapActions([
       'addNewTask',
