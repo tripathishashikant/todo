@@ -1,12 +1,12 @@
 <template>
-  <section class="app">
+  <div class="app">
     <section class="app__header">
       <app-header></app-header>
     </section>
     <main class="app__content">
       <router-view></router-view>
     </main>
-  </section>
+  </div>
 </template>
 
 <script>
