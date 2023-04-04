@@ -1,30 +1,32 @@
 <template>
-  <section class="list">
-    <base-card v-for="list in lists" :key="list.id">
-      <article class="list__article">
-        <h2 class="list__title">{{ list.name }}</h2>
-        <section class="list__addTask">
-          <add-task :listID="list.id"></add-task>
+  <div class="list" :class="{ list__horizontalLayout: !showVerticalIconStatus }">
+    <div class="list__cardContainer">
+      <base-card v-for="list in lists" :key="list.id" class="list__card">
+        <section class="list__wrapper">
+          <h2 class="list__title">{{ list.name }}</h2>
+          <div class="list__addTask">
+            <add-task :listID="list.id"></add-task>
+          </div>
+          <div class="list__pending">
+            <pending-list
+              :listID="list.id"
+              :showAlertMessage="false">
+            </pending-list>
+          </div>
+          <div class="list__completed">
+            <completed-list
+              :listID="list.id"
+              :showTitle="true"
+              :showAlertMessage="false">
+            </completed-list>
+          </div>
         </section>
-        <section class="list__pending">
-          <pending-list
-            :listID="list.id"
-            :showAlertMessage="false">
-          </pending-list>
-        </section>
-        <section class="list__completed">
-          <completed-list
-            :listID="list.id"
-            :showTitle="true"
-            :showAlertMessage="false">
-          </completed-list>
-        </section>
-      </article>
-    </base-card>
-    <section class="list__newList">
-      <add-list></add-list>
-    </section>
-  </section>
+      </base-card>
+      <div class="list__card list__card--addListBtn">
+        <add-list></add-list>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -45,6 +47,7 @@ export default {
   computed: {
     ...mapGetters({
       lists: 'getLists',
+      showVerticalIconStatus: 'appHeaderStore/showVerticalIconStatus',
     }),
   },
 };

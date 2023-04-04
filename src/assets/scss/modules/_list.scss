@@ -1,18 +1,39 @@
 .list {
   padding: 0 1.5rem;
 
+  &__cardContainer {
+
+    .list__horizontalLayout & {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      overflow-y: auto;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__card {
+    width: 100%;
+    max-width: 80rem;
+    margin: 2rem auto;
+
+    .list__horizontalLayout & {
+      flex: 0 0 30rem;
+      max-width: none;
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+  }
+
   &__headerTitle {
     text-align: center;
   }
 
   &__title {
     padding: 0.5rem 0;
-  }
-
-  &__newList {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
   }
 }

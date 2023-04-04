@@ -1,17 +1,58 @@
 <template>
   <header class="header">
-    <h1 class="header__title">{{ title }}</h1>
+    <div class="header__container">
+      <div class="header__logo logo">
+        <router-link to="/" class="logo__link">
+          <the-logo></the-logo>
+          <h1 class="logo__title">{{ title }}</h1>
+        </router-link>
+      </div>
+      <div class="header__menu menu">
+        <div
+          class="menu__toggleLayout toggleLayout"
+          :title="showLayoutTitle"
+          @click="setVerticalIconStatus">
+          <vertical-layout-icon v-if="showVerticalIconStatus"></vertical-layout-icon>
+          <horizontal-layout-icon v-else></horizontal-layout-icon>
+        </div>
+      </div>
+    </div>
   </header>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+import TheLogo from '../svgs/TheLogo.vue';
+import VerticalLayoutIcon from '../svgs/VerticalLayoutIcon.vue';
+import HorizontalLayoutIcon from '../svgs/HorizontalLayoutIcon.vue';
 
 export default {
   name: 'appHeader',
+  components: {
+    TheLogo,
+    VerticalLayoutIcon,
+    HorizontalLayoutIcon,
+  },
   computed: {
     ...mapGetters({
       title: 'getTitle',
+      showVerticalIconStatus: 'appHeaderStore/showVerticalIconStatus',
+      showLayoutTitle: 'appHeaderStore/showLayoutTitle',
+    }),
+  },
+  watch: {
+    showVerticalIconStatus(value) {
+      if (value) {
+        this.setLayoutTitle('Vertical view');
+      } else {
+        this.setLayoutTitle('Horizontal view');
+      }
+    },
+  },
+  methods: {
+    ...mapActions({
+      setVerticalIconStatus: 'appHeaderStore/setVerticalIconStatus',
+      setLayoutTitle: 'appHeaderStore/setLayoutTitle',
     }),
   },
 };
@@ -19,10 +60,21 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  padding: 2rem 1.5rem;
+  &__container {
+    padding: 2rem 1.5rem;
 
-  &__title {
-    text-align: center;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  &__logo {
+    flex: 0 1 11rem;
+  }
+
+  &__menu {
+    flex: 1 1 auto;
   }
 }
 </style>
