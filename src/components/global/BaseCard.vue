@@ -8,7 +8,8 @@
 .card {
   padding: 1.5rem;
   border-radius: 1rem;
-  box-shadow: 0 0.2rem 0.8rem rgba($black, 0.26);
+  background-color: $secondaryBgColor;
+  box-shadow: 0 0.1rem 0.2rem 0 rgba($primaryBoxShadowColor, 1);
   overflow: hidden;
 }
 </style>

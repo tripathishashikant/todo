@@ -96,6 +96,7 @@ export default {
     right: 0.5rem;
     transform: translateY(-50%);
     font-size: 1.4rem;
+    color: $primaryIconColor;
     cursor: pointer;
     border: 0 none;
     background: transparent;
@@ -112,6 +113,7 @@ export default {
     right: 2.5rem;
     transform: translateY(-50%);
     font-size: 1.4rem;
+    color: $primaryIconColor;
     cursor: pointer;
     border: 0 none;
     background: transparent;

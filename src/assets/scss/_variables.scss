@@ -30,7 +30,41 @@ $desaturatedCyan: #67958e;
 
 $blue: #0000ff;
 $aliceBlue: #f0f8ff;
+
+$white: #ffffff;
+$shark: #1f2024;
+$sharkOffset: #1b1c1f;
+$sharkLighter: #292a2f;
+$tuna: #303138;
+$osloGray: #93999C;
+$malibu: #7bacfc;
 /* --- colors ends --- */
+
+/* --- background color starts --- */
+$primaryBgColor: $shark;
+$secondaryBgColor: $sharkLighter;
+$tertiaryBgColor: $tuna;
+/* --- background color ends --- */
+
+/* --- font color starts --- */
+$primaryHeadingColor: $white;
+$secondayHeadingColor: $white;
+$tertiaryHeadingColor: $white;
+$quaternaryHeadingColor: $white;
+
+$primaryBodyColor: $white;
+$secondaryBodyColor: $osloGray;
+
+$primaryLinkColor: $malibu;
+/* --- font color ends --- */
+
+/* --- icon color starts --- */
+$primaryIconColor: $white;
+/* --- icon color ends --- */
+
+/* --- box-shadow color starts --- */
+$primaryBoxShadowColor: $sharkOffset;
+/* --- box-shadow color ends --- */
 
 /* --- global variables starts --- */
 $button: (
