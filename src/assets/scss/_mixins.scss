@@ -1,5 +1,5 @@
 /* --- headings starts --- */
-@mixin h1($fontSize: 2rem, $color: $tangaroa) {
+@mixin h1($fontSize: 2rem, $color: $primaryHeadingColor) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
@@ -7,7 +7,7 @@
   color: $color;
 }
 
-@mixin h2($fontSize: 1.6rem, $color: $tangaroa) {
+@mixin h2($fontSize: 1.6rem, $color: $secondayHeadingColor) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
@@ -15,7 +15,7 @@
   color: $color;
 }
 
-@mixin h3($fontSize: 1.4rem, $color: $tangaroa) {
+@mixin h3($fontSize: 1.4rem, $color: $tertiaryHeadingColor) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
@@ -23,7 +23,7 @@
   color: $color;
 }
 
-@mixin h4($fontSize: 1.2rem, $color: $tangaroa) {
+@mixin h4($fontSize: 1.2rem, $color: $quaternaryHeadingColor) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
@@ -31,7 +31,7 @@
   color: $color;
 }
 
-@mixin link($color: $tangaroa, $decoration: underline) {
+@mixin link($color: $primaryLinkColor, $decoration: underline) {
   font-size: inherit;
   line-height: inherit;
   color: $color;

@@ -59,12 +59,18 @@ export default {
   max-width: 30rem;
   margin: 0 auto;
   border-radius: 1rem;
-  box-shadow: 0 0.2rem 0.8rem rgba($black, 0.26);
+  background: rgba($secondaryBgColor, 0.6);
+  box-shadow: 0 0.2rem 0.8rem rgba($primaryBoxShadowColor, 1);
+
+  &:hover {
+    background: rgba($secondaryBgColor, 0.8);
+  }
 
   &__input {
     width: 100%;
     min-height: 4rem;
     font-size: 1.5rem;
+    color: $secondaryBodyColor;
     cursor: pointer;
     outline: 0 none;
     border-color: transparent;
@@ -75,6 +81,7 @@ export default {
     width: 100%;
     padding: 1rem 0 0.8rem;
     font-size: 1.5rem;
+    color: $secondaryBodyColor;
     cursor: pointer;
     border-color: transparent;
     background: transparent;
