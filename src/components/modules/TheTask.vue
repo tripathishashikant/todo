@@ -96,13 +96,21 @@ export default {
     right: 0.5rem;
     transform: translateY(-50%);
     font-size: 1.4rem;
-    color: $primaryIconColor;
+    color: $primary-icon-dark;
     cursor: pointer;
     border: 0 none;
     background: transparent;
 
+    .light & {
+      color: $primary-icon-light;
+    }
+
     &:hover {
-      color: $sage;
+      color: $tertiary-bg-light;
+
+      .light & {
+        color: $tertiary-bg-dark;
+      }
     }
   }
 
@@ -113,13 +121,21 @@ export default {
     right: 2.5rem;
     transform: translateY(-50%);
     font-size: 1.4rem;
-    color: $primaryIconColor;
+    color: $primary-icon-dark;
     cursor: pointer;
     border: 0 none;
     background: transparent;
 
+    .light & {
+      color: $primary-icon-light;
+    }
+
     &:hover {
-      color: $sage;
+      color: $tertiary-bg-light;
+
+      .light & {
+        color: $tertiary-bg-dark;
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ import appHeaderStore from './appHeader.store';
 
 export const initialMainState = {
   title: 'Todo',
+  defaultTheme: 'dark',
   lists: [
     {
       name: 'List 1',
@@ -89,69 +90,6 @@ export const initialMainState = {
         },
       ],
     },
-    {
-      name: 'List 5',
-      id: 5,
-      todos: [
-        {
-          id: 1,
-          title: 'Learn Mocha',
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'Learn Sinon',
-          completed: false,
-        },
-        {
-          id: 3,
-          title: 'Learn Karma',
-          completed: true,
-        },
-      ],
-    },
-    {
-      name: 'List 6',
-      id: 6,
-      todos: [
-        {
-          id: 1,
-          title: 'Learn Mocha',
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'Learn Sinon',
-          completed: false,
-        },
-        {
-          id: 3,
-          title: 'Learn Karma',
-          completed: true,
-        },
-      ],
-    },
-    {
-      name: 'List 7',
-      id: 7,
-      todos: [
-        {
-          id: 1,
-          title: 'Learn Mocha',
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'Learn Sinon',
-          completed: false,
-        },
-        {
-          id: 3,
-          title: 'Learn Karma',
-          completed: true,
-        },
-      ],
-    },
   ],
 };
 
@@ -160,6 +98,7 @@ export const mainState = { ...initialMainState };
 export const getters = {
   getTitle: (state) => state.title,
   getLists: (state) => state.lists,
+  getDefaultTheme: (state) => state.defaultTheme,
 };
 
 export const mutations = {
@@ -185,6 +124,9 @@ export const mutations = {
   EDIT_TASK(state, payload) {
     const { i, j, value } = payload;
     state.lists[i].todos[j].title = value;
+  },
+  SET_DEFAULT_THEME(state, value) {
+    state.defaultTheme = value;
   },
 };
 
@@ -235,6 +177,9 @@ export const actions = {
         }
       }
     }
+  },
+  setDefaultTheme({ commit }, value) {
+    commit('SET_DEFAULT_THEME', value);
   },
 };
 
