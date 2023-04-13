@@ -7,11 +7,13 @@
     </article>
   </base-card>
 </template>
+
 <script>
 export default {
   name: 'notFound',
 };
 </script>
+
 <style lang="scss" scoped>
 .errorPage {
   padding: 0 1.5rem;
