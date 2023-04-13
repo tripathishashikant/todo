@@ -1,13 +1,13 @@
 <template>
   <div class="themeSwitcher">
-    <p class="themeSwitcher__title" @click="openThemeSwitcher">
-      Switch Theme
+    <p class="themeSwitcher__title" @click="setToggleThemeSwitcher">
+      {{ title }}
     </p>
     <ul v-show="toggleThemeSwitcher" class="themeSwitcher__dropdown">
-      <li class="themeSwitcher__theme" @click="setDefaultTheme('light')">
+      <li class="themeSwitcher__theme" @click="updateTheme('light')">
         Light
       </li>
-      <li class="themeSwitcher__theme" @click="setDefaultTheme('dark')">
+      <li class="themeSwitcher__theme" @click="updateTheme('dark')">
         Dark
       </li>
     </ul>
@@ -19,22 +19,22 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'ThemeSwitcher',
-  data() {
-    return {
-      toggleThemeSwitcher: false,
-    };
-  },
   computed: {
     ...mapGetters({
-      defaultTheme: 'getDefaultTheme',
+      title: 'themeSwitcherStore/getThemeSwitcherTitle',
+      defaultTheme: 'themeSwitcherStore/getDefaultTheme',
+      toggleThemeSwitcher: 'themeSwitcherStore/getToggleThemeSwitcher',
+
     }),
   },
   methods: {
-    ...mapActions([
-      'setDefaultTheme',
-    ]),
-    openThemeSwitcher() {
-      this.toggleThemeSwitcher = !this.toggleThemeSwitcher;
+    ...mapActions({
+      setDefaultTheme: 'themeSwitcherStore/setDefaultTheme',
+      setToggleThemeSwitcher: 'themeSwitcherStore/setToggleThemeSwitcher',
+    }),
+    updateTheme(themeName) {
+      this.setDefaultTheme(themeName);
+      this.setToggleThemeSwitcher();
     },
   },
 };

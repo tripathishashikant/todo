@@ -8,10 +8,10 @@
     height: 2.4rem;
 
     path {
-      fill: $primary-icon-dark !important;
+      fill: $primary-icon-dark;
 
       .light & {
-        fill: $primary-icon-light !important;
+        fill: $primary-icon-light;
       }
     }
   }

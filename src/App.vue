@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import AppHeader from './components/modules/AppHeader.vue';
 
 export default {
@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      defaultTheme: 'getDefaultTheme',
+      defaultTheme: 'themeSwitcherStore/getDefaultTheme',
     }),
   },
   watch: {
@@ -28,11 +28,6 @@ export default {
       document.getElementById('body').classList.remove(oldValue);
       document.getElementById('body').classList.add(newValue);
     },
-  },
-  methods: {
-    ...mapActions([
-      'setDefaultTheme',
-    ]),
   },
 };
 </script>

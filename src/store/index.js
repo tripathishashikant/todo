@@ -1,10 +1,10 @@
 import { createStore } from 'vuex';
 
 import appHeaderStore from './appHeader.store';
+import themeSwitcherStore from './themeSwitcher.store';
 
-export const initialMainState = {
+const initialMainState = {
   title: 'Todo',
-  defaultTheme: 'dark',
   lists: [
     {
       name: 'List 1',
@@ -98,7 +98,6 @@ export const mainState = { ...initialMainState };
 export const getters = {
   getTitle: (state) => state.title,
   getLists: (state) => state.lists,
-  getDefaultTheme: (state) => state.defaultTheme,
 };
 
 export const mutations = {
@@ -124,9 +123,6 @@ export const mutations = {
   EDIT_TASK(state, payload) {
     const { i, j, value } = payload;
     state.lists[i].todos[j].title = value;
-  },
-  SET_DEFAULT_THEME(state, value) {
-    state.defaultTheme = value;
   },
 };
 
@@ -178,9 +174,6 @@ export const actions = {
       }
     }
   },
-  setDefaultTheme({ commit }, value) {
-    commit('SET_DEFAULT_THEME', value);
-  },
 };
 
 const store = createStore({
@@ -190,6 +183,7 @@ const store = createStore({
   actions,
   modules: {
     appHeaderStore,
+    themeSwitcherStore,
   },
 });
 
