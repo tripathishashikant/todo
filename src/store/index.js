@@ -1,8 +1,9 @@
 import { createStore } from 'vuex';
 
 import appHeaderStore from './appHeader.store';
+import themeSwitcherStore from './themeSwitcher.store';
 
-export const initialMainState = {
+const initialMainState = {
   title: 'Todo',
   lists: [
     {
@@ -71,69 +72,6 @@ export const initialMainState = {
     {
       name: 'List 4',
       id: 4,
-      todos: [
-        {
-          id: 1,
-          title: 'Learn Mocha',
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'Learn Sinon',
-          completed: false,
-        },
-        {
-          id: 3,
-          title: 'Learn Karma',
-          completed: true,
-        },
-      ],
-    },
-    {
-      name: 'List 5',
-      id: 5,
-      todos: [
-        {
-          id: 1,
-          title: 'Learn Mocha',
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'Learn Sinon',
-          completed: false,
-        },
-        {
-          id: 3,
-          title: 'Learn Karma',
-          completed: true,
-        },
-      ],
-    },
-    {
-      name: 'List 6',
-      id: 6,
-      todos: [
-        {
-          id: 1,
-          title: 'Learn Mocha',
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'Learn Sinon',
-          completed: false,
-        },
-        {
-          id: 3,
-          title: 'Learn Karma',
-          completed: true,
-        },
-      ],
-    },
-    {
-      name: 'List 7',
-      id: 7,
       todos: [
         {
           id: 1,
@@ -245,6 +183,7 @@ const store = createStore({
   actions,
   modules: {
     appHeaderStore,
+    themeSwitcherStore,
   },
 });
 

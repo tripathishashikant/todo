@@ -59,11 +59,19 @@ export default {
     padding-bottom: 0;
 
     &:hover {
-      background-color: $aliceBlue;
+      background-color: $tertiary-bg-dark;
+
+      .light & {
+        background-color: $tertiary-bg-light;
+      }
 
       &:before,
       &:after {
-        background-color: $aliceBlue;
+        background-color: $tertiary-bg-dark;
+
+        .light & {
+          background-color: $tertiary-bg-light;
+        }
       }
     }
 

@@ -16,6 +16,9 @@
           <horizontal-layout-icon v-else></horizontal-layout-icon>
         </div>
       </div>
+      <div class="header__themeSwitcher">
+        <theme-switcher></theme-switcher>
+      </div>
     </div>
   </header>
 </template>
@@ -25,6 +28,7 @@ import { mapActions, mapGetters } from 'vuex';
 import TheLogo from '../svgs/TheLogo.vue';
 import VerticalLayoutIcon from '../svgs/VerticalLayoutIcon.vue';
 import HorizontalLayoutIcon from '../svgs/HorizontalLayoutIcon.vue';
+import ThemeSwitcher from './ThemeSwitcher.vue';
 
 export default {
   name: 'appHeader',
@@ -32,6 +36,7 @@ export default {
     TheLogo,
     VerticalLayoutIcon,
     HorizontalLayoutIcon,
+    ThemeSwitcher,
   },
   computed: {
     ...mapGetters({

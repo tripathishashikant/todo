@@ -59,25 +59,49 @@ export default {
   max-width: 30rem;
   margin: 0 auto;
   border-radius: 1rem;
-  box-shadow: 0 0.2rem 0.8rem rgba($black, 0.26);
+  background: rgba($secondary-bg-dark, 0.6);
+  box-shadow: 0 0.2rem 0.8rem rgba($primary-shadow-dark, 1);
+
+  .light & {
+    background: rgba($secondary-bg-light, 0.6);
+    box-shadow: 0 0.2rem 0.8rem rgba($primary-shadow-light, 1);
+  }
+
+  &:hover {
+    background: rgba($secondary-bg-dark, 0.8);
+
+    .light & {
+      background: rgba($secondary-bg-light, 0.6);
+    }
+  }
 
   &__input {
     width: 100%;
     min-height: 4rem;
     font-size: 1.5rem;
+    color: $secondary-body-dark;
     cursor: pointer;
     outline: 0 none;
     border-color: transparent;
     background: transparent;
+
+    .light & {
+      color: $secondary-body-light;
+    }
   }
 
   &__btn {
     width: 100%;
     padding: 1rem 0 0.8rem;
     font-size: 1.5rem;
+    color: $secondary-body-dark;
     cursor: pointer;
     border-color: transparent;
     background: transparent;
+
+    .light & {
+      color: $secondary-body-light;
+    }
   }
 }
 </style>

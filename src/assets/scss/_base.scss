@@ -3,8 +3,13 @@
 }
 
 *::selection {
-  color: $bone;
-  background: $tangaroa;
+  color: $primary-bg-dark;
+  background: $primary-body-dark;
+
+  .light & {
+    color: $primary-body-dark;
+    background: $primary-bg-dark;
+  }
 }
 
 html {
@@ -16,8 +21,13 @@ body {
   font-weight: 400;
   font-size: 1.4rem;
   line-height: 1.2;
-  color: $black;
-  background-color: $dirtyWhite;
+  color: $primary-body-dark;
+  background-color: $primary-bg-dark;
+
+  &.light {
+    color: $primary-body-light;
+    background-color: $primary-bg-light;
+  }
 }
 
 h1 {
@@ -116,7 +126,12 @@ input[type=text] {
   font-family: $fontLeagueSpartan;
   font-size: 1.6rem;
   line-height: normal;
-  color: $tangaroa;
-  border: 1px solid $tangaroa;
+  color: $primary-body-dark;
+  border: 1px solid $primary-body-dark;
   border-radius: 0.5rem;
+
+  .light & {
+    color: $primary-body-light;
+    border-color: $primary-body-light;
+  }
 }
