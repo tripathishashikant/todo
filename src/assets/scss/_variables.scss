@@ -1,44 +1,55 @@
-/* --- font family starts --- */
+// font family
 $fontMerriweather: 'Merriweather';
 $fontLeagueSpartan: 'League Spartan';
-/* --- font family ends --- */
 
-/* --- colors starts --- */
-$tangaroa: #04253a;
-$maastrichtBlue: #031c2b;
-$blackPearl: #021018;
+// colors
 $black: #000;
-$elephant: #113044;
-$blueDianne: #1d3a4d;
-$rhino: #294557;
-
+$sharkOffset: #1b1c1f;
+$shark: #1f2024;
+$sharkLighter: #292a2f;
+$tuna: #303138;
+$osloGray: #93999C;
+$white: #ffffff;
 $bone: #e1ddbf;
-$desertSand: #d9d4af;
-$darkVanilla: #d1cb9f;
 $sage: #c6bf88;
-$berylGreen: #e3dfc2;
-$whiteRock: #e4e0c5;
-$dirtyWhite: #e5e2c9;
+$malibu: #7bacfc;
 
-$fadedJade: #4c837a;
-$hookersGreen: #45776f;
-$deepSpaceSparkle: #3b6760;
-$ourterSpace: #24403b;
-$winterGreenDream: #558981;
-$steelTeal: #5e8f87;
-$desaturatedCyan: #67958e;
+// font colors
+$primary-body-dark: $white;
+$secondary-body-dark: $bone;
+$tertiary-body-dark: $sage;
 
-$blue: #0000ff;
-$aliceBlue: #f0f8ff;
-/* --- colors ends --- */
+$primary-body-light: $shark;
+$secondary-body-light: $sharkLighter;
+$tertiary-body-light: $tuna;
 
-/* --- global variables starts --- */
+// link
+$primary-link-dark: $malibu;
+
+// background colors
+$primary-bg-dark: $shark;
+$secondary-bg-dark: $sharkLighter;
+$tertiary-bg-dark: $tuna;
+
+$primary-bg-light: $white;
+$secondary-bg-light: $bone;
+$tertiary-bg-light: $sage;
+
+// icon colors
+$primary-icon-dark: $white;
+
+$primary-icon-light: $black;
+
+// box-shadow
+$primary-shadow-dark: $sharkOffset;
+
+$primary-shadow-light: $bone;
+
+// global variables
 $button: (
   'button:not(.nostyle), .button, [type=submit], [type=reset], [type=button]'
   ) !default;
-/* --- global variables ends --- */
 
-/* --- media queries starts --- */
+// media queries
 $tabletLandscape: 'all and (min-width: 1024px)';
 $tabletPotrait: 'all and (min-width: 768px)';
-/* --- media queries ends --- */

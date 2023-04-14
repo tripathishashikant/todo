@@ -1,37 +1,53 @@
 /* --- headings starts --- */
-@mixin h1($fontSize: 2rem, $color: $tangaroa) {
+@mixin h1($fontSize: 2rem, $color: $primary-body-dark) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
   font-weight: bold;
   color: $color;
+
+  .light & {
+    color: $primary-body-light;
+  }
 }
 
-@mixin h2($fontSize: 1.6rem, $color: $tangaroa) {
+@mixin h2($fontSize: 1.6rem, $color: $primary-body-dark) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
   font-weight: bold;
   color: $color;
+
+  .light & {
+    color: $primary-body-light;
+  }
 }
 
-@mixin h3($fontSize: 1.4rem, $color: $tangaroa) {
+@mixin h3($fontSize: 1.4rem, $color: $primary-body-dark) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
   font-weight: bold;
   color: $color;
+
+  .light & {
+    color: $primary-body-light;
+  }
 }
 
-@mixin h4($fontSize: 1.2rem, $color: $tangaroa) {
+@mixin h4($fontSize: 1.2rem, $color: $primary-body-dark) {
   font-family: $fontMerriweather;
   font-size: $fontSize;
   line-height: 1.2;
   font-weight: bold;
   color: $color;
+
+  .light & {
+    color: $primary-body-light;
+  }
 }
 
-@mixin link($color: $tangaroa, $decoration: underline) {
+@mixin link($color: $primary-link-dark, $decoration: underline) {
   font-size: inherit;
   line-height: inherit;
   color: $color;
@@ -51,7 +67,7 @@
   }
 }
 
-@mixin btn($fontSize: 1.4rem, $color: $bone, $bg: $tangaroa) {
+@mixin btn($fontSize: 1.4rem, $color: $primary-body-dark, $bg: $primary-bg-dark) {
   font-family: $fontLeagueSpartan;
   position: relative;
   padding: 1.2rem 2rem 0.8rem;
@@ -69,19 +85,35 @@
   justify-content: center;
   align-items: center;
 
+  .light & {
+    color: $primary-body-light;
+    border-color: $primary-body-light;
+    background-color: $primary-bg-light;
+  }
+
   &:hover,
   &:focus {
     color: $bg;
     border-color: $bg;
     background: $color;
+
+    .light & {
+      color: $primary-bg-light;
+      border-color: $primary-bg-light;
+      background-color: $primary-body-light;
+    }
   }
 }
 
-@mixin footnotes($fontSize: 1.2rem, $color: $tangaroa) {
+@mixin footnotes($fontSize: 1.2rem, $color: $primary-body-dark) {
   font-family: $fontLeagueSpartan;
   font-size: $fontSize;
   line-height: 1.2;
   color: $color;
+
+  .light & {
+    color: $primary-bg-light;
+  }
 }
 
 @mixin fullScreen() {
