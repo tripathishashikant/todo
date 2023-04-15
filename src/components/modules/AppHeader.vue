@@ -2,22 +2,28 @@
   <header class="header">
     <div class="header__container">
       <div class="header__logo logo">
-        <router-link to="/" class="logo__link">
-          <the-logo></the-logo>
-          <h1 class="logo__title">{{ title }}</h1>
+        <router-link
+          to="/"
+          class="logo__link"
+        >
+          <the-logo />
+          <h1 class="logo__title">
+            {{ title }}
+          </h1>
         </router-link>
       </div>
       <div class="header__menu menu">
         <div
           class="menu__toggleLayout toggleLayout"
           :title="showLayoutTitle"
-          @click="setVerticalIconStatus">
-          <vertical-layout-icon v-if="showVerticalIconStatus"></vertical-layout-icon>
-          <horizontal-layout-icon v-else></horizontal-layout-icon>
+          @click="setVerticalIconStatus"
+        >
+          <vertical-layout-icon v-if="showVerticalIconStatus" />
+          <horizontal-layout-icon v-else />
         </div>
       </div>
       <div class="header__themeSwitcher">
-        <theme-switcher></theme-switcher>
+        <theme-switcher />
       </div>
     </div>
   </header>
@@ -31,7 +37,7 @@ import HorizontalLayoutIcon from '../svgs/HorizontalLayoutIcon.vue';
 import ThemeSwitcher from './ThemeSwitcher.vue';
 
 export default {
-  name: 'appHeader',
+  name: 'AppHeader',
   components: {
     TheLogo,
     VerticalLayoutIcon,

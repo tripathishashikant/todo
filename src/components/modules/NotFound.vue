@@ -1,8 +1,11 @@
 <template>
   <base-card>
     <article class="errorPage__article">
-      <h2 class="errorPage__title"> Page not found! Maybe view our <router-link to="/">Home
-          page</router-link>?
+      <h2 class="errorPage__title">
+        Page not found! Maybe view our
+        <router-link to="/">
+          Home page
+        </router-link>?
       </h2>
     </article>
   </base-card>
@@ -10,7 +13,7 @@
 
 <script>
 export default {
-  name: 'notFound',
+  name: 'NotFound',
 };
 </script>
 
