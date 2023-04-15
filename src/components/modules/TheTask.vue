@@ -55,6 +55,7 @@ export default {
     },
     editComplete(listID, id) {
       this.editTask(listID, id, this.$refs.task__title.value);
+      this.$refs.task__title.classList.remove('task__title--edit');
       this.$refs.task__title.setAttribute('readonly', true);
     },
   },
@@ -82,6 +83,12 @@ export default {
   }
 
   &__title {
+    &--edit {
+      .dark & {
+        color: $tertiary-body-dark;
+      }
+    }
+
     &:read-only {
       border: 0 none;
       background: transparent;
@@ -96,20 +103,20 @@ export default {
     right: 0.5rem;
     transform: translateY(-50%);
     font-size: 1.4rem;
-    color: $primary-icon-dark;
+    color: $primary-body-dark;
     cursor: pointer;
     border: 0 none;
     background: transparent;
 
     .light & {
-      color: $primary-icon-light;
+      color: $primary-body-light;
     }
 
     &:hover {
-      color: $tertiary-bg-light;
+      color: rgba($primary-body-dark, 0.5);
 
       .light & {
-        color: $tertiary-bg-dark;
+        color: rgba($primary-body-light, 0.5);
       }
     }
   }
@@ -121,20 +128,20 @@ export default {
     right: 2.5rem;
     transform: translateY(-50%);
     font-size: 1.4rem;
-    color: $primary-icon-dark;
+    color: $primary-body-dark;
     cursor: pointer;
     border: 0 none;
     background: transparent;
 
     .light & {
-      color: $primary-icon-light;
+      color: $primary-body-light;
     }
 
     &:hover {
-      color: $tertiary-bg-light;
+      color: rgba($primary-body-dark, 0.5);
 
       .light & {
-        color: $tertiary-bg-dark;
+        color: rgba($primary-body-light, 0.5);
       }
     }
   }
