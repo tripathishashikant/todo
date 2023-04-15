@@ -1,13 +1,23 @@
 <template>
   <section class="list">
     <header class="list__header">
-      <h2 class="list__headerTitle">{{ title }}</h2>
+      <h2 class="list__headerTitle">
+        {{ title }}
+      </h2>
     </header>
-    <base-card v-for="list in lists" :key="list.id">
+    <base-card
+      v-for="list in lists"
+      :key="list.id"
+    >
       <article class="list__article">
-        <h3 class="list__title">{{ list.name }}</h3>
+        <h3 class="list__title">
+          {{ list.name }}
+        </h3>
         <section class="list_pending">
-          <pending-list :listID="list.id" :showAlertMessage="true"></pending-list>
+          <pending-list
+            :list-i-d="list.id"
+            :show-alert-message="true"
+          />
         </section>
       </article>
     </base-card>

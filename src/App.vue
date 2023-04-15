@@ -1,10 +1,10 @@
 <template>
   <div class="app__container">
     <section class="app__header">
-      <app-header></app-header>
+      <app-header />
     </section>
     <main class="app__content">
-      <router-view></router-view>
+      <router-view />
     </main>
   </div>
 </template>
@@ -14,7 +14,7 @@ import { mapGetters } from 'vuex';
 import AppHeader from './components/modules/AppHeader.vue';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     AppHeader,
   },

@@ -1,13 +1,25 @@
 <template>
   <div class="themeSwitcher">
-    <p class="themeSwitcher__title" @click="setToggleThemeSwitcher">
+    <p
+      class="themeSwitcher__title"
+      @click="setToggleThemeSwitcher"
+    >
       {{ title }}
     </p>
-    <ul v-show="toggleThemeSwitcher" class="themeSwitcher__dropdown">
-      <li class="themeSwitcher__theme" @click="updateTheme('light')">
+    <ul
+      v-show="toggleThemeSwitcher"
+      class="themeSwitcher__dropdown"
+    >
+      <li
+        class="themeSwitcher__theme"
+        @click="updateTheme('light')"
+      >
         Light
       </li>
-      <li class="themeSwitcher__theme" @click="updateTheme('dark')">
+      <li
+        class="themeSwitcher__theme"
+        @click="updateTheme('dark')"
+      >
         Dark
       </li>
     </ul>
