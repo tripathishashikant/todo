@@ -1,7 +1,7 @@
 <template>
   <div
     class="list"
-    :class="{ list__horizontalLayout: !showVerticalIconStatus }"
+    :class="{ list__horizontalLayout: !getVerticalIconStatus }"
   >
     <div class="list__cardContainer">
       <base-card
@@ -56,7 +56,7 @@ export default {
   computed: {
     ...mapGetters({
       lists: 'getLists',
-      showVerticalIconStatus: 'appHeaderStore/showVerticalIconStatus',
+      getVerticalIconStatus: 'layoutSwitcherStore/getVerticalIconStatus',
     }),
   },
 };

@@ -151,10 +151,13 @@ export default {
 
   &__edit {
     padding: 0.5rem 0.5rem 0.3rem;
+
     position: absolute;
     top: 50%;
     right: 2.5rem;
     transform: translateY(-50%);
+
+    font-family: $fontMerriweather;
     font-size: 1.4rem;
     color: $primary-body-dark;
     cursor: pointer;

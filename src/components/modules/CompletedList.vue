@@ -58,8 +58,8 @@ export default {
       default: 0,
     },
     showTitle: {
-      type: String,
-      default: '',
+      type: Boolean,
+      default: false,
     },
     showAlertMessage: {
       type: Boolean,

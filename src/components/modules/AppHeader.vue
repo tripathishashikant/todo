@@ -11,14 +11,7 @@
         <SiteMenu />
       </div>
       <div class="header__layoutSwitcher">
-        <div
-          class="toggleLayout"
-          :title="showLayoutTitle"
-          @click="setVerticalIconStatus"
-        >
-          <vertical-layout-icon v-if="showVerticalIconStatus" />
-          <horizontal-layout-icon v-else />
-        </div>
+        <LayoutSwitcher />
       </div>
       <div class="header__themeSwitcher">
         <theme-switcher />
@@ -28,11 +21,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import SiteLogo from './SiteLogo.vue';
 import SiteMenu from './SiteMenu.vue';
-import VerticalLayoutIcon from '../svgs/VerticalLayoutIcon.vue';
-import HorizontalLayoutIcon from '../svgs/HorizontalLayoutIcon.vue';
+import LayoutSwitcher from './LayoutSwitcher.vue';
 import ThemeSwitcher from './ThemeSwitcher.vue';
 
 export default {
@@ -40,30 +32,12 @@ export default {
   components: {
     SiteLogo,
     SiteMenu,
-    VerticalLayoutIcon,
-    HorizontalLayoutIcon,
+    LayoutSwitcher,
     ThemeSwitcher,
   },
   computed: {
     ...mapGetters({
       title: 'getTitle',
-      showVerticalIconStatus: 'appHeaderStore/showVerticalIconStatus',
-      showLayoutTitle: 'appHeaderStore/showLayoutTitle',
-    }),
-  },
-  watch: {
-    showVerticalIconStatus(value) {
-      if (value) {
-        this.setLayoutTitle('Vertical view');
-      } else {
-        this.setLayoutTitle('Horizontal view');
-      }
-    },
-  },
-  methods: {
-    ...mapActions({
-      setVerticalIconStatus: 'appHeaderStore/setVerticalIconStatus',
-      setLayoutTitle: 'appHeaderStore/setLayoutTitle',
     }),
   },
 };
@@ -72,12 +46,12 @@ export default {
 <style lang="scss" scoped>
 .header {
   &__container {
-    padding: 2rem 1.5rem;
-
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
+
+    padding: 2rem 1.5rem;
   }
 
   &__logo {
@@ -96,6 +70,13 @@ export default {
     flex-flow:row nowrap;
     justify-content: space-around;
     align-items: center;
+  }
+
+  &__layoutSwitcher {
+    flex: 0 1 auto;
+
+    width:2.5rem;
+    height:2.5rem;
   }
 }
 </style>

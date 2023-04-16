@@ -98,6 +98,7 @@ export default {
   &__btn {
     width: 100%;
     padding: 1rem 0 0.8rem;
+    font-family: $fontLeagueSpartan;
     font-size: 1.5rem;
     color: $secondary-body-dark;
     cursor: pointer;
@@ -106,6 +107,14 @@ export default {
 
     .light & {
       color: $secondary-body-light;
+    }
+
+    &:hover {
+      color: $primary-link-dark;
+
+      .light & {
+        color: $primary-link-light;
+      }
     }
   }
 }

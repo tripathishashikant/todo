@@ -41,7 +41,7 @@ export default {
 
   &__link {
     margin: 0 1rem;
-    font-size:1.8rem;
+    font-size:1.5rem;
     color: $primary-body-dark;
     text-decoration: none;
 
@@ -59,6 +59,8 @@ export default {
     &--home {
       width:2.4rem;
       height:2.4rem;
+      position: relative;
+      top: -0.3rem;
     }
   }
 }

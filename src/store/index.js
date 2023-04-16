@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 
-import appHeaderStore from './appHeader.store';
+import layoutSwitcherStore from './layoutSwitcher.store';
 import themeSwitcherStore from './themeSwitcher.store';
 
 const initialMainState = {
@@ -182,7 +182,7 @@ const store = createStore({
   mutations,
   actions,
   modules: {
-    appHeaderStore,
+    layoutSwitcherStore,
     themeSwitcherStore,
   },
 });
