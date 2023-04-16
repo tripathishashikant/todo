@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .logo {
   width:4rem;
   height:4rem;

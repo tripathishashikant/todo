@@ -1,11 +1,11 @@
 <template>
   <svg
-    class="svg"
+    class="logoSVG"
     viewBox="0 0 24 24"
     fill="none"
   >
     <path
-      class="svg_path"
+      class="logoSVG__path"
       fill-rule="evenodd"
       clip-rule="evenodd"
       d="m20.215 2.387-8.258 10.547-2.704-3.092a1 1 0 1 0-1.506 1.316l3.103
@@ -27,12 +27,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.svg {
+<style lang="scss" scoped>
+.logoSVG {
   width:100%;
   height:100%;
 
-  &_path {
+  &__path {
     fill: $primary-body-dark;
 
     .light & {
