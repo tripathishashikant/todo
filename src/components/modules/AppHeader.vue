@@ -1,16 +1,11 @@
 <template>
   <header class="header">
     <div class="header__container">
-      <div class="header__logo logo">
-        <router-link
-          to="/"
-          class="logo__link"
-        >
-          <the-logo />
-          <h1 class="logo__title">
-            {{ title }}
-          </h1>
-        </router-link>
+      <div class="header__logo">
+        <SiteLogo />
+        <h1 class="header__pageTitle">
+          {{ title }}
+        </h1>
       </div>
       <div class="header__menu menu">
         <div
@@ -31,7 +26,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import TheLogo from '../svgs/TheLogo.vue';
+import SiteLogo from './SiteLogo.vue';
 import VerticalLayoutIcon from '../svgs/VerticalLayoutIcon.vue';
 import HorizontalLayoutIcon from '../svgs/HorizontalLayoutIcon.vue';
 import ThemeSwitcher from './ThemeSwitcher.vue';
@@ -39,7 +34,7 @@ import ThemeSwitcher from './ThemeSwitcher.vue';
 export default {
   name: 'AppHeader',
   components: {
-    TheLogo,
+    SiteLogo,
     VerticalLayoutIcon,
     HorizontalLayoutIcon,
     ThemeSwitcher,
@@ -82,6 +77,11 @@ export default {
 
   &__logo {
     flex: 0 1 11rem;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
   }
 
   &__menu {
