@@ -7,9 +7,12 @@
           {{ title }}
         </h1>
       </div>
-      <div class="header__menu menu">
+      <div class="header__menu">
+        <SiteMenu />
+      </div>
+      <div class="header__layoutSwitcher">
         <div
-          class="menu__toggleLayout toggleLayout"
+          class="toggleLayout"
           :title="showLayoutTitle"
           @click="setVerticalIconStatus"
         >
@@ -27,6 +30,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import SiteLogo from './SiteLogo.vue';
+import SiteMenu from './SiteMenu.vue';
 import VerticalLayoutIcon from '../svgs/VerticalLayoutIcon.vue';
 import HorizontalLayoutIcon from '../svgs/HorizontalLayoutIcon.vue';
 import ThemeSwitcher from './ThemeSwitcher.vue';
@@ -35,6 +39,7 @@ export default {
   name: 'AppHeader',
   components: {
     SiteLogo,
+    SiteMenu,
     VerticalLayoutIcon,
     HorizontalLayoutIcon,
     ThemeSwitcher,
@@ -86,6 +91,11 @@ export default {
 
   &__menu {
     flex: 1 1 auto;
+
+    display: flex;
+    flex-flow:row nowrap;
+    justify-content: space-around;
+    align-items: center;
   }
 }
 </style>
