@@ -4,8 +4,8 @@ const initialState = {
 };
 
 const getters = {
-  showVerticalIconStatus: (state) => state.showVerticalIcon,
-  showLayoutTitle: (state) => state.layoutTitle,
+  getVerticalIconStatus: (state) => state.showVerticalIcon,
+  getLayoutTitle: (state) => state.layoutTitle,
 };
 
 const mutations = {
