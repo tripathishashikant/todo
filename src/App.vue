@@ -35,3 +35,11 @@ export default {
 <style lang="scss">
 @import './assets/scss/styles.scss';
 </style>
+
+<style lang="scss" scoped>
+.app {
+  &__content {
+    padding:0 1.5rem;
+  }
+}
+</style>
