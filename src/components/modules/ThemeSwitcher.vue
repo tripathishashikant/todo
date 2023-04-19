@@ -60,7 +60,7 @@ export default {
 <style lang="scss" scoped>
 .themeSwitcher {
   position: relative;
-  padding: 0 2rem;
+  padding: 0 0 0 2rem;
 
   &__wrapper {
     width: 4.5rem;

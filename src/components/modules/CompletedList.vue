@@ -26,6 +26,7 @@
               :list-i-d="listID"
               :title="title"
               :checked="true"
+              :add-completed-class="true"
             />
           </li>
         </template>
@@ -90,6 +91,10 @@ export default {
 <style lang="scss" scoped>
 .completed {
   padding: 0.5rem 0;
+
+  &__title {
+    padding: 1rem 0 1.5rem;
+  }
 
   &__completed {
     padding: 0.5rem 0;

@@ -17,6 +17,7 @@
       :id="'list-' + listID + '-edit-task-' + id"
       ref="task__title"
       class="task__title"
+      :class="{ 'task__title--completed': addCompletedClass}"
       type="text"
       :name="title"
       :value="title"
@@ -64,6 +65,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    addCompletedClass: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -97,7 +102,7 @@ export default {
   justify-content: flex-start;
   align-items: center;
 
-  padding: 0.7rem 6rem 0.5rem 0;
+  padding: 0.3rem 6rem 0.3rem 0;
 
   &__label {
     width: 1.5rem;
@@ -121,6 +126,10 @@ export default {
       border: 0 none;
       background: transparent;
       outline: 0 none;
+    }
+
+    &--completed {
+      text-decoration: line-through;
     }
   }
 

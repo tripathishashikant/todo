@@ -61,6 +61,9 @@ export default {
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
+
+    position:relative;
+    right: 0.6rem;
   }
 
   &__menu {

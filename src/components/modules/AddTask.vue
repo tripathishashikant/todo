@@ -63,7 +63,7 @@ export default {
     justify-content: space-between;
     align-items: center;
 
-    padding: 1rem 0;
+    padding: 0.5rem 0;
   }
 
   &__label {
@@ -72,6 +72,8 @@ export default {
 
   &__input {
     width: 100%;
+    padding-left:0;
+    padding-right:0;
     border: 0 none;
     background: transparent;
     outline: 0 none;
