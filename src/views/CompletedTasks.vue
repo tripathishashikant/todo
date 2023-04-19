@@ -1,27 +1,33 @@
 <template>
-  <section class="list">
+  <section
+    class="list"
+    :class="{ list__horizontalLayout: !getVerticalIconStatus }"
+  >
     <header class="list__header">
       <h2 class="list__headerTitle">
         {{ title }}
       </h2>
     </header>
-    <base-card
-      v-for="list in lists"
-      :key="list.id"
-    >
-      <article class="list__article">
-        <h3 class="list__title">
-          {{ list.name }}
-        </h3>
-        <section class="list_pending">
-          <completed-list
-            :list-i-d="list.id"
-            :show="false"
-            :show-alert-message="true"
-          />
-        </section>
-      </article>
-    </base-card>
+    <div class="list__cardContainer">
+      <base-card
+        v-for="list in lists"
+        :key="list.id"
+        class="list__card"
+      >
+        <article class="list__article">
+          <h3 class="list__title">
+            {{ list.name }}
+          </h3>
+          <section class="list_completed">
+            <completed-list
+              :list-i-d="list.id"
+              :show="false"
+              :show-alert-message="true"
+            />
+          </section>
+        </article>
+      </base-card>
+    </div>
   </section>
 </template>
 
@@ -42,6 +48,7 @@ export default {
   computed: {
     ...mapGetters({
       lists: 'getLists',
+      getVerticalIconStatus: 'layoutSwitcherStore/getVerticalIconStatus',
     }),
   },
 };
