@@ -1,16 +1,31 @@
 <template>
-  <section class="list">
+  <section
+    class="list"
+    :class="{ list__horizontalLayout: !getVerticalIconStatus }"
+  >
     <header class="list__header">
-      <h2 class="list__headerTitle">{{ title }}</h2>
+      <h2 class="list__headerTitle">
+        {{ title }}
+      </h2>
     </header>
-    <base-card v-for="list in lists" :key="list.id">
-      <article class="list__article">
-        <h3 class="list__title">{{ list.name }}</h3>
-        <section class="list_pending">
-          <pending-list :listID="list.id" :showAlertMessage="true"></pending-list>
-        </section>
-      </article>
-    </base-card>
+    <div class="list__cardContainer">
+      <base-card
+        v-for="list in lists"
+        :key="list.id"
+      >
+        <article class="list__article">
+          <h3 class="list__title">
+            {{ list.name }}
+          </h3>
+          <section class="list_pending">
+            <pending-list
+              :list-i-d="list.id"
+              :show-alert-message="true"
+            />
+          </section>
+        </article>
+      </base-card>
+    </div>
   </section>
 </template>
 
@@ -25,12 +40,13 @@ export default {
   },
   data() {
     return {
-      title: 'Pending List',
+      title: 'Pending Tasks',
     };
   },
   computed: {
     ...mapGetters({
       lists: 'getLists',
+      getVerticalIconStatus: 'layoutSwitcherStore/getVerticalIconStatus',
     }),
   },
 };

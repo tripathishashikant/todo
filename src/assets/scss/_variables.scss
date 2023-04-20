@@ -13,6 +13,8 @@ $white: #ffffff;
 $bone: #e1ddbf;
 $sage: #c6bf88;
 $malibu: #7bacfc;
+$funBlue: #1d4fa0;
+$tahitiGold: #e18a07;
 
 // font colors
 $primary-body-dark: $white;
@@ -25,11 +27,13 @@ $tertiary-body-light: $tuna;
 
 // link
 $primary-link-dark: $malibu;
+$primary-link-light: $funBlue;
 
 // background colors
 $primary-bg-dark: $shark;
 $secondary-bg-dark: $sharkLighter;
 $tertiary-bg-dark: $tuna;
+$quaternary-bg-dark: $black;
 
 $primary-bg-light: $white;
 $secondary-bg-light: $bone;
@@ -42,7 +46,6 @@ $primary-icon-light: $black;
 
 // box-shadow
 $primary-shadow-dark: $sharkOffset;
-
 $primary-shadow-light: $bone;
 
 // global variables

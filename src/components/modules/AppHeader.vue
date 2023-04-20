@@ -1,63 +1,43 @@
 <template>
   <header class="header">
     <div class="header__container">
-      <div class="header__logo logo">
-        <router-link to="/" class="logo__link">
-          <the-logo></the-logo>
-          <h1 class="logo__title">{{ title }}</h1>
-        </router-link>
+      <div class="header__logo">
+        <SiteLogo />
+        <h1 class="header__pageTitle">
+          {{ title }}
+        </h1>
       </div>
-      <div class="header__menu menu">
-        <div
-          class="menu__toggleLayout toggleLayout"
-          :title="showLayoutTitle"
-          @click="setVerticalIconStatus">
-          <vertical-layout-icon v-if="showVerticalIconStatus"></vertical-layout-icon>
-          <horizontal-layout-icon v-else></horizontal-layout-icon>
-        </div>
+      <div class="header__menu">
+        <SiteMenu />
+      </div>
+      <div class="header__layoutSwitcher">
+        <LayoutSwitcher />
       </div>
       <div class="header__themeSwitcher">
-        <theme-switcher></theme-switcher>
+        <theme-switcher />
       </div>
     </div>
   </header>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import TheLogo from '../svgs/TheLogo.vue';
-import VerticalLayoutIcon from '../svgs/VerticalLayoutIcon.vue';
-import HorizontalLayoutIcon from '../svgs/HorizontalLayoutIcon.vue';
+import { mapGetters } from 'vuex';
+import SiteLogo from './SiteLogo.vue';
+import SiteMenu from './SiteMenu.vue';
+import LayoutSwitcher from './LayoutSwitcher.vue';
 import ThemeSwitcher from './ThemeSwitcher.vue';
 
 export default {
-  name: 'appHeader',
+  name: 'AppHeader',
   components: {
-    TheLogo,
-    VerticalLayoutIcon,
-    HorizontalLayoutIcon,
+    SiteLogo,
+    SiteMenu,
+    LayoutSwitcher,
     ThemeSwitcher,
   },
   computed: {
     ...mapGetters({
       title: 'getTitle',
-      showVerticalIconStatus: 'appHeaderStore/showVerticalIconStatus',
-      showLayoutTitle: 'appHeaderStore/showLayoutTitle',
-    }),
-  },
-  watch: {
-    showVerticalIconStatus(value) {
-      if (value) {
-        this.setLayoutTitle('Vertical view');
-      } else {
-        this.setLayoutTitle('Horizontal view');
-      }
-    },
-  },
-  methods: {
-    ...mapActions({
-      setVerticalIconStatus: 'appHeaderStore/setVerticalIconStatus',
-      setLayoutTitle: 'appHeaderStore/setLayoutTitle',
     }),
   },
 };
@@ -66,20 +46,40 @@ export default {
 <style lang="scss" scoped>
 .header {
   &__container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
     padding: 2rem 1.5rem;
+  }
+
+  &__logo {
+    flex: 0 1 11rem;
 
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-  }
 
-  &__logo {
-    flex: 0 1 11rem;
+    position:relative;
+    right: 0.6rem;
   }
 
   &__menu {
     flex: 1 1 auto;
+
+    display: flex;
+    flex-flow:row nowrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  &__layoutSwitcher {
+    flex: 0 1 auto;
+
+    width:2.5rem;
+    height:2.5rem;
   }
 }
 </style>

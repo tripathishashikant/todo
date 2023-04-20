@@ -1,0 +1,11 @@
+User-Agent: *
+Disallow: /src/assets/scss/
+Disallow: /src/components/
+Disallow: /src/constants/
+Disallow: /src/router/
+Disallow: /src/store/
+Disallow: /src/views/
+Disallow: /src/*.vue
+Disallow: /src/*.js 
+Disallow: *.js 
+Disallow: *.json
