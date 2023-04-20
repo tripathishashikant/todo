@@ -1,19 +1,24 @@
 <template>
   <div class="addList">
-    <label v-show="listnameVisible" class="addList__label">
+    <label
+      v-show="listnameVisible"
+      class="addList__label"
+    >
       <input
-        ref="addlistname"
         id="addList"
+        ref="addlistname"
+        v-model="listname"
         class="addList__input"
         type="text"
         placeholder="New list name"
-        v-model="listname"
-        @keydown.enter="addList()" />
+        @keydown.enter="addList()"
+      >
     </label>
     <button
-      class="addList__btn nostyle"
       v-show="!listnameVisible"
-      @click.stop="setListnameVisibility">
+      class="addList__btn nostyle"
+      @click.stop="setListnameVisibility"
+    >
       + Add new list
     </button>
   </div>
@@ -23,7 +28,7 @@
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'addList',
+  name: 'AddList',
   data() {
     return {
       listname: null,
@@ -93,6 +98,7 @@ export default {
   &__btn {
     width: 100%;
     padding: 1rem 0 0.8rem;
+    font-family: $fontLeagueSpartan;
     font-size: 1.5rem;
     color: $secondary-body-dark;
     cursor: pointer;
@@ -101,6 +107,14 @@ export default {
 
     .light & {
       color: $secondary-body-light;
+    }
+
+    &:hover {
+      color: $primary-link-dark;
+
+      .light & {
+        color: $primary-link-light;
+      }
     }
   }
 }

@@ -1,15 +1,19 @@
 <template>
   <div class="addTask">
     <div class="addTask__wrapper">
-      <label class="addTask__label" :for="'addTask' + listID">
+      <label
+        class="addTask__label"
+        :for="'addTask' + listID"
+      >
         <input
-          ref="addTask__input"
           :id="'addTask' + listID"
+          ref="addTask__input"
+          v-model="newTask"
           class="addTask__input"
           type="text"
           placeholder="Add a task"
-          v-model="newTask"
-          @keydown.enter="addTask()" />
+          @keydown.enter="addTask()"
+        >
       </label>
     </div>
   </div>
@@ -19,8 +23,13 @@
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'addTask',
-  props: ['listID'],
+  name: 'AddTask',
+  props: {
+    listID: {
+      type: Number,
+      default: 0,
+    },
+  },
   data() {
     return {
       newTask: null,
@@ -54,7 +63,7 @@ export default {
     justify-content: space-between;
     align-items: center;
 
-    padding: 1rem 0;
+    padding: 0.5rem 0;
   }
 
   &__label {
@@ -63,6 +72,8 @@ export default {
 
   &__input {
     width: 100%;
+    padding-left:0;
+    padding-right:0;
     border: 0 none;
     background: transparent;
     outline: 0 none;

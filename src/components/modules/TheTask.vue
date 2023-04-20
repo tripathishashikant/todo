@@ -1,33 +1,45 @@
 <template>
   <div class="task">
-    <label class="task__label" :for="'list-' + listID + '-checkbox-' + '-task-' + id">
+    <label
+      class="task__label"
+      :for="'list-' + listID + '-checkbox-' + '-task-' + id"
+    >
       <input
+        :id="'list-' + listID + '-checkbox-' + '-task-' + id"
+        v-model="completed"
         class="task__checkbox"
         type="checkbox"
-        :id="'list-' + listID + '-checkbox-' + '-task-' + id"
         :name="title"
-        v-model="completed"
-        @click="toggleCompletedTask({ listID, id })">
+        @click="toggleCompletedTask({ listID, id })"
+      >
     </label>
     <input
+      :id="'list-' + listID + '-edit-task-' + id"
       ref="task__title"
       class="task__title"
+      :class="{ 'task__title--completed': addCompletedClass}"
       type="text"
-      :id="'list-' + listID + '-edit-task-' + id"
       :name="title"
       :value="title"
+      readonly
       @blur="editComplete(listID, id)"
       @keypress.enter="editComplete(listID, id)"
-      readonly>
+    >
     <button
+      v-if="!completed"
       class="task__edit nostyle"
       title="Edit this task"
-      v-if="!completed"
-      @click="editTheTask()">&#9998;</button>
+      @click="editTheTask()"
+    >
+      &#9998;
+    </button>
     <button
       class="task__delete nostyle"
       title="Delete this task"
-      @click="deleteTask({ listID, id })">&#10006;</button>
+      @click="deleteTask({ listID, id })"
+    >
+      &#10006;
+    </button>
   </div>
 </template>
 
@@ -35,8 +47,29 @@
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'theTask',
-  props: ['listID', 'id', 'title', 'checked'],
+  name: 'TheTask',
+  props: {
+    listID: {
+      type: Number,
+      default: 0,
+    },
+    id: {
+      type: Number,
+      default: 0,
+    },
+    title: {
+      type: String,
+      default: '',
+    },
+    checked: {
+      type: Boolean,
+      default: false,
+    },
+    addCompletedClass: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       completed: this.checked,
@@ -69,7 +102,7 @@ export default {
   justify-content: flex-start;
   align-items: center;
 
-  padding: 0.7rem 6rem 0.5rem 0;
+  padding: 0.3rem 6rem 0.3rem 0;
 
   &__label {
     width: 1.5rem;
@@ -93,6 +126,10 @@ export default {
       border: 0 none;
       background: transparent;
       outline: 0 none;
+    }
+
+    &--completed {
+      text-decoration: line-through;
     }
   }
 
@@ -123,10 +160,13 @@ export default {
 
   &__edit {
     padding: 0.5rem 0.5rem 0.3rem;
+
     position: absolute;
     top: 50%;
     right: 2.5rem;
     transform: translateY(-50%);
+
+    font-family: $fontMerriweather;
     font-size: 1.4rem;
     color: $primary-body-dark;
     cursor: pointer;

@@ -1,10 +1,13 @@
 <template>
   <div class="app__container">
     <section class="app__header">
-      <app-header></app-header>
+      <app-header />
     </section>
-    <main class="app__content">
-      <router-view></router-view>
+    <main
+      id="mainContent"
+      class="app__content"
+    >
+      <router-view />
     </main>
   </div>
 </template>
@@ -14,7 +17,7 @@ import { mapGetters } from 'vuex';
 import AppHeader from './components/modules/AppHeader.vue';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     AppHeader,
   },
@@ -34,4 +37,12 @@ export default {
 
 <style lang="scss">
 @import './assets/scss/styles.scss';
+</style>
+
+<style lang="scss" scoped>
+.app {
+  &__content {
+    padding:0 1.5rem;
+  }
+}
 </style>
