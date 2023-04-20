@@ -3,7 +3,10 @@
     <section class="app__header">
       <app-header />
     </section>
-    <main class="app__content">
+    <main
+      id="mainContent"
+      class="app__content"
+    >
       <router-view />
     </main>
   </div>
