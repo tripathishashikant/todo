@@ -13,10 +13,4 @@ module.exports = {
       },
     },
   },
-  pages: {
-    index: {
-      entry: '/',
-      title: 'Todo - Home page',
-    },
-  },
 };
