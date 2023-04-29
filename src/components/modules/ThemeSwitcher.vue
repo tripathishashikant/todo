@@ -47,11 +47,10 @@ export default {
   methods: {
     ...mapActions({
       setDefaultTheme: 'themeSwitcherStore/setDefaultTheme',
-      setToggleThemeSwitcher: 'themeSwitcherStore/setToggleThemeSwitcher',
     }),
     updateTheme(themeName) {
       this.setDefaultTheme(themeName);
-      this.setToggleThemeSwitcher();
+      localStorage.setItem('currentTheme', themeName);
     },
   },
 };

@@ -13,8 +13,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import AppHeader from './components/modules/AppHeader.vue';
+import CONSTANTS from './constants/constants';
 
 export default {
   name: 'App',
@@ -24,6 +25,7 @@ export default {
   computed: {
     ...mapGetters({
       defaultTheme: 'themeSwitcherStore/getDefaultTheme',
+      getDarkThemeName: 'themeSwitcherStore/getDarkThemeName',
     }),
   },
   watch: {
@@ -31,6 +33,20 @@ export default {
       document.getElementById('body').classList.remove(oldValue);
       document.getElementById('body').classList.add(newValue);
     },
+  },
+  mounted() {
+    const currentTheme = localStorage.getItem(CONSTANTS.LOCAL_STORAGE.currentTheme);
+
+    if (currentTheme) {
+      this.setDefaultTheme(currentTheme);
+    } else {
+      localStorage.setItem(CONSTANTS.LOCAL_STORAGE.currentTheme, this.defaultTheme);
+    }
+  },
+  methods: {
+    ...mapActions({
+      setDefaultTheme: 'themeSwitcherStore/setDefaultTheme',
+    }),
   },
 };
 </script>

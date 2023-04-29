@@ -1,9 +1,11 @@
+import CONSTANTS from '../constants/constants';
+
 const initialState = {
   title: 'Switch Theme',
-  defaultTheme: 'dark',
+  defaultTheme: CONSTANTS.THEME_SWITCHER.dark,
   themes: {
-    light: 'light',
-    dark: 'dark',
+    light: CONSTANTS.THEME_SWITCHER.light,
+    dark: CONSTANTS.THEME_SWITCHER.dark,
   },
 };
 
