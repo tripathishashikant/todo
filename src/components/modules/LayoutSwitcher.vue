@@ -1,9 +1,9 @@
 <template>
   <div
     class="layoutSwitcher"
-    :class="{ 'layoutSwitcher--horizontal': !getVerticalIconStatus }"
-    :title="getLayoutTitle"
-    @click="setVerticalIconStatus"
+    :class="{ 'layoutSwitcher--horizontal': getIsHorizontalLayoutClass }"
+    :title="getAccessibilityTitle"
+    @click="switchLayout()"
   >
     <LayoutSVG />
   </div>
@@ -20,22 +20,25 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getLayoutTitle: 'layoutSwitcherStore/getLayoutTitle',
-      getVerticalIconStatus: 'layoutSwitcherStore/getVerticalIconStatus',
+      getAccessibilityTitle: 'layoutSwitcherStore/getAccessibilityTitle',
+      getDefaultLayout: 'layoutSwitcherStore/getDefaultLayout',
+      getIsHorizontalLayoutClass: 'layoutSwitcherStore/getIsHorizontalLayoutClass',
     }),
   },
-  watcher: {
-    getVerticalIconStatus(value) {
-      if (value) {
-        this.setLayoutTitle = 'Vertical Layout';
-      } else {
-        this.setLayoutTitle = 'Horizontal Layout';
-      }
-    },
+  mounted() {
+    const currentLayout = localStorage.getItem('currentLayout');
+
+    if (currentLayout) {
+      this.setCurrentLayout(currentLayout);
+    } else {
+      this.setCurrentLayout(this.getDefaultLayout);
+      localStorage.setItem('currentLayout', this.getDefaultLayout);
+    }
   },
   methods: {
     ...mapActions({
-      setVerticalIconStatus: 'layoutSwitcherStore/setVerticalIconStatus',
+      setCurrentLayout: 'layoutSwitcherStore/setCurrentLayout',
+      switchLayout: 'layoutSwitcherStore/switchLayout',
     }),
   },
 };

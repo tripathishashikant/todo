@@ -1,7 +1,7 @@
 <template>
   <section
     class="list"
-    :class="{ list__horizontalLayout: !getVerticalIconStatus }"
+    :class="{ list__horizontalLayout: getIsHorizontalLayoutClass }"
   >
     <header class="list__header">
       <h2 class="list__headerTitle">
@@ -48,7 +48,7 @@ export default {
   computed: {
     ...mapGetters({
       lists: 'getLists',
-      getVerticalIconStatus: 'layoutSwitcherStore/getVerticalIconStatus',
+      getIsHorizontalLayoutClass: 'layoutSwitcherStore/getIsHorizontalLayoutClass',
     }),
   },
 };

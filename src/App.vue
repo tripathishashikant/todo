@@ -25,7 +25,6 @@ export default {
   computed: {
     ...mapGetters({
       defaultTheme: 'themeSwitcherStore/getDefaultTheme',
-      getDarkThemeName: 'themeSwitcherStore/getDarkThemeName',
     }),
   },
   watch: {
