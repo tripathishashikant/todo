@@ -1,19 +1,13 @@
-import CONSTANTS from '../constants/constants';
+import CONSTANTS from '../constants/index';
 
 const initialState = {
   title: 'Switch Theme',
   defaultTheme: CONSTANTS.THEME_SWITCHER.dark,
-  themes: {
-    light: CONSTANTS.THEME_SWITCHER.light,
-    dark: CONSTANTS.THEME_SWITCHER.dark,
-  },
 };
 
 const getters = {
   getThemeSwitcherTitle: (state) => state.title,
   getDefaultTheme: (state) => state.defaultTheme,
-  getLightThemeName: (state) => state.themes.light,
-  getDarkThemeName: (state) => state.themes.dark,
 };
 
 const mutations = {

@@ -1,9 +1,9 @@
 <template>
   <div
     class="layoutSwitcher"
-    :class="{ 'layoutSwitcher--horizontal': !getVerticalIconStatus }"
-    :title="getLayoutTitle"
-    @click="setVerticalIconStatus"
+    :class="{ 'layoutSwitcher--horizontal': getIsHorizontalLayoutClass }"
+    :title="getAccessibilityTitle"
+    @click="switchLayout()"
   >
     <LayoutSVG />
   </div>
@@ -12,6 +12,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import LayoutSVG from '../svgs/LayoutSVG.vue';
+import CONSTANTS from '../../constants/index';
 
 export default {
   name: 'LayoutSwitcher',
@@ -20,22 +21,35 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getLayoutTitle: 'layoutSwitcherStore/getLayoutTitle',
-      getVerticalIconStatus: 'layoutSwitcherStore/getVerticalIconStatus',
+      getAccessibilityTitle: 'layoutSwitcherStore/getAccessibilityTitle',
+      getDefaultLayout: 'layoutSwitcherStore/getDefaultLayout',
+      getIsHorizontalLayoutClass: 'layoutSwitcherStore/getIsHorizontalLayoutClass',
     }),
   },
-  watcher: {
-    getVerticalIconStatus(value) {
-      if (value) {
-        this.setLayoutTitle = 'Vertical Layout';
-      } else {
-        this.setLayoutTitle = 'Horizontal Layout';
-      }
-    },
+  mounted() {
+    const currentLayout = localStorage.getItem('currentLayout');
+
+    switch (currentLayout) {
+      case CONSTANTS.LAYOUT_SWITCHER.vertical.id:
+        this.setVerticalLayout();
+        break;
+
+      case CONSTANTS.LAYOUT_SWITCHER.horizontal.id:
+        this.setHorizontalLayout();
+        break;
+
+      default:
+        this.setDefaultLayout();
+        localStorage.setItem('currentLayout', this.getDefaultLayout);
+        break;
+    }
   },
   methods: {
     ...mapActions({
-      setVerticalIconStatus: 'layoutSwitcherStore/setVerticalIconStatus',
+      setDefaultLayout: 'layoutSwitcherStore/setDefaultLayout',
+      switchLayout: 'layoutSwitcherStore/switchLayout',
+      setVerticalLayout: 'layoutSwitcherStore/setVerticalLayout',
+      setHorizontalLayout: 'layoutSwitcherStore/setHorizontalLayout',
     }),
   },
 };
@@ -46,10 +60,11 @@ export default {
   width:100%;
   height: 100%;
   cursor: pointer;
+  transform: rotate(90deg);
   transition: all 0.1s ease-in;
 
   &--horizontal {
-    transform: rotate(90deg);
+    transform: rotate(0deg);
   }
 }
 </style>

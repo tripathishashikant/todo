@@ -1,34 +1,71 @@
+import CONSTANTS from '../constants/index';
+
 const initialState = {
-  showVerticalIcon: true,
-  layoutTitle: 'Vertical view',
+  accessibilityTitle: CONSTANTS.LAYOUT_SWITCHER.vertical.title,
+  defaultLayout: CONSTANTS.LAYOUT_SWITCHER.vertical.id,
+  currentLayout: '',
+  isHorizontalLayoutClass: false,
 };
 
-const getters = {
-  getVerticalIconStatus: (state) => state.showVerticalIcon,
-  getLayoutTitle: (state) => state.layoutTitle,
+const getter = {
+  getAccessibilityTitle: (state) => state.accessibilityTitle,
+  getDefaultLayout: (state) => state.defaultLayout,
+  getCurrentLayout: (state) => state.currentLayout,
+  getIsHorizontalLayoutClass: (state) => state.isHorizontalLayoutClass,
 };
 
 const mutations = {
-  SET_VERTICAL_ICON_STATUS(state, status) {
-    state.showVerticalIcon = status;
+  SET_ACCESSIBILITY_TITLE(state, title) {
+    state.accessibilityTitle = title;
   },
-  SET_LAYOUT_TITLE(state, title) {
-    state.layoutTitle = title;
+  SET_CURRENT_LAYOUT(state, value) {
+    state.currentLayout = value;
+  },
+  SET_IS_HORIZONTAL_LAYOUT_CLASS(state, value) {
+    state.isHorizontalLayoutClass = value;
   },
 };
 
 const actions = {
-  setVerticalIconStatus({ state, commit }) {
-    commit('SET_VERTICAL_ICON_STATUS', !state.showVerticalIcon);
+  setCurrentLayout({ commit }, value) {
+    commit('SET_CURRENT_LAYOUT', value);
+    localStorage.setItem('currentLayout', value);
   },
-  setLayoutTitle({ commit }, title) {
-    commit('SET_LAYOUT_TITLE', title);
+  setAccessibilityTitle({ commit }, title) {
+    commit('SET_ACCESSIBILITY_TITLE', title);
+  },
+  setIsHorizontalLayoutClass({ commit }, value) {
+    commit('SET_IS_HORIZONTAL_LAYOUT_CLASS', value);
+  },
+  setVerticalLayout({ dispatch }) {
+    dispatch('setAccessibilityTitle', CONSTANTS.LAYOUT_SWITCHER.vertical.title);
+    dispatch('setCurrentLayout', CONSTANTS.LAYOUT_SWITCHER.vertical.id);
+    dispatch('setIsHorizontalLayoutClass', true);
+  },
+  setHorizontalLayout({ dispatch }) {
+    dispatch('setAccessibilityTitle', CONSTANTS.LAYOUT_SWITCHER.horizontal.title);
+    dispatch('setCurrentLayout', CONSTANTS.LAYOUT_SWITCHER.horizontal.id);
+    dispatch('setIsHorizontalLayoutClass', false);
+  },
+  switchLayout({ dispatch, getters }) {
+    if (getters.getCurrentLayout === CONSTANTS.LAYOUT_SWITCHER.vertical.id) {
+      dispatch('setHorizontalLayout');
+    } else {
+      dispatch('setVerticalLayout');
+    }
+  },
+  setDefaultLayout({ dispatch, getters }) {
+    if (getters.getDefaultLayout === CONSTANTS.LAYOUT_SWITCHER.vertical.id) {
+      dispatch('setVerticalLayout');
+    } else {
+      dispatch('setHorizontalLayout');
+    }
   },
 };
 
 export default {
   state: initialState,
-  getters,
+  getters: getter,
   mutations,
   actions,
   namespaced: true,
