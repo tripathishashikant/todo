@@ -15,7 +15,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import AppHeader from './components/modules/AppHeader.vue';
-import CONSTANTS from './constants/constants';
+import CONSTANTS from './constants/index';
 
 export default {
   name: 'App',
@@ -34,6 +34,7 @@ export default {
     },
   },
   mounted() {
+    // setting default theme
     const currentTheme = localStorage.getItem(CONSTANTS.LOCAL_STORAGE.currentTheme);
 
     if (currentTheme) {
@@ -45,6 +46,7 @@ export default {
   methods: {
     ...mapActions({
       setDefaultTheme: 'themeSwitcherStore/setDefaultTheme',
+      setDefaultLayout: 'layoutSwitcherStore/setDefaultLayout',
     }),
   },
 };

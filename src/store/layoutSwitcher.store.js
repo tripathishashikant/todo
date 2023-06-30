@@ -1,6 +1,8 @@
+import CONSTANTS from '../constants/index';
+
 const initialState = {
-  accessibilityTitle: 'Vertical Layout',
-  defaultLayout: 'vertical',
+  accessibilityTitle: CONSTANTS.LAYOUT_SWITCHER.vertical.title,
+  defaultLayout: CONSTANTS.LAYOUT_SWITCHER.vertical.id,
   currentLayout: '',
   isHorizontalLayoutClass: false,
 };
@@ -36,20 +38,27 @@ const actions = {
     commit('SET_IS_HORIZONTAL_LAYOUT_CLASS', value);
   },
   setVerticalLayout({ dispatch }) {
-    dispatch('setAccessibilityTitle', 'Vertical Layout');
-    dispatch('setCurrentLayout', 'vertical');
-    dispatch('setIsHorizontalLayoutClass', false);
-  },
-  setHorizontalLayout({ dispatch }) {
-    dispatch('setAccessibilityTitle', 'Horizontal Layout');
-    dispatch('setCurrentLayout', 'horizontal');
+    dispatch('setAccessibilityTitle', CONSTANTS.LAYOUT_SWITCHER.vertical.title);
+    dispatch('setCurrentLayout', CONSTANTS.LAYOUT_SWITCHER.vertical.id);
     dispatch('setIsHorizontalLayoutClass', true);
   },
+  setHorizontalLayout({ dispatch }) {
+    dispatch('setAccessibilityTitle', CONSTANTS.LAYOUT_SWITCHER.horizontal.title);
+    dispatch('setCurrentLayout', CONSTANTS.LAYOUT_SWITCHER.horizontal.id);
+    dispatch('setIsHorizontalLayoutClass', false);
+  },
   switchLayout({ dispatch, getters }) {
-    if (getters.getCurrentLayout === 'vertical') {
+    if (getters.getCurrentLayout === CONSTANTS.LAYOUT_SWITCHER.vertical.id) {
       dispatch('setHorizontalLayout');
     } else {
       dispatch('setVerticalLayout');
+    }
+  },
+  setDefaultLayout({ dispatch, getters }) {
+    if (getters.getDefaultLayout === CONSTANTS.LAYOUT_SWITCHER.vertical.id) {
+      dispatch('setVerticalLayout');
+    } else {
+      dispatch('setHorizontalLayout');
     }
   },
 };

@@ -12,6 +12,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import LayoutSVG from '../svgs/LayoutSVG.vue';
+import CONSTANTS from '../../constants/index';
 
 export default {
   name: 'LayoutSwitcher',
@@ -28,17 +29,27 @@ export default {
   mounted() {
     const currentLayout = localStorage.getItem('currentLayout');
 
-    if (currentLayout) {
-      this.setCurrentLayout(currentLayout);
-    } else {
-      this.setCurrentLayout(this.getDefaultLayout);
-      localStorage.setItem('currentLayout', this.getDefaultLayout);
+    switch (currentLayout) {
+      case CONSTANTS.LAYOUT_SWITCHER.vertical.id:
+        this.setVerticalLayout();
+        break;
+
+      case CONSTANTS.LAYOUT_SWITCHER.horizontal.id:
+        this.setHorizontalLayout();
+        break;
+
+      default:
+        this.setDefaultLayout();
+        localStorage.setItem('currentLayout', this.getDefaultLayout);
+        break;
     }
   },
   methods: {
     ...mapActions({
-      setCurrentLayout: 'layoutSwitcherStore/setCurrentLayout',
+      setDefaultLayout: 'layoutSwitcherStore/setDefaultLayout',
       switchLayout: 'layoutSwitcherStore/switchLayout',
+      setVerticalLayout: 'layoutSwitcherStore/setVerticalLayout',
+      setHorizontalLayout: 'layoutSwitcherStore/setHorizontalLayout',
     }),
   },
 };
@@ -49,10 +60,11 @@ export default {
   width:100%;
   height: 100%;
   cursor: pointer;
+  transform: rotate(90deg);
   transition: all 0.1s ease-in;
 
   &--horizontal {
-    transform: rotate(90deg);
+    transform: rotate(0deg);
   }
 }
 </style>
