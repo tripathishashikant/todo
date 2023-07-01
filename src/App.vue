@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import AppHeader from './components/modules/AppHeader.vue';
 
 export default {
@@ -31,6 +31,20 @@ export default {
       document.getElementById('body').classList.remove(oldValue);
       document.getElementById('body').classList.add(newValue);
     },
+  },
+  mounted() {
+    // loading list from local storage
+    const lists = JSON.parse(localStorage.getItem('lists'));
+    if (lists) {
+      this.setLists(lists);
+    }
+  },
+  methods: {
+    ...mapActions({
+      setDefaultTheme: 'themeSwitcherStore/setDefaultTheme',
+      setDefaultLayout: 'layoutSwitcherStore/setDefaultLayout',
+      setLists: 'setLists',
+    }),
   },
 };
 </script>
