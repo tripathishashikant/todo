@@ -22,7 +22,6 @@
       :name="title"
       :value="title"
       readonly
-      @blur="editComplete(listID, id)"
       @keypress.enter="editComplete(listID, id)"
     >
     <button
@@ -87,7 +86,7 @@ export default {
       this.$refs.task__title.focus();
     },
     editComplete(listID, id) {
-      this.editTask(listID, id, this.$refs.task__title.value);
+      this.editTask({ listID, id, value: this.$refs.task__title.value });
       this.$refs.task__title.classList.remove('task__title--edit');
       this.$refs.task__title.setAttribute('readonly', true);
     },

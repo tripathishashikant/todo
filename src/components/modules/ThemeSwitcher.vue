@@ -30,6 +30,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import MoonSVG from '../svgs/MoonSVG.vue';
 import SunSVG from '../svgs/SunSVG.vue';
+import CONSTANTS from '../../constants/index';
 
 export default {
   name: 'ThemeSwitcher',
@@ -43,6 +44,16 @@ export default {
       defaultTheme: 'themeSwitcherStore/getDefaultTheme',
       toggleThemeSwitcher: 'themeSwitcherStore/getToggleThemeSwitcher',
     }),
+  },
+  mounted() {
+    // setting default theme
+    const currentTheme = localStorage.getItem(CONSTANTS.LOCAL_STORAGE.currentTheme);
+
+    if (currentTheme) {
+      this.setDefaultTheme(currentTheme);
+    } else {
+      localStorage.setItem(CONSTANTS.LOCAL_STORAGE.currentTheme, this.defaultTheme);
+    }
   },
   methods: {
     ...mapActions({
