@@ -5,92 +5,7 @@ import themeSwitcherStore from './themeSwitcher.store';
 
 const initialMainState = {
   title: 'Todo',
-  lists: [
-    {
-      name: 'List 1',
-      id: 1,
-      todos: [
-        {
-          id: 1,
-          title: 'Learn Vue',
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'Learn Vuex',
-          completed: true,
-        },
-        {
-          id: 3,
-          title: 'Learn Vue Router',
-          completed: false,
-        },
-      ],
-    },
-    {
-      name: 'List 2',
-      id: 2,
-      todos: [
-        {
-          id: 1,
-          title: 'Learn Mocha',
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'Learn Sinon',
-          completed: false,
-        },
-        {
-          id: 3,
-          title: 'Learn Karma',
-          completed: true,
-        },
-      ],
-    },
-    {
-      name: 'List 3',
-      id: 3,
-      todos: [
-        {
-          id: 1,
-          title: 'Learn Mocha',
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'Learn Sinon',
-          completed: false,
-        },
-        {
-          id: 3,
-          title: 'Learn Karma',
-          completed: true,
-        },
-      ],
-    },
-    {
-      name: 'List 4',
-      id: 4,
-      todos: [
-        {
-          id: 1,
-          title: 'Learn Mocha',
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'Learn Sinon',
-          completed: false,
-        },
-        {
-          id: 3,
-          title: 'Learn Karma',
-          completed: true,
-        },
-      ],
-    },
-  ],
+  lists: [],
 };
 
 export const mainState = { ...initialMainState };
@@ -101,6 +16,12 @@ export const getters = {
 };
 
 export const mutations = {
+  SET_LISTS(state, lists) {
+    state.lists = lists;
+  },
+  SET_LISTS_TO_LOCAL_STORAGE(state) {
+    localStorage.setItem('lists', JSON.stringify(state.lists));
+  },
   ADD_NEW_LIST(state, newList) {
     state.lists.push(newList);
   },
@@ -127,13 +48,21 @@ export const mutations = {
 };
 
 export const actions = {
-  addNewList({ commit }, newList) {
+  setLists({ commit }, lists) {
+    commit('SET_LISTS', lists);
+  },
+  setListsToLocalStorage({ commit }) {
+    commit('SET_LISTS_TO_LOCAL_STORAGE');
+  },
+  addNewList({ commit, dispatch }, newList) {
     commit('ADD_NEW_LIST', newList);
+    dispatch('setListsToLocalStorage');
   },
-  addNewTask({ commit }, payload) {
+  addNewTask({ commit, dispatch }, payload) {
     commit('ADD_NEW_TASK', payload);
+    dispatch('setListsToLocalStorage');
   },
-  toggleCompletedTask({ state, commit }, ids) {
+  toggleCompletedTask({ state, commit, dispatch }, ids) {
     const { listID, id } = ids;
 
     for (let i = 0; i < state.lists.length; i += 1) {
@@ -146,8 +75,9 @@ export const actions = {
         }
       }
     }
+    dispatch('setListsToLocalStorage');
   },
-  deleteTask({ state, commit }, ids) {
+  deleteTask({ state, commit, dispatch }, ids) {
     const { listID, id } = ids;
 
     for (let i = 0; i < state.lists.length; i += 1) {
@@ -160,12 +90,17 @@ export const actions = {
         }
       }
     }
+    dispatch('setListsToLocalStorage');
   },
-  editTask({ state, commit }, ids) {
-    const { listID, id, value } = ids;
-    for (let i = 0; i < state.lists.length; i += 1) {
+  editTask({ state, commit, dispatch }, updatedValue) {
+    const { listID, id, value } = updatedValue;
+    const listLength = state.lists.length;
+    let todosLength = null;
+
+    for (let i = 0; i < listLength; i += 1) {
       if (state.lists[i].id === listID) {
-        for (let j = 0; j < state.lists[i].todos.length; j += 1) {
+        todosLength = state.lists[i].todos.length;
+        for (let j = 0; j < todosLength; j += 1) {
           if (state.lists[i].todos[j].id === id) {
             commit('EDIT_TASK', { i, j, value });
             break;
@@ -173,6 +108,7 @@ export const actions = {
         }
       }
     }
+    dispatch('setListsToLocalStorage');
   },
 };
 
