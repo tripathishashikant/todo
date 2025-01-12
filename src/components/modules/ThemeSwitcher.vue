@@ -68,6 +68,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/scss/variables" as *;
+
 .themeSwitcher {
   position: relative;
   padding: 0 0 0 2rem;

@@ -1,3 +1,5 @@
+@use "variables" as *;
+
 /* --- headings starts --- */
 @mixin h1($fontSize: 2rem, $color: $primary-body-dark) {
   font-family: $fontMerriweather;
