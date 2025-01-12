@@ -5,6 +5,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use "@/assets/scss/variables" as *;
+
 .card {
   width: 100%;
   max-width: 80rem;

@@ -76,6 +76,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/scss/variables" as *;
+
 .pending {
   padding: 0.5rem 0;
 

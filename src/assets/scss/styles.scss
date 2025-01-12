@@ -1,18 +1,22 @@
 @charset "UTF-8";
 
+@forward "variables";
+@forward "mixins";
+@forward "extends";
+
 /* --- reset browser default styles --- */
-@import 'reset';
+@forward 'reset';
 
 /* --- fonts --- */
-@import 'fonts';
+@forward 'fonts';
 
 /* --- global styling --- */
-@import 'base';
+@forward 'base';
 
 /* --- global modules styling --- */
-@import './modules/toggleLayout';
-@import './modules/list';
-@import './modules/alert';
+@forward './modules/toggleLayout';
+@forward './modules/list';
+@forward './modules/alert';
 
 
 /* --- global plugin style goes here --- */
@@ -20,4 +24,4 @@
 /* --- global component style goes here --- */
 
 /* --- override --- */
-@import 'override';
+@forward 'override';

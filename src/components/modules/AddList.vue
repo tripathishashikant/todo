@@ -59,6 +59,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/scss/variables" as *;
+
 .addList {
   width: 100%;
   max-width: 30rem;
