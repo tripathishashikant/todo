@@ -28,8 +28,8 @@ export default {
   },
   watch: {
     defaultTheme(newValue, oldValue) {
-      document.getElementsByTagName('body')[0].classList.remove(oldValue);
-      document.getElementsByTagName('body')[0].classList.add(newValue);
+      document.getElementById('body').classList.remove(oldValue);
+      document.getElementById('body').classList.add(newValue);
     },
   },
   mounted() {
