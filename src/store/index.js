@@ -3,7 +3,7 @@ import { createStore } from 'vuex';
 import layoutSwitcherStore from '@/store/layoutSwitcher.store';
 import themeSwitcherStore from '@/store/themeSwitcher.store';
 
-import { collection, getDocs } from "firebase/firestore";
+import { onSnapshot, collection, getDocs } from "firebase/firestore";
 import { db } from '@/firebase';
 
 const initialMainState = {
@@ -60,35 +60,35 @@ export const actions = {
     try {
       // Reference to the todos collection
       const todosCollectionRef = collection(db, 'todos');
-      const todosSnapshot = await getDocs(todosCollectionRef);
 
-      const lists = [];
+      // Listen for real-time updates on the todos collection
+      onSnapshot(todosCollectionRef, async (todosSnapshot) => {
+        const lists = [];
 
-      for (const todoDoc of todosSnapshot.docs) {
-        const todoData = {
-          id: todoDoc.id,
-          ...todoDoc.data(),
-          tasks: [],
-        };
+        for (const todoDoc of todosSnapshot.docs) {
+          const todoData = {
+            docId: todoDoc.id,
+            ...todoDoc.data(),
+            tasks: [],
+          };
 
-        const tasksCollectionRef = collection(db, `todos/${todoDoc.id}/tasks`);
-        const tasksSnapshot = await getDocs(tasksCollectionRef);
+          const tasksCollectionRef = collection(db, `todos/${todoDoc.id}/tasks`);
+          const tasksSnapshot = await getDocs(tasksCollectionRef);
 
-        // Add tasks to the todoData object
-        tasksSnapshot.forEach((taskDoc) => {
-          todoData.tasks.push({
-            id: taskDoc.id,
-            ...taskDoc.data(),
+          // Add tasks to the todoData object
+          tasksSnapshot.forEach((taskDoc) => {
+            todoData.tasks.push({
+              docId: taskDoc.id,
+              ...taskDoc.data(),
+            });
           });
-        });
 
-        lists.unshift(todoData);
-      }
+          lists.unshift(todoData);
+        }
 
-      // console.log('lists', lists);
-
-      commit('SET_LISTS', lists);
-      commit('SET_LISTS_LOADED', true);
+        commit('SET_LISTS', lists);
+        commit('SET_LISTS_LOADED', true);
+      });
     } catch (error) {
       console.error('Error fetching lists from Firestore:', error);
     }
