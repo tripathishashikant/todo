@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="hasListsLoaded"
     class="list"
     :class="{ list__horizontalLayout: getIsHorizontalLayoutClass }"
   >
@@ -11,7 +12,7 @@
       >
         <section class="list__wrapper">
           <h2 class="list__title">
-            {{ list.name }}
+            {{ list.listName }}
           </h2>
           <div class="list__addTask">
             <add-task :list-i-d="list.id" />
@@ -56,6 +57,7 @@ export default {
   computed: {
     ...mapGetters({
       lists: 'getLists',
+      hasListsLoaded: 'getListsLoaded',
       getCurrentLayout: 'layoutSwitcherStore/getCurrentLayout',
       getIsHorizontalLayoutClass: 'layoutSwitcherStore/getIsHorizontalLayoutClass',
     }),

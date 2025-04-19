@@ -14,7 +14,7 @@
       </h3>
       <ul class="completed__tasks">
         <template
-          v-for="{ id, title, completed } in list.todos"
+          v-for="{ id, task, completed } in list.tasks"
         >
           <li
             v-if="completed"
@@ -24,7 +24,7 @@
             <the-task
               :id="id"
               :list-i-d="listID"
-              :title="title"
+              :title="task"
               :checked="true"
               :add-completed-class="true"
             />
@@ -55,8 +55,8 @@ export default {
   },
   props: {
     listID: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '',
     },
     showTitle: {
       type: Boolean,
@@ -75,7 +75,7 @@ export default {
       return this.lists.find((list) => list.id === this.listID);
     },
     showCompletedList() {
-      return this.list.todos.some((todo) => todo.completed === true);
+      return this.list.tasks.some((task) => task.completed === true);
     },
     showNoTaskCompletedAlert() {
       if (this.showAlertMessage && !this.showCompletedList) {
