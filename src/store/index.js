@@ -3,13 +3,15 @@ import { createStore } from 'vuex';
 import layoutSwitcherStore from '@/store/layoutSwitcher.store';
 import themeSwitcherStore from '@/store/themeSwitcher.store';
 
-import { onSnapshot, collection, getDocs } from "firebase/firestore";
+import { onSnapshot, collection } from "firebase/firestore";
 import { db } from '@/firebase';
 
 const initialMainState = {
   title: 'Todo',
   lists: [],
+  tasks: [],
   hasListsLoaded: false,
+  hasTasksLoaded: false,
 };
 
 export const mainState = { ...initialMainState };
@@ -17,15 +19,24 @@ export const mainState = { ...initialMainState };
 export const getters = {
   getTitle: (state) => state.title,
   getLists: (state) => state.lists,
+  getTasks: (state) => state.tasks,
   getListsLoaded: (state) => state.hasListsLoaded,
+  getTasksLoaded: (state) => state.hasTasksLoaded,
+  siteDataLoaded: (state) => state.hasListsLoaded && state.hasTasksLoaded,
 };
 
 export const mutations = {
   SET_LISTS(state, lists) {
     state.lists = lists;
   },
+  SET_TASKS(state, tasks) {
+    state.tasks = tasks;
+  },
   SET_LISTS_LOADED(state, flag) {
     state.hasListsLoaded = flag;
+  },
+  SET_TASKS_LOADED(state, flag) {
+    state.hasTasksLoaded = flag;
   },
   SET_LISTS_TO_LOCAL_STORAGE(state) {
     localStorage.setItem('lists', JSON.stringify(state.lists));
@@ -56,39 +67,39 @@ export const mutations = {
 };
 
 export const actions = {
-  async getListsFromFireStore({ commit }) {
+  async subscribeToData({ commit, state }) {
     try {
-      // Reference to the todos collection
-      const todosCollectionRef = collection(db, 'todos');
+      // Subscribe to todoLists
+      const todoListsRef = collection(db, "todos");
 
-      // Listen for real-time updates on the todos collection
-      onSnapshot(todosCollectionRef, async (todosSnapshot) => {
-        const lists = [];
+      onSnapshot(todoListsRef, (snapshot) => {
+        const todoLists = [];
 
-        for (const todoDoc of todosSnapshot.docs) {
-          const todoData = {
-            docId: todoDoc.id,
-            ...todoDoc.data(),
-            tasks: [],
-          };
+        snapshot.forEach(doc => {
+          todoLists.unshift({ docId: doc.id, ...doc.data() });
+        });
 
-          const tasksCollectionRef = collection(db, `todos/${todoDoc.id}/tasks`);
-          const tasksSnapshot = await getDocs(tasksCollectionRef);
-
-          // Add tasks to the todoData object
-          tasksSnapshot.forEach((taskDoc) => {
-            todoData.tasks.push({
-              docId: taskDoc.id,
-              ...taskDoc.data(),
-            });
-          });
-
-          lists.unshift(todoData);
-        }
-
-        commit('SET_LISTS', lists);
+        commit("SET_LISTS", todoLists);
         commit('SET_LISTS_LOADED', true);
+        // console.log('Todo lists loaded:', state.lists);
       });
+
+
+      // Subscribe to tasks
+      const tasksRef = collection(db, "tasks");
+
+      onSnapshot(tasksRef, (snapshot) => {
+        const tasks = [];
+
+        snapshot.forEach(doc => {
+          tasks.unshift({ ...doc.data() });
+        });
+
+        commit("SET_TASKS", tasks);
+        commit('SET_TASKS_LOADED', true);
+        // console.log('Tasks loaded:', state.tasks);
+      });
+
     } catch (error) {
       console.error('Error fetching lists from Firestore:', error);
     }
@@ -100,9 +111,17 @@ export const actions = {
     commit('ADD_NEW_LIST', newList);
     dispatch('setListsToLocalStorage');
   },
-  addNewTask({ commit, dispatch }, payload) {
-    commit('ADD_NEW_TASK', payload);
-    dispatch('setListsToLocalStorage');
+  async addNewTask({ commit, dispatch }, payload) {
+    const { listDocId, newTask } = payload;
+
+    try {
+      const tasksCollectionRef = collection(db, `todos/${listDocId}/tasks`);
+
+      await addDoc(tasksCollectionRef, newTask);
+    }
+    catch(error) {
+      console.error('Error adding new task:', error);
+    }
   },
   toggleCompletedTask({ state, commit, dispatch }, ids) {
     const { listID, id } = ids;

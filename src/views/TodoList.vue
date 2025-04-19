@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="hasListsLoaded"
+    v-if="siteDataLoaded"
     class="list"
     :class="{ list__horizontalLayout: getIsHorizontalLayoutClass }"
   >
@@ -12,28 +12,28 @@
       >
         <section class="list__wrapper">
           <h2 class="list__title">
-            {{ list.listName }}
+            {{ list.title }}
           </h2>
           <div class="list__addTask">
-            <add-task :list-i-d="list.id" />
+            <!-- <add-task :list-doc-id="list.docId" /> -->
           </div>
           <div class="list__pending">
             <pending-list
-              :list-i-d="list.id"
+              :list-id="list.docId"
               :show-alert-message="false"
             />
           </div>
           <div class="list__completed">
-            <completed-list
+            <!-- <completed-list
               :list-i-d="list.id"
               :show-title="true"
               :show-alert-message="false"
-            />
+            /> -->
           </div>
         </section>
       </base-card>
       <div class="list__card list__card--addListBtn">
-        <add-list />
+        <!-- <add-list /> -->
       </div>
     </div>
   </div>
@@ -57,7 +57,7 @@ export default {
   computed: {
     ...mapGetters({
       lists: 'getLists',
-      hasListsLoaded: 'getListsLoaded',
+      siteDataLoaded: 'siteDataLoaded',
       getCurrentLayout: 'layoutSwitcherStore/getCurrentLayout',
       getIsHorizontalLayoutClass: 'layoutSwitcherStore/getIsHorizontalLayoutClass',
     }),

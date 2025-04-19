@@ -3,10 +3,10 @@
     <div class="addTask__wrapper">
       <label
         class="addTask__label"
-        :for="'addTask' + listID"
+        :for="'addTask' + listDocId"
       >
         <input
-          :id="'addTask' + listID"
+          :id="'addTask' + listDocId"
           ref="addTask__input"
           v-model="newTask"
           class="addTask__input"
@@ -25,7 +25,7 @@ import { mapActions } from 'vuex';
 export default {
   name: 'AddTask',
   props: {
-    listID: {
+    listDocId: {
       type: String,
       default: '',
     },
@@ -41,13 +41,14 @@ export default {
     ]),
     addTask() {
       const task = {
-        listID: this.listID,
+        listDocId: this.listDocId,
         newTask: {
-          title: this.newTask,
+          id: Date.now().toString(),
+          task: this.newTask,
           completed: false,
         },
       };
-      this.addNewTask(task);
+      // this.addNewTask(task);
       this.newTask = '';
     },
   },

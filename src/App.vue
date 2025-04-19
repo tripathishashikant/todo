@@ -34,13 +34,13 @@ export default {
   },
   mounted() {
     // loading data from firebase firestore
-    this.getListsFromFireStore();
+    this.subscribeToData();
   },
   methods: {
     ...mapActions({
       setDefaultTheme: 'themeSwitcherStore/setDefaultTheme',
       setDefaultLayout: 'layoutSwitcherStore/setDefaultLayout',
-      getListsFromFireStore: 'getListsFromFireStore',
+      subscribeToData: 'subscribeToData',
     }),
   },
 };
