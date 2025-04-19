@@ -26,8 +26,8 @@ export default {
   name: 'AddTask',
   props: {
     listID: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -43,7 +43,6 @@ export default {
       const task = {
         listID: this.listID,
         newTask: {
-          id: new Date().valueOf(),
           title: this.newTask,
           completed: false,
         },

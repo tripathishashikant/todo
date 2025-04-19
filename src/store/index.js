@@ -1,11 +1,15 @@
 import { createStore } from 'vuex';
 
-import layoutSwitcherStore from './layoutSwitcher.store';
-import themeSwitcherStore from './themeSwitcher.store';
+import layoutSwitcherStore from '@/store/layoutSwitcher.store';
+import themeSwitcherStore from '@/store/themeSwitcher.store';
+
+import { onSnapshot, collection, getDocs } from "firebase/firestore";
+import { db } from '@/firebase';
 
 const initialMainState = {
   title: 'Todo',
   lists: [],
+  hasListsLoaded: false,
 };
 
 export const mainState = { ...initialMainState };
@@ -13,11 +17,15 @@ export const mainState = { ...initialMainState };
 export const getters = {
   getTitle: (state) => state.title,
   getLists: (state) => state.lists,
+  getListsLoaded: (state) => state.hasListsLoaded,
 };
 
 export const mutations = {
   SET_LISTS(state, lists) {
     state.lists = lists;
+  },
+  SET_LISTS_LOADED(state, flag) {
+    state.hasListsLoaded = flag;
   },
   SET_LISTS_TO_LOCAL_STORAGE(state) {
     localStorage.setItem('lists', JSON.stringify(state.lists));
@@ -48,8 +56,42 @@ export const mutations = {
 };
 
 export const actions = {
-  setLists({ commit }, lists) {
-    commit('SET_LISTS', lists);
+  async getListsFromFireStore({ commit }) {
+    try {
+      // Reference to the todos collection
+      const todosCollectionRef = collection(db, 'todos');
+
+      // Listen for real-time updates on the todos collection
+      onSnapshot(todosCollectionRef, async (todosSnapshot) => {
+        const lists = [];
+
+        for (const todoDoc of todosSnapshot.docs) {
+          const todoData = {
+            docId: todoDoc.id,
+            ...todoDoc.data(),
+            tasks: [],
+          };
+
+          const tasksCollectionRef = collection(db, `todos/${todoDoc.id}/tasks`);
+          const tasksSnapshot = await getDocs(tasksCollectionRef);
+
+          // Add tasks to the todoData object
+          tasksSnapshot.forEach((taskDoc) => {
+            todoData.tasks.push({
+              docId: taskDoc.id,
+              ...taskDoc.data(),
+            });
+          });
+
+          lists.unshift(todoData);
+        }
+
+        commit('SET_LISTS', lists);
+        commit('SET_LISTS_LOADED', true);
+      });
+    } catch (error) {
+      console.error('Error fetching lists from Firestore:', error);
+    }
   },
   setListsToLocalStorage({ commit }) {
     commit('SET_LISTS_TO_LOCAL_STORAGE');

@@ -49,12 +49,12 @@ export default {
   name: 'TheTask',
   props: {
     listID: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '',
     },
     id: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '',
     },
     title: {
       type: String,

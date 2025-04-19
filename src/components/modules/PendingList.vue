@@ -8,7 +8,7 @@
     >
       <ul class="pending__tasks">
         <template
-          v-for="{ id, title, completed } in list.todos"
+          v-for="{ id, task, completed } in list.tasks"
         >
           <li
             v-if="!completed"
@@ -18,7 +18,7 @@
             <the-task
               :id="id"
               :list-i-d="list.id"
-              :title="title"
+              :title="task"
             />
           </li>
         </template>
@@ -27,6 +27,7 @@
     <div
       v-show="showNoTaskPresentAlert"
       class="alert"
+      role="alert"
     >
       <p class="alert__title">
         Hurray you have completed all the tasks from this list!
@@ -46,8 +47,8 @@ export default {
   },
   props: {
     listID: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '',
     },
     showAlertMessage: {
       type: Boolean,
@@ -62,14 +63,14 @@ export default {
       return this.lists.find((list) => list.id === this.listID);
     },
     showPendingList() {
-      return this.list.todos.some((todo) => todo.completed === false);
+      return this.list.tasks.some((task) => task.completed === false);
     },
     showNoTaskPresentAlert() {
       if (this.showAlertMessage && !this.showPendingList) {
         return true;
       }
 
-      return false;
+      return this.list.tasks.length === 0;
     },
   },
 };
