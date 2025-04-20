@@ -129,19 +129,8 @@ export const actions = {
       isCompleted: completedFlag
     });
   },
-  deleteTask({ state, commit, dispatch }, ids) {
-    const { listID, id } = ids;
-
-    for (let i = 0; i < state.lists.length; i += 1) {
-      if (state.lists[i].id === listID) {
-        for (let j = 0; j < state.lists[i].todos.length; j += 1) {
-          if (state.lists[i].todos[j].id === id) {
-            commit('DELETE_TASK', { i, j });
-            break;
-          }
-        }
-      }
-    }
+  async deleteTask(context, taskDocId) {
+    await deleteDoc(doc(db, "tasks", taskDocId));
   },
   async editTask(context, { taskDocId, val: title }) {
     await updateDoc(doc(db, "tasks", taskDocId), { title });
