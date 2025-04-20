@@ -41,14 +41,12 @@ export default {
     ]),
     addTask() {
       const task = {
-        listDocId: this.listDocId,
-        newTask: {
-          id: Date.now().toString(),
-          task: this.newTask,
-          completed: false,
-        },
+        id: Date.now().toString(),
+        listId: this.listDocId,
+        title: this.newTask,
+        isCompleted: false,
       };
-      // this.addNewTask(task);
+      this.addNewTask(task);
       this.newTask = '';
     },
   },

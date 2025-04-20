@@ -21,7 +21,7 @@
             >&#128465;</button>
           </div>
           <div class="list__addTask">
-            <!-- <add-task :list-doc-id="list.docId" /> -->
+            <add-task :list-doc-id="docId" />
           </div>
           <div class="list__pending">
             <pending-list

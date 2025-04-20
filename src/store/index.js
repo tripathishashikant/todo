@@ -107,33 +107,54 @@ export const actions = {
     }
   },
   async addNewList(context, newList) {
-    await addDoc(collection(db, "todos"), newList);
+    try {
+      await addDoc(collection(db, "todos"), newList);
+    }
+    catch (error) {
+      console.error('Error adding new list:', error);
+    }
   },
   async deleteList(context, listId) {
-    await deleteDoc(doc(db, "todos", listId));
-  },
-  async addNewTask(context, payload) {
-    const { listDocId, newTask } = payload;
-
     try {
-      const tasksCollectionRef = collection(db, `todos/${listDocId}/tasks`);
-
-      await addDoc(tasksCollectionRef, newTask);
+      await deleteDoc(doc(db, "todos", listId));
+    }
+    catch (error) {
+      console.error('Error deleting list:', error);
+    }
+  },
+  async addNewTask(context, newTask) {
+    try {
+      await addDoc(collection(db, 'tasks'), newTask);
     }
     catch(error) {
       console.error('Error adding new task:', error);
     }
   },
   async toggleCompletedTask(context, { taskDocId, completedFlag }) {
-    await updateDoc(doc(db, "tasks", taskDocId), {
-      isCompleted: completedFlag
-    });
+    try {
+      await updateDoc(doc(db, "tasks", taskDocId), {
+        isCompleted: completedFlag
+      });
+    }
+    catch (error) {
+      console.error('Error toggling task completion:', error);
+    }
   },
   async deleteTask(context, taskDocId) {
-    await deleteDoc(doc(db, "tasks", taskDocId));
+    try {
+      await deleteDoc(doc(db, "tasks", taskDocId));
+    }
+    catch (error) {
+      console.error('Error deleting task:', error);
+    }
   },
   async editTask(context, { taskDocId, val: title }) {
-    await updateDoc(doc(db, "tasks", taskDocId), { title });
+    try {
+      await updateDoc(doc(db, "tasks", taskDocId), { title });
+    }
+    catch (error) {
+      console.error('Error editing task:', error);
+    }
   },
 };
 
