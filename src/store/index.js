@@ -106,13 +106,13 @@ export const actions = {
       console.error('Error fetching lists from Firestore:', error);
     }
   },
-  async addNewList({ commit }, newList) {
+  async addNewList(context, newList) {
     await addDoc(collection(db, "todos"), newList);
   },
-  async deleteList({ commit }, listId) {
+  async deleteList(context, listId) {
     await deleteDoc(doc(db, "todos", listId));
   },
-  async addNewTask({ commit, dispatch }, payload) {
+  async addNewTask(context, payload) {
     const { listDocId, newTask } = payload;
 
     try {
@@ -124,7 +124,7 @@ export const actions = {
       console.error('Error adding new task:', error);
     }
   },
-  async toggleCompletedTask({ commit }, { taskDocId, completedFlag }) {
+  async toggleCompletedTask(context, { taskDocId, completedFlag }) {
     await updateDoc(doc(db, "tasks", taskDocId), {
       isCompleted: completedFlag
     });
@@ -143,22 +143,8 @@ export const actions = {
       }
     }
   },
-  editTask({ state, commit, dispatch }, updatedValue) {
-    const { listID, id, value } = updatedValue;
-    const listLength = state.lists.length;
-    let todosLength = null;
-
-    for (let i = 0; i < listLength; i += 1) {
-      if (state.lists[i].id === listID) {
-        todosLength = state.lists[i].todos.length;
-        for (let j = 0; j < todosLength; j += 1) {
-          if (state.lists[i].todos[j].id === id) {
-            commit('EDIT_TASK', { i, j, value });
-            break;
-          }
-        }
-      }
-    }
+  async editTask(context, { taskDocId, val: title }) {
+    await updateDoc(doc(db, "tasks", taskDocId), { title });
   },
 };
 

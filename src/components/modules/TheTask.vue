@@ -22,7 +22,7 @@
       :name="title"
       :value="title"
       readonly
-      @keypress.enter="editComplete(listDocId, id)"
+      @keypress.enter="editComplete(taskDocId, id)"
     >
     <button
       v-if="!completed"
@@ -35,7 +35,7 @@
     <button
       class="task__delete nostyle"
       title="Delete this task"
-      @click="deleteTask({ listDocId, id })"
+      @click="deleteTask(taskDocId)"
     >
       &#10006;
     </button>
@@ -89,8 +89,8 @@ export default {
       this.$refs.task__title.classList.add('task__title--edit');
       this.$refs.task__title.focus();
     },
-    editComplete(listDocId, id) {
-      this.editTask({ listDocId, id, value: this.$refs.task__title.value });
+    editComplete(taskDocId) {
+      this.editTask({ taskDocId, val: this.$refs.task__title.value});
       this.$refs.task__title.classList.remove('task__title--edit');
       this.$refs.task__title.setAttribute('readonly', true);
     },
