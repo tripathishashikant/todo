@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.layoutSVG {
+.layout__svg {
   width:100%;
   height:100%;
 }
