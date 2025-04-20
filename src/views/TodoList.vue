@@ -6,18 +6,18 @@
   >
     <div class="list__cardContainer">
       <base-card
-        v-for="list in lists"
-        :key="list.id"
+        v-for="{ id, docId, title } in lists"
+        :key="id"
         class="list__card"
       >
         <section class="list__wrapper">
           <div class="list__header">
             <h2 class="list__title">
-              {{ list.title }}
+              {{ title }}
             </h2>
             <button
               class="list__deleteBtn nostyle"
-              @click="deleteList(list.docId)"
+              @click="deleteList(docId)"
             >&#128465;</button>
           </div>
           <div class="list__addTask">
@@ -25,13 +25,13 @@
           </div>
           <div class="list__pending">
             <pending-list
-              :list-id="list.docId"
+              :list-doc-id="docId"
               :show-alert-message="false"
             />
           </div>
           <div class="list__completed">
             <completed-list
-              :list-id="list.docId"
+              :list-doc-id="docId"
               :show-title="true"
               :show-alert-message="false"
             />

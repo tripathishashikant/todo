@@ -8,7 +8,7 @@
     >
       <ul class="pending__tasks">
         <template
-          v-for="{ id, title, isCompleted } in pendingTasks"
+          v-for="{ id, docId, title, isCompleted } in pendingTasks"
         >
           <li
             v-if="!isCompleted"
@@ -17,7 +17,8 @@
           >
             <the-task
               :id="id"
-              :list-id="listId"
+              :task-doc-id="docId"
+              :list-doc-id="listDocId"
               :title="title"
             />
           </li>
@@ -46,7 +47,7 @@ export default {
     TheTask,
   },
   props: {
-    listId: {
+    listDocId: {
       type: String,
       default: '',
     },
@@ -60,7 +61,7 @@ export default {
       tasks: 'getTasks',
     }),
     pendingTasks() {
-      return this.tasks.filter((task) => task.listId === this.listId);
+      return this.tasks.filter((task) => task.listId === this.listDocId);
     },
     showPendingList() {
       return this.pendingTasks.some((task) => task.isCompleted === false);

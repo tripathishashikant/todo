@@ -8,7 +8,8 @@ import {
   collection,
   doc,
   addDoc,
-  deleteDoc
+  deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from '@/firebase';
 
@@ -94,7 +95,7 @@ export const actions = {
         const tasks = [];
 
         snapshot.forEach(doc => {
-          tasks.unshift({ ...doc.data() });
+          tasks.unshift({ docId: doc.id, ...doc.data() });
         });
 
         commit("SET_TASKS", tasks);
@@ -123,19 +124,10 @@ export const actions = {
       console.error('Error adding new task:', error);
     }
   },
-  toggleCompletedTask({ state, commit, dispatch }, ids) {
-    const { listID, id } = ids;
-
-    for (let i = 0; i < state.lists.length; i += 1) {
-      if (state.lists[i].id === listID) {
-        for (let j = 0; j < state.lists[i].todos.length; j += 1) {
-          if (state.lists[i].todos[j].id === id) {
-            commit('TOGGLE_COMPLETED_TASK', { i, j });
-            break;
-          }
-        }
-      }
-    }
+  async toggleCompletedTask({ commit }, { taskDocId, completedFlag }) {
+    await updateDoc(doc(db, "tasks", taskDocId), {
+      isCompleted: completedFlag
+    });
   },
   deleteTask({ state, commit, dispatch }, ids) {
     const { listID, id } = ids;

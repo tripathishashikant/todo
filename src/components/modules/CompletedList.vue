@@ -14,7 +14,7 @@
       </h3>
       <ul class="completed__tasks">
         <template
-          v-for="{ id, title, isCompleted } in completedTasks"
+          v-for="{ id, docId, title, isCompleted } in completedTasks"
         >
           <li
             v-if="isCompleted"
@@ -23,7 +23,8 @@
           >
             <the-task
               :id="id"
-              :list-id="listId"
+              :task-doc-id="docId"
+              :list-doc-id="listDocId"
               :title="title"
               :checked="true"
               :add-completed-class="true"
@@ -54,7 +55,7 @@ export default {
     TheTask,
   },
   props: {
-    listId: {
+    listDocId: {
       type: String,
       default: '',
     },
@@ -72,7 +73,7 @@ export default {
       tasks: 'getTasks',
     }),
     completedTasks() {
-      return this.tasks.filter((list) => list.listId === this.listId);
+      return this.tasks.filter((list) => list.listId === this.listDocId);
     },
     showCompletedList() {
       return this.completedTasks.some((task) => task.isCompleted);

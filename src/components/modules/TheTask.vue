@@ -2,19 +2,19 @@
   <div class="task">
     <label
       class="task__label"
-      :for="'list-' + listId + '-checkbox-' + '-task-' + id"
+      :for="'list-' + listDocId + '-checkbox-' + '-task-' + id"
     >
       <input
-        :id="'list-' + listId + '-checkbox-' + '-task-' + id"
+        :id="'list-' + listDocId + '-checkbox-' + '-task-' + id"
         v-model="completed"
         class="task__checkbox"
         type="checkbox"
         :name="title"
-        @click="toggleCompletedTask({ listId, id })"
+        @click="toggleCompletedTask({ taskDocId, completedFlag: !checked })"
       >
     </label>
     <input
-      :id="'list-' + listId + '-edit-task-' + id"
+      :id="'list-' + listDocId + '-edit-task-' + id"
       ref="task__title"
       class="task__title"
       :class="{ 'task__title--completed': addCompletedClass}"
@@ -22,7 +22,7 @@
       :name="title"
       :value="title"
       readonly
-      @keypress.enter="editComplete(listId, id)"
+      @keypress.enter="editComplete(listDocId, id)"
     >
     <button
       v-if="!completed"
@@ -35,7 +35,7 @@
     <button
       class="task__delete nostyle"
       title="Delete this task"
-      @click="deleteTask({ listId, id })"
+      @click="deleteTask({ listDocId, id })"
     >
       &#10006;
     </button>
@@ -48,11 +48,15 @@ import { mapActions } from 'vuex';
 export default {
   name: 'TheTask',
   props: {
-    listId: {
+    id: {
       type: String,
       default: '',
     },
-    id: {
+    taskDocId: {
+      type: String,
+      default: '',
+    },
+    listDocId: {
       type: String,
       default: '',
     },
@@ -85,8 +89,8 @@ export default {
       this.$refs.task__title.classList.add('task__title--edit');
       this.$refs.task__title.focus();
     },
-    editComplete(listId, id) {
-      this.editTask({ listId, id, value: this.$refs.task__title.value });
+    editComplete(listDocId, id) {
+      this.editTask({ listDocId, id, value: this.$refs.task__title.value });
       this.$refs.task__title.classList.remove('task__title--edit');
       this.$refs.task__title.setAttribute('readonly', true);
     },
