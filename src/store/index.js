@@ -3,7 +3,13 @@ import { createStore } from 'vuex';
 import layoutSwitcherStore from '@/store/layoutSwitcher.store';
 import themeSwitcherStore from '@/store/themeSwitcher.store';
 
-import { onSnapshot, collection } from "firebase/firestore";
+import {
+  onSnapshot,
+  collection,
+  doc,
+  addDoc,
+  deleteDoc
+} from "firebase/firestore";
 import { db } from '@/firebase';
 
 const initialMainState = {
@@ -38,9 +44,6 @@ export const mutations = {
   SET_TASKS_LOADED(state, flag) {
     state.hasTasksLoaded = flag;
   },
-  SET_LISTS_TO_LOCAL_STORAGE(state) {
-    localStorage.setItem('lists', JSON.stringify(state.lists));
-  },
   ADD_NEW_LIST(state, newList) {
     state.lists.push(newList);
   },
@@ -67,7 +70,7 @@ export const mutations = {
 };
 
 export const actions = {
-  async subscribeToData({ commit, state }) {
+  async subscribeToData({ commit }) {
     try {
       // Subscribe to todoLists
       const todoListsRef = collection(db, "todos");
@@ -81,7 +84,6 @@ export const actions = {
 
         commit("SET_LISTS", todoLists);
         commit('SET_LISTS_LOADED', true);
-        // console.log('Todo lists loaded:', state.lists);
       });
 
 
@@ -97,19 +99,17 @@ export const actions = {
 
         commit("SET_TASKS", tasks);
         commit('SET_TASKS_LOADED', true);
-        // console.log('Tasks loaded:', state.tasks);
       });
 
     } catch (error) {
       console.error('Error fetching lists from Firestore:', error);
     }
   },
-  setListsToLocalStorage({ commit }) {
-    commit('SET_LISTS_TO_LOCAL_STORAGE');
+  async addNewList({ commit }, newList) {
+    await addDoc(collection(db, "todos"), newList);
   },
-  addNewList({ commit, dispatch }, newList) {
-    commit('ADD_NEW_LIST', newList);
-    dispatch('setListsToLocalStorage');
+  async deleteList({ commit }, listId) {
+    await deleteDoc(doc(db, "todos", listId));
   },
   async addNewTask({ commit, dispatch }, payload) {
     const { listDocId, newTask } = payload;
@@ -136,7 +136,6 @@ export const actions = {
         }
       }
     }
-    dispatch('setListsToLocalStorage');
   },
   deleteTask({ state, commit, dispatch }, ids) {
     const { listID, id } = ids;
@@ -151,7 +150,6 @@ export const actions = {
         }
       }
     }
-    dispatch('setListsToLocalStorage');
   },
   editTask({ state, commit, dispatch }, updatedValue) {
     const { listID, id, value } = updatedValue;
@@ -169,7 +167,6 @@ export const actions = {
         }
       }
     }
-    dispatch('setListsToLocalStorage');
   },
 };
 

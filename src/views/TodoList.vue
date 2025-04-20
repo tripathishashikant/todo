@@ -11,9 +11,15 @@
         class="list__card"
       >
         <section class="list__wrapper">
-          <h2 class="list__title">
-            {{ list.title }}
-          </h2>
+          <div class="list__header">
+            <h2 class="list__title">
+              {{ list.title }}
+            </h2>
+            <button
+              class="list__deleteBtn nostyle"
+              @click="deleteList(list.docId)"
+            >&#128465;</button>
+          </div>
           <div class="list__addTask">
             <!-- <add-task :list-doc-id="list.docId" /> -->
           </div>
@@ -24,23 +30,23 @@
             />
           </div>
           <div class="list__completed">
-            <!-- <completed-list
-              :list-i-d="list.id"
+            <completed-list
+              :list-id="list.docId"
               :show-title="true"
               :show-alert-message="false"
-            /> -->
+            />
           </div>
         </section>
       </base-card>
       <div class="list__card list__card--addListBtn">
-        <!-- <add-list /> -->
+        <add-list />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import PendingList from '../components/modules/PendingList.vue';
 import CompletedList from '../components/modules/CompletedList.vue';
 import AddTask from '../components/modules/AddTask.vue';
@@ -60,6 +66,11 @@ export default {
       siteDataLoaded: 'siteDataLoaded',
       getCurrentLayout: 'layoutSwitcherStore/getCurrentLayout',
       getIsHorizontalLayoutClass: 'layoutSwitcherStore/getIsHorizontalLayoutClass',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      deleteList: 'deleteList',
     }),
   },
 };
