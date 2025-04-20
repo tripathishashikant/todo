@@ -1,6 +1,13 @@
 @use "@/assets/scss/variables" as *;
 
 .list {
+  &__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
   &__cardContainer {
     .list__horizontalLayout & {
       display: flex;
