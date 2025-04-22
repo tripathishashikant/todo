@@ -1,8 +1,20 @@
 <template>
-  <div class="card">
+  <div class="card" :class="customClasses">
     <slot />
   </div>
 </template>
+
+<script>
+export default {
+  name: 'BaseCard',
+  props: {
+    customClasses: {
+      type: String,
+      default: '',
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 @use "@/assets/scss/variables" as *;
@@ -16,6 +28,10 @@
   background-color: $secondary-bg-dark;
   box-shadow: 0 0.1rem 0.2rem 0 $primary-shadow-dark;
   overflow: hidden;
+
+  &--smallWidth {
+    max-width: 40rem;
+  }
 
   .list__horizontalLayout & {
     flex: 0 0 30rem;
