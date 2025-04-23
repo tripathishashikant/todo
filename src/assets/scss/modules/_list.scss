@@ -1,6 +1,12 @@
 @use "@/assets/scss/variables" as *;
 
 .list {
+  flex: 1 1 100%;
+
+  &__horizontalLayout {
+    flex: 1 1 auto;
+  }
+
   &__loading {
     display: flex;
     justify-content: center;

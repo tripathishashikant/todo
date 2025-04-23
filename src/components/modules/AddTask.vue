@@ -9,7 +9,7 @@
           :id="'addTask' + listDocId"
           ref="addTask__input"
           v-model="newTask"
-          class="addTask__input"
+          class="input addTask__input"
           type="text"
           placeholder="Add a task"
           @keydown.enter="addTask()"
@@ -72,9 +72,6 @@ export default {
     width: 100%;
     padding-left:0;
     padding-right:0;
-    border: 0 none;
-    background: transparent;
-    outline: 0 none;
   }
 
   &__btn {

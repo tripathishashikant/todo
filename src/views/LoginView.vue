@@ -13,7 +13,7 @@
             {{ description }}
           </h3>
           <section class="login__form">
-            <form @submit.prevent="handleSubmit">
+            <form @submit.prevent="handleSubmit" autocomplete="off">
               <div class="login__formGroup">
                 <label
                   for="username"
@@ -24,7 +24,8 @@
                   id="username"
                   v-model="username"
                   required
-                  class="login__input"
+                  class="input login__input"
+                  placeholder="Enter your email"
                 />
               </div>
               <div class="login__formGroup">
@@ -37,7 +38,8 @@
                   id="password"
                   v-model="password"
                   required
-                  class="login__input"
+                  class="input login__input"
+                  placeholder="Enter your password"
                 />
               </div>
               <div class="login__formGroup login__formGroup--button">
@@ -105,8 +107,6 @@ export default {
     flex: 1 1 auto;
 
     padding: 0.5rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
   }
 }
 </style>

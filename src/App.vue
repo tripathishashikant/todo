@@ -52,7 +52,19 @@ export default {
 
 <style lang="scss" scoped>
 .app {
+  &__container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "header" "content";
+    min-height: 100vh;
+  }
+
   &__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     padding:0 1.5rem;
   }
 }

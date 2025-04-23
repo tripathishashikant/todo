@@ -16,7 +16,7 @@
     <input
       :id="'list-' + listDocId + '-edit-task-' + id"
       ref="task__title"
-      class="task__title"
+      class="input task__title"
       :class="{ 'task__title--completed': addCompletedClass}"
       type="text"
       :name="title"

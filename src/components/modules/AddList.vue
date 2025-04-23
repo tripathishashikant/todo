@@ -8,7 +8,7 @@
         id="addList"
         ref="addlistname"
         v-model="listName"
-        class="addList__input"
+        class="input addList__input"
         type="text"
         placeholder="New list name"
         @keydown.enter="addList()"
