@@ -45,8 +45,12 @@
               <div class="login__formGroup login__formGroup--button">
                 <button
                   type="submit"
-                  class="login__button">Login</button
+                  class="login__button"
+                  @click="handleSubmit"
+                  :disabled="!username || !password"
                 >
+                  Login
+                </button>
               </div>
             </form>
           </section>
@@ -57,6 +61,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'Login',
   data() {
@@ -68,7 +74,21 @@ export default {
     }
   },
   methods: {
-    handleSubmit() {},
+    ...mapActions({
+      signIn: 'authStore/signIn',
+    }),
+    handleSubmit() {
+      this.signIn({
+        email: this.username,
+        password: this.password,
+      })
+      .then(() => {
+        this.$router.push({ name: 'home' });
+      })
+      .catch((error) => {
+        console.error('Login failed:', error);
+      });
+    },
   },
 };
 </script>
