@@ -1,11 +1,25 @@
 import { createStore } from 'vuex';
 
-import layoutSwitcherStore from './layoutSwitcher.store';
-import themeSwitcherStore from './themeSwitcher.store';
+import authStore from '@/store/auth.store';
+import layoutSwitcherStore from '@/store/layoutSwitcher.store';
+import themeSwitcherStore from '@/store/themeSwitcher.store';
+
+import {
+  onSnapshot,
+  collection,
+  doc,
+  addDoc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from '@/firebase';
 
 const initialMainState = {
   title: 'Todo',
   lists: [],
+  tasks: [],
+  hasListsLoaded: false,
+  hasTasksLoaded: false,
 };
 
 export const mainState = { ...initialMainState };
@@ -13,102 +27,120 @@ export const mainState = { ...initialMainState };
 export const getters = {
   getTitle: (state) => state.title,
   getLists: (state) => state.lists,
+  getTasks: (state) => state.tasks,
+  getListsLoaded: (state) => state.hasListsLoaded,
+  getTasksLoaded: (state) => state.hasTasksLoaded,
+  siteDataLoaded: (state) => state.hasListsLoaded && state.hasTasksLoaded,
 };
 
 export const mutations = {
   SET_LISTS(state, lists) {
     state.lists = lists;
   },
-  SET_LISTS_TO_LOCAL_STORAGE(state) {
-    localStorage.setItem('lists', JSON.stringify(state.lists));
+  SET_TASKS(state, tasks) {
+    state.tasks = tasks;
   },
-  ADD_NEW_LIST(state, newList) {
-    state.lists.push(newList);
+  SET_LISTS_LOADED(state, flag) {
+    state.hasListsLoaded = flag;
   },
-  ADD_NEW_TASK(state, payload) {
-    for (let i = 0; i < state.lists.length; i += 1) {
-      if (state.lists[i].id === payload.listID) {
-        state.lists[i].todos.unshift(payload.newTask);
-        break;
-      }
-    }
-  },
-  TOGGLE_COMPLETED_TASK(state, payload) {
-    const { i, j } = payload;
-    state.lists[i].todos[j].completed = !state.lists[i].todos[j].completed;
-  },
-  DELETE_TASK(state, payload) {
-    const { i, j } = payload;
-    state.lists[i].todos.splice(j, 1);
-  },
-  EDIT_TASK(state, payload) {
-    const { i, j, value } = payload;
-    state.lists[i].todos[j].title = value;
+  SET_TASKS_LOADED(state, flag) {
+    state.hasTasksLoaded = flag;
   },
 };
 
 export const actions = {
-  setLists({ commit }, lists) {
-    commit('SET_LISTS', lists);
-  },
-  setListsToLocalStorage({ commit }) {
-    commit('SET_LISTS_TO_LOCAL_STORAGE');
-  },
-  addNewList({ commit, dispatch }, newList) {
-    commit('ADD_NEW_LIST', newList);
-    dispatch('setListsToLocalStorage');
-  },
-  addNewTask({ commit, dispatch }, payload) {
-    commit('ADD_NEW_TASK', payload);
-    dispatch('setListsToLocalStorage');
-  },
-  toggleCompletedTask({ state, commit, dispatch }, ids) {
-    const { listID, id } = ids;
+  async subscribeToData({ commit }) {
+    try {
+      // Subscribe to todoLists
+      const todoListsRef = collection(db, "todos");
 
-    for (let i = 0; i < state.lists.length; i += 1) {
-      if (state.lists[i].id === listID) {
-        for (let j = 0; j < state.lists[i].todos.length; j += 1) {
-          if (state.lists[i].todos[j].id === id) {
-            commit('TOGGLE_COMPLETED_TASK', { i, j });
-            break;
-          }
-        }
-      }
-    }
-    dispatch('setListsToLocalStorage');
-  },
-  deleteTask({ state, commit, dispatch }, ids) {
-    const { listID, id } = ids;
+      onSnapshot(todoListsRef, (snapshot) => {
+        const todoLists = [];
 
-    for (let i = 0; i < state.lists.length; i += 1) {
-      if (state.lists[i].id === listID) {
-        for (let j = 0; j < state.lists[i].todos.length; j += 1) {
-          if (state.lists[i].todos[j].id === id) {
-            commit('DELETE_TASK', { i, j });
-            break;
-          }
-        }
-      }
-    }
-    dispatch('setListsToLocalStorage');
-  },
-  editTask({ state, commit, dispatch }, updatedValue) {
-    const { listID, id, value } = updatedValue;
-    const listLength = state.lists.length;
-    let todosLength = null;
+        snapshot.forEach(doc => {
+          todoLists.unshift({ docId: doc.id, ...doc.data() });
+        });
 
-    for (let i = 0; i < listLength; i += 1) {
-      if (state.lists[i].id === listID) {
-        todosLength = state.lists[i].todos.length;
-        for (let j = 0; j < todosLength; j += 1) {
-          if (state.lists[i].todos[j].id === id) {
-            commit('EDIT_TASK', { i, j, value });
-            break;
-          }
-        }
-      }
+        commit("SET_LISTS", todoLists);
+        commit('SET_LISTS_LOADED', true);
+      });
+
+
+      // Subscribe to tasks
+      const tasksRef = collection(db, "tasks");
+
+      onSnapshot(tasksRef, (snapshot) => {
+        const tasks = [];
+
+        snapshot.forEach(doc => {
+          tasks.unshift({ docId: doc.id, ...doc.data() });
+        });
+
+        commit("SET_TASKS", tasks);
+        commit('SET_TASKS_LOADED', true);
+      });
+
+    } catch (error) {
+      console.error('Error fetching lists from Firestore:', error);
     }
-    dispatch('setListsToLocalStorage');
+  },
+  async addNewList(context, newList) {
+    try {
+      await addDoc(collection(db, "todos"), newList);
+    }
+    catch (error) {
+      console.error('Error adding new list:', error);
+    }
+  },
+  async deleteList(context, listId) {
+    try {
+      await deleteDoc(doc(db, "todos", listId));
+    }
+    catch (error) {
+      console.error('Error deleting list:', error);
+    }
+  },
+  async addNewTask(context, newTask) {
+    try {
+      await addDoc(collection(db, 'tasks'), newTask);
+    }
+    catch(error) {
+      console.error('Error adding new task:', error);
+    }
+  },
+  async toggleCompletedTask(context, { taskDocId, completedFlag }) {
+    try {
+      await updateDoc(doc(db, "tasks", taskDocId), {
+        isCompleted: completedFlag
+      });
+    }
+    catch (error) {
+      console.error('Error toggling task completion:', error);
+    }
+  },
+  async deleteTask(context, taskDocId) {
+    try {
+      await deleteDoc(doc(db, "tasks", taskDocId));
+    }
+    catch (error) {
+      console.error('Error deleting task:', error);
+    }
+  },
+  async editTask(context, { taskDocId, val: title }) {
+    try {
+      await updateDoc(doc(db, "tasks", taskDocId), { title });
+    }
+    catch (error) {
+      console.error('Error editing task:', error);
+    }
+  },
+  clearLists({ commit }) {
+    commit('SET_LISTS', []);
+    commit('SET_LISTS_LOADED', false);
+  },
+  clearTasks({ commit }) {
+    commit('SET_TASKS', []);
+    commit('SET_TASKS_LOADED', false);
   },
 };
 
@@ -118,6 +150,7 @@ const store = createStore({
   mutations,
   actions,
   modules: {
+    authStore,
     layoutSwitcherStore,
     themeSwitcherStore,
   },

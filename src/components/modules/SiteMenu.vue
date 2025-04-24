@@ -18,16 +18,36 @@
     >
       Completed Tasks
     </router-link>
+    <a
+      v-if="isAuthenticated"
+      class="menu__link menu__link--sign-out"
+      role="button"
+      @click="signOut"
+    >
+      Sign Out {{ `(${user.email})` }}
+    </a>
   </nav>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import HomeSVG from '../svgs/HomeSVG.vue';
 
 export default {
   name: 'SiteMenu',
   components: {
     HomeSVG,
+  },
+  computed: {
+    ...mapGetters({
+      user: 'authStore/user',
+      isAuthenticated: 'authStore/isAuthenticated',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      signOut: 'authStore/signOut',
+    }),
   },
 };
 </script>
@@ -63,6 +83,10 @@ export default {
       height:2.4rem;
       position: relative;
       top: -0.3rem;
+    }
+
+    &--sign-out {
+      cursor: pointer;
     }
   }
 }

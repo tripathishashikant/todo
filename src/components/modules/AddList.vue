@@ -1,25 +1,25 @@
 <template>
   <div class="addList">
     <label
-      v-show="listnameVisible"
+      v-show="listNameVisible"
       class="addList__label"
     >
       <input
         id="addList"
         ref="addlistname"
-        v-model="listname"
-        class="addList__input"
+        v-model="listName"
+        class="input addList__input"
         type="text"
         placeholder="New list name"
         @keydown.enter="addList()"
       >
     </label>
     <button
-      v-show="!listnameVisible"
+      v-show="!listNameVisible"
       class="addList__btn nostyle"
       @click.stop="setListnameVisibility"
     >
-      + Add new list
+      {{ title }}
     </button>
   </div>
 </template>
@@ -31,8 +31,9 @@ export default {
   name: 'AddList',
   data() {
     return {
-      listname: null,
-      listnameVisible: false,
+      title: '+ Add new list',
+      listName: null,
+      listNameVisible: false,
     };
   },
   methods: {
@@ -40,19 +41,20 @@ export default {
       'addNewList',
     ]),
     setListnameVisibility() {
-      this.listnameVisible = true;
+      this.listNameVisible = true;
+
       setTimeout(() => {
         this.$refs.addlistname.focus();
       }, 350);
     },
     addList() {
       const newList = {
-        id: new Date().valueOf(),
-        name: this.listname,
-        todos: [],
+        id: Date.now(),
+        title: this.listName,
       };
+
       this.addNewList(newList);
-      this.listnameVisible = false;
+      this.listNameVisible = false;
     },
   },
 };

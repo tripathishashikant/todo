@@ -10,16 +10,16 @@
     </header>
     <div class="list__cardContainer">
       <base-card
-        v-for="list in lists"
-        :key="list.id"
+        v-for="{ id, docId, title } in lists"
+        :key="id"
       >
         <article class="list__article">
           <h3 class="list__title">
-            {{ list.name }}
+            {{ title }}
           </h3>
           <section class="list_pending">
             <pending-list
-              :list-i-d="list.id"
+              :list-doc-id="docId"
               :show-alert-message="true"
             />
           </section>

@@ -3,13 +3,13 @@
     <div class="addTask__wrapper">
       <label
         class="addTask__label"
-        :for="'addTask' + listID"
+        :for="'addTask' + listDocId"
       >
         <input
-          :id="'addTask' + listID"
+          :id="'addTask' + listDocId"
           ref="addTask__input"
           v-model="newTask"
-          class="addTask__input"
+          class="input addTask__input"
           type="text"
           placeholder="Add a task"
           @keydown.enter="addTask()"
@@ -25,9 +25,9 @@ import { mapActions } from 'vuex';
 export default {
   name: 'AddTask',
   props: {
-    listID: {
-      type: Number,
-      default: 0,
+    listDocId: {
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -41,12 +41,10 @@ export default {
     ]),
     addTask() {
       const task = {
-        listID: this.listID,
-        newTask: {
-          id: new Date().valueOf(),
-          title: this.newTask,
-          completed: false,
-        },
+        id: Date.now().toString(),
+        listId: this.listDocId,
+        title: this.newTask,
+        isCompleted: false,
       };
       this.addNewTask(task);
       this.newTask = '';
@@ -74,9 +72,6 @@ export default {
     width: 100%;
     padding-left:0;
     padding-right:0;
-    border: 0 none;
-    background: transparent;
-    outline: 0 none;
   }
 
   &__btn {
