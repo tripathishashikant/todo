@@ -42,21 +42,24 @@
   }
 
   &__headerTitle {
+    flex: 1 1 auto;
+
     text-align: center;
   }
 
   &__header {
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__title {
     padding: 1.5rem 0;
+    text-align: center;
   }
 
   &__deleteBtn {
-    position: absolute;
-    top: 0;
-    right: 0;
+    padding: 0;
     font-size: larger;
     color: $primary-body-dark;
     background-color: transparent;

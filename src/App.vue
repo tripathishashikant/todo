@@ -33,14 +33,14 @@ export default {
     },
   },
   mounted() {
-    // loading data from firebase firestore
-    this.subscribeToData();
+    // Init authentication
+    this.init();
   },
   methods: {
     ...mapActions({
       setDefaultTheme: 'themeSwitcherStore/setDefaultTheme',
       setDefaultLayout: 'layoutSwitcherStore/setDefaultLayout',
-      subscribeToData: 'subscribeToData',
+      init: 'authStore/init',
     }),
   },
 };

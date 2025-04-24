@@ -1,8 +1,9 @@
 import router from '@/router/router';
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
 } from 'firebase/auth';
 import { auth } from '@/firebase';
 
@@ -25,37 +26,43 @@ const mutations = {
 };
 
 const actions = {
-  async signIn({ commit }, { email, password }) {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("User signed in: ", userCredential.user);
-      commit('SET_USER', userCredential.user);
-    } catch (error) {
-      console.error("Error signing in: ", error);
-      throw error;
-    }
-  },
-  async signOut({ commit }) {
-    try {
-      await signOut(auth)
-      .then(() => {
-        console.log("User signed out");
+  init({ commit, dispatch }) {
+    onAuthStateChanged(auth, (user) => {
+      if (router.currentRoute.value.name === 'register') {
+        return; // Ignore the logic if the user is on the registration page
+      }
+
+      if (user) {
+        commit('SET_USER', { uid: user.uid, email: user.email });
+        router.push({ name: 'home' });
+      } else {
         commit('CLEAR_USER');
+        dispatch('clearLists', null, { root: true });
+        dispatch('clearTasks', null, { root: true });
         router.push({ name: 'login' });
-      });
-    } catch (error) {
-      console.error("Error signing out: ", error);
-      throw error;
-    }
+      }
+    });
   },
   async signUp(ctx, { email, password }) {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log("User signed up: ", userCredential.user);
-      return userCredential;
+      await createUserWithEmailAndPassword(auth, email, password)
+      .then(() => router.push({ name: 'home' }));
     } catch (error) {
       console.error("Error signing up: ", error);
-      throw error;
+    }
+  },
+  async signIn(ctx, { email, password }) {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.error("Error signing in: ", error);
+    }
+  },
+  async signOut(ctx) {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error signing out: ", error);
     }
   },
 };

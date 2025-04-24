@@ -134,6 +134,14 @@ export const actions = {
       console.error('Error editing task:', error);
     }
   },
+  clearLists({ commit }) {
+    commit('SET_LISTS', []);
+    commit('SET_LISTS_LOADED', false);
+  },
+  clearTasks({ commit }) {
+    commit('SET_TASKS', []);
+    commit('SET_TASKS_LOADED', false);
+  },
 };
 
 const store = createStore({

@@ -9,7 +9,7 @@
     <div class="list__cardContainer">
       <base-card :customClasses="'card--smallWidth'">
         <article class="list__article">
-          <h3 class="list__title">
+          <h3 class="list__title list__title--center">
             {{ description }}
           </h3>
           <section class="login__form">
@@ -43,6 +43,12 @@
                 />
               </div>
               <div class="login__formGroup login__formGroup--button">
+                <RouterLink
+                  to="/register"
+                  class="login__link nostyle"
+                >
+                  Don't have an account?
+                </RouterLink>
                 <button
                   type="submit"
                   class="login__button"
@@ -61,6 +67,7 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
 import { mapActions } from 'vuex';
 
 export default {
@@ -81,12 +88,6 @@ export default {
       this.signIn({
         email: this.username,
         password: this.password,
-      })
-      .then(() => {
-        this.$router.push({ name: 'home' });
-      })
-      .catch((error) => {
-        console.error('Login failed:', error);
       });
     },
   },
@@ -110,7 +111,7 @@ export default {
     margin-bottom: 2rem;
 
     &--button {
-      justify-content: flex-end;
+      justify-content: space-between;
 
       margin-top: 1rem;
     }

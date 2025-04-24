@@ -118,6 +118,7 @@ export default {
   &__checkbox {
     width: 100%;
     height: 100%;
+    cursor: pointer;
   }
 
   &__title {
