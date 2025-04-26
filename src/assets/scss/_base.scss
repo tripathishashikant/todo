@@ -125,18 +125,18 @@ img {
   @include btn;
 }
 
-input[type=text] {
+.input {
   padding: 1rem 1rem 0.8rem;
   font-family: $fontLeagueSpartan;
   font-size: 1.6rem;
   line-height: normal;
   color: $primary-body-dark;
-  border: 1px solid $primary-body-dark;
-  border-radius: 0.5rem;
+  border: 0 none;
+  border-radius: 0.4rem;
+  background: transparent;
 
   .light & {
     color: $primary-body-light;
-    border-color: $primary-body-light;
   }
 }
 
