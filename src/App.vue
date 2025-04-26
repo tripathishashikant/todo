@@ -33,14 +33,17 @@ export default {
     },
   },
   mounted() {
-    // Init authentication
-    this.init();
+    // loading list from local storage
+    const lists = JSON.parse(localStorage.getItem('lists'));
+    if (lists) {
+      this.setLists(lists);
+    }
   },
   methods: {
     ...mapActions({
       setDefaultTheme: 'themeSwitcherStore/setDefaultTheme',
       setDefaultLayout: 'layoutSwitcherStore/setDefaultLayout',
-      init: 'authStore/init',
+      setLists: 'setLists',
     }),
   },
 };
@@ -52,19 +55,7 @@ export default {
 
 <style lang="scss" scoped>
 .app {
-  &__container {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    grid-template-columns: 1fr;
-    grid-template-areas: "header" "content";
-    min-height: 100vh;
-  }
-
   &__content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     padding:0 1.5rem;
   }
 }
