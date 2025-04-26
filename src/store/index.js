@@ -11,8 +11,14 @@ import {
   addDoc,
   deleteDoc,
   updateDoc,
+  query,
+  where,
+  getDocs,
 } from "firebase/firestore";
 import { db } from '@/firebase';
+
+let todoListsRef = null;
+let tasksRef = null;
 
 const initialMainState = {
   title: 'Todo',
@@ -49,11 +55,17 @@ export const mutations = {
 };
 
 export const actions = {
+  async init({ dispatch, rootGetters }) {
+    const user = rootGetters['authStore/user'];
+
+    todoListsRef = collection(db, 'users', user.docId, 'todos');
+    tasksRef = collection(db, 'users', user.docId, 'tasks');
+
+    dispatch('subscribeToData');
+  },
   async subscribeToData({ commit }) {
     try {
       // Subscribe to todoLists
-      const todoListsRef = collection(db, "todos");
-
       onSnapshot(todoListsRef, (snapshot) => {
         const todoLists = [];
 
@@ -67,8 +79,6 @@ export const actions = {
 
 
       // Subscribe to tasks
-      const tasksRef = collection(db, "tasks");
-
       onSnapshot(tasksRef, (snapshot) => {
         const tasks = [];
 
@@ -86,7 +96,7 @@ export const actions = {
   },
   async addNewList(context, newList) {
     try {
-      await addDoc(collection(db, "todos"), newList);
+      await addDoc(todoListsRef, newList);
     }
     catch (error) {
       console.error('Error adding new list:', error);
@@ -94,33 +104,31 @@ export const actions = {
   },
   async deleteList(context, listId) {
     try {
-      await deleteDoc(doc(db, "todos", listId));
-    }
-    catch (error) {
-      console.error('Error deleting list:', error);
+      // Query tasks with the corresponding listId
+      const tasksQuery = query(tasksRef, where("listId", "==", listId));
+      const querySnapshot = await getDocs(tasksQuery);
+
+      // Delete each task associated with the listId
+      const deleteTasksPromises = querySnapshot.docs.map((doc) => deleteDoc(doc.ref));
+      await Promise.all(deleteTasksPromises);
+
+      // Delete the list itself
+      await deleteDoc(doc(todoListsRef, listId));
+    } catch (error) {
+      console.error('Error deleting list and associated tasks:', error);
     }
   },
   async addNewTask(context, newTask) {
     try {
-      await addDoc(collection(db, 'tasks'), newTask);
+      await addDoc(tasksRef, newTask);
     }
     catch(error) {
       console.error('Error adding new task:', error);
     }
   },
-  async toggleCompletedTask(context, { taskDocId, completedFlag }) {
-    try {
-      await updateDoc(doc(db, "tasks", taskDocId), {
-        isCompleted: completedFlag
-      });
-    }
-    catch (error) {
-      console.error('Error toggling task completion:', error);
-    }
-  },
   async deleteTask(context, taskDocId) {
     try {
-      await deleteDoc(doc(db, "tasks", taskDocId));
+      await deleteDoc(doc(tasksRef, taskDocId));
     }
     catch (error) {
       console.error('Error deleting task:', error);
@@ -128,10 +136,18 @@ export const actions = {
   },
   async editTask(context, { taskDocId, val: title }) {
     try {
-      await updateDoc(doc(db, "tasks", taskDocId), { title });
+      await updateDoc(doc(tasksRef, taskDocId), { title });
     }
     catch (error) {
       console.error('Error editing task:', error);
+    }
+  },
+  async toggleCompletedTask(context, { taskDocId, completedFlag }) {
+    try {
+      await updateDoc(doc(tasksRef, taskDocId), { isCompleted: completedFlag });
+    }
+    catch (error) {
+      console.error('Error toggling task completion:', error);
     }
   },
   clearLists({ commit }) {

@@ -26,14 +26,15 @@ const mutations = {
 };
 
 const actions = {
-  init({ commit, dispatch }) {
+  onAuthStateChange({ commit, dispatch }) {
     onAuthStateChanged(auth, (user) => {
       if (router.currentRoute.value.name === 'register') {
         return; // Ignore the logic if the user is on the registration page
       }
 
       if (user) {
-        commit('SET_USER', { uid: user.uid, email: user.email });
+        commit('SET_USER', { docId: user.uid, email: user.email });
+        dispatch('init', null, { root: true });
         router.push({ name: 'home' });
       } else {
         commit('CLEAR_USER');
@@ -45,15 +46,17 @@ const actions = {
   },
   async signUp(ctx, { email, password }) {
     try {
-      await createUserWithEmailAndPassword(auth, email, password)
-      .then(() => router.push({ name: 'home' }));
+      await createUserWithEmailAndPassword(auth, email, password);
     } catch (error) {
       console.error("Error signing up: ", error);
     }
   },
-  async signIn(ctx, { email, password }) {
+  async signIn({ dispatch }, { email, password }) {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        dispatch('subscribeToData', null, { root: true });
+      });
     } catch (error) {
       console.error("Error signing in: ", error);
     }
