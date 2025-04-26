@@ -157,7 +157,10 @@ export const actions = {
   },
   async toggleCompletedTask(context, { taskDocId, completedFlag }) {
     try {
-      await updateDoc(doc(tasksRef, taskDocId), { isCompleted: completedFlag });
+      await updateDoc(doc(tasksRef, taskDocId), {
+        isCompleted: completedFlag,
+        updatedAt: serverTimestamp()
+      });
     }
     catch (error) {
       console.error('Error toggling task completion:', error);
