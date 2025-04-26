@@ -33,17 +33,14 @@ export default {
     },
   },
   mounted() {
-    // loading list from local storage
-    const lists = JSON.parse(localStorage.getItem('lists'));
-    if (lists) {
-      this.setLists(lists);
-    }
+    // loading data from firebase firestore
+    this.subscribeToData();
   },
   methods: {
     ...mapActions({
       setDefaultTheme: 'themeSwitcherStore/setDefaultTheme',
       setDefaultLayout: 'layoutSwitcherStore/setDefaultLayout',
-      setLists: 'setLists',
+      subscribeToData: 'subscribeToData',
     }),
   },
 };

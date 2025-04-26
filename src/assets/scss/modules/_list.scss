@@ -1,4 +1,13 @@
+@use "@/assets/scss/variables" as *;
+
 .list {
+  &__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
   &__cardContainer {
     .list__horizontalLayout & {
       display: flex;
@@ -30,7 +39,26 @@
     text-align: center;
   }
 
+  &__header {
+    position: relative;
+  }
+
   &__title {
     padding: 1.5rem 0;
+  }
+
+  &__deleteBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: larger;
+    color: $primary-body-dark;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    .light & {
+      color: $primary-body-light;
+    }
   }
 }
