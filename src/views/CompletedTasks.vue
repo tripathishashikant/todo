@@ -10,17 +10,17 @@
     </header>
     <div class="list__cardContainer">
       <base-card
-        v-for="{ id, docId, title } in lists"
-        :key="id"
+        v-for="list in lists"
+        :key="list.id"
         class="list__card"
       >
         <article class="list__article">
           <h3 class="list__title">
-            {{ title }}
+            {{ list.name }}
           </h3>
           <section class="list_completed">
             <completed-list
-              :list-doc-id="docId"
+              :list-i-d="list.id"
               :show="false"
               :show-alert-message="true"
             />

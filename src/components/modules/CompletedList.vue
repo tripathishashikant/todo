@@ -14,17 +14,16 @@
       </h3>
       <ul class="completed__tasks">
         <template
-          v-for="{ id, docId, title, isCompleted } in completedTasks"
+          v-for="{ id, title, completed } in list.todos"
         >
           <li
-            v-if="isCompleted"
+            v-if="completed"
             :key="id"
             class="completed__task"
           >
             <the-task
               :id="id"
-              :task-doc-id="docId"
-              :list-doc-id="listDocId"
+              :list-i-d="listID"
               :title="title"
               :checked="true"
               :add-completed-class="true"
@@ -55,9 +54,9 @@ export default {
     TheTask,
   },
   props: {
-    listDocId: {
-      type: String,
-      default: '',
+    listID: {
+      type: Number,
+      default: 0,
     },
     showTitle: {
       type: Boolean,
@@ -70,13 +69,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      tasks: 'getTasks',
+      lists: 'getLists',
     }),
-    completedTasks() {
-      return this.tasks.filter((list) => list.listId === this.listDocId);
+    list() {
+      return this.lists.find((list) => list.id === this.listID);
     },
     showCompletedList() {
-      return this.completedTasks.some((task) => task.isCompleted);
+      return this.list.todos.some((todo) => todo.completed === true);
     },
     showNoTaskCompletedAlert() {
       if (this.showAlertMessage && !this.showCompletedList) {
