@@ -14,11 +14,15 @@ import {
   query,
   where,
   getDocs,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from '@/firebase';
 
 let todoListsRef = null;
 let tasksRef = null;
+
+export let unSubscribeTodoLists = null;
+export let unSubscribeTasks = null;
 
 const initialMainState = {
   title: 'Todo',
@@ -66,7 +70,7 @@ export const actions = {
   async subscribeToData({ commit }) {
     try {
       // Subscribe to todoLists
-      onSnapshot(todoListsRef, (snapshot) => {
+      unSubscribeTodoLists = onSnapshot(todoListsRef, (snapshot) => {
         const todoLists = [];
 
         snapshot.forEach(doc => {
@@ -79,7 +83,7 @@ export const actions = {
 
 
       // Subscribe to tasks
-      onSnapshot(tasksRef, (snapshot) => {
+      unSubscribeTasks = onSnapshot(tasksRef, (snapshot) => {
         const tasks = [];
 
         snapshot.forEach(doc => {
@@ -96,7 +100,10 @@ export const actions = {
   },
   async addNewList(context, newList) {
     try {
-      await addDoc(todoListsRef, newList);
+      await addDoc(todoListsRef, {
+        ...newList,
+        createdAt: serverTimestamp()
+      });
     }
     catch (error) {
       console.error('Error adding new list:', error);
@@ -120,7 +127,10 @@ export const actions = {
   },
   async addNewTask(context, newTask) {
     try {
-      await addDoc(tasksRef, newTask);
+      await addDoc(tasksRef, {
+        ...newTask,
+        createdAt: serverTimestamp()
+      });
     }
     catch(error) {
       console.error('Error adding new task:', error);
@@ -136,7 +146,10 @@ export const actions = {
   },
   async editTask(context, { taskDocId, val: title }) {
     try {
-      await updateDoc(doc(tasksRef, taskDocId), { title });
+      await updateDoc(doc(tasksRef, taskDocId), {
+        title,
+        updatedAt: serverTimestamp()
+      });
     }
     catch (error) {
       console.error('Error editing task:', error);
