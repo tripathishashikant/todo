@@ -85,14 +85,9 @@ export default {
       getIsHorizontalLayoutClass: 'layoutSwitcherStore/getIsHorizontalLayoutClass',
     }),
   },
-  mounted() {
-    // loading data from firebase firestore
-    this.subscribeToData();
-  },
   methods: {
     ...mapActions({
       deleteList: 'deleteList',
-      subscribeToData: 'subscribeToData',
     }),
   },
 };

@@ -10,7 +10,7 @@
         v-model="listName"
         class="input addList__input"
         type="text"
-        placeholder="New list name"
+        placeholder="Enter list name"
         @keydown.enter="addList()"
       >
     </label>
@@ -54,6 +54,7 @@ export default {
       };
 
       this.addNewList(newList);
+      this.listName = null;
       this.listNameVisible = false;
     },
   },

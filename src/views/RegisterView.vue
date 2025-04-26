@@ -52,7 +52,6 @@
                 <button
                   type="submit"
                   class="register__button"
-                  @click="handleSubmit"
                   :disabled="!username || !password"
                 >
                   Register

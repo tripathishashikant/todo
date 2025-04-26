@@ -5,7 +5,9 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
-import { auth } from '@/firebase';
+import { auth, db } from '@/firebase';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { unSubscribeTodoLists, unSubscribeTasks } from '@/store/index';
 
 const state = {
   user: null,
@@ -26,14 +28,11 @@ const mutations = {
 };
 
 const actions = {
-  init({ commit, dispatch }) {
+  onAuthStateChange({ commit, dispatch }) {
     onAuthStateChanged(auth, (user) => {
-      if (router.currentRoute.value.name === 'register') {
-        return; // Ignore the logic if the user is on the registration page
-      }
-
       if (user) {
-        commit('SET_USER', { uid: user.uid, email: user.email });
+        commit('SET_USER', { docId: user.uid, email: user.email });
+        dispatch('init', null, { root: true });
         router.push({ name: 'home' });
       } else {
         commit('CLEAR_USER');
@@ -45,15 +44,24 @@ const actions = {
   },
   async signUp(ctx, { email, password }) {
     try {
-      await createUserWithEmailAndPassword(auth, email, password)
-      .then(() => router.push({ name: 'home' }));
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Add the user to the Firestore 'users' collection only if it doesn't already exist
+      await setDoc(doc(db, 'users', user.uid), {
+        email: user.email,
+        createdAt: serverTimestamp(),
+      }, { merge: false });
     } catch (error) {
       console.error("Error signing up: ", error);
     }
   },
-  async signIn(ctx, { email, password }) {
+  async signIn({ dispatch }, { email, password }) {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        dispatch('subscribeToData', null, { root: true });
+      });
     } catch (error) {
       console.error("Error signing in: ", error);
     }
@@ -61,6 +69,14 @@ const actions = {
   async signOut(ctx) {
     try {
       await signOut(auth);
+
+      if (unSubscribeTodoLists) {
+        unSubscribeTodoLists();
+      }
+
+      if (unSubscribeTasks) {
+        unSubscribeTasks();
+      }
     } catch (error) {
       console.error("Error signing out: ", error);
     }

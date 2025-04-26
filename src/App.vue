@@ -34,13 +34,13 @@ export default {
   },
   mounted() {
     // Init authentication
-    this.init();
+    this.onAuthStateChange();
   },
   methods: {
     ...mapActions({
       setDefaultTheme: 'themeSwitcherStore/setDefaultTheme',
       setDefaultLayout: 'layoutSwitcherStore/setDefaultLayout',
-      init: 'authStore/init',
+      onAuthStateChange: 'authStore/onAuthStateChange',
     }),
   },
 };
