@@ -79,6 +79,8 @@ export const actions = {
 
         commit("SET_LISTS", todoLists);
         commit('SET_LISTS_LOADED', true);
+      }, (error) => {
+        console.log('Error fetching lists from Firestore:', error.message);
       });
 
 
@@ -92,6 +94,8 @@ export const actions = {
 
         commit("SET_TASKS", tasks);
         commit('SET_TASKS_LOADED', true);
+      }, (error) => {
+        console.log('Error fetching tasks from Firestore:', error.message);
       });
 
     } catch (error) {
