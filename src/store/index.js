@@ -79,6 +79,8 @@ export const actions = {
 
         commit("SET_LISTS", todoLists);
         commit('SET_LISTS_LOADED', true);
+      }, (error) => {
+        console.log('Error fetching lists from Firestore:', error.message);
       });
 
 
@@ -92,6 +94,8 @@ export const actions = {
 
         commit("SET_TASKS", tasks);
         commit('SET_TASKS_LOADED', true);
+      }, (error) => {
+        console.log('Error fetching tasks from Firestore:', error.message);
       });
 
     } catch (error) {
@@ -157,7 +161,10 @@ export const actions = {
   },
   async toggleCompletedTask(context, { taskDocId, completedFlag }) {
     try {
-      await updateDoc(doc(tasksRef, taskDocId), { isCompleted: completedFlag });
+      await updateDoc(doc(tasksRef, taskDocId), {
+        isCompleted: completedFlag,
+        updatedAt: serverTimestamp()
+      });
     }
     catch (error) {
       console.error('Error toggling task completion:', error);
